@@ -1,7 +1,7 @@
-plugin.iml
-pom.xml
-.idea
-target
+EveryThingPlugin/plugin.iml
+EveryThingPlugin/pom.xml
+EveryThingPlugin/.idea
+EveryThingPlugin/target
 # Compiled class file
 *.class
 
