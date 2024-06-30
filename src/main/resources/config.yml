@@ -1,0 +1,47 @@
+Commands:
+  isSuicideEnabled: true
+  isGMEnabled: true
+  isRELEnabled: true
+  isHomeEnabled: true
+  isCarryEnabled: true
+  isSendCordsEnabled: true
+  isLDLEnabled: true
+  isChunkLoaderEnabled: true
+  isCoordsEnabled: true
+  isTPAEnabled: true
+  isWarpEnabled: true
+  isNickEnabled: true
+  isEnderChestEnabled: true
+  isCraftingTableEnabled: true
+  isInvseeEnabled: true
+  isAnvilEnabled: true
+Misc:
+  isBellEnabled: true
+  isLeashEnabled: true
+  FastSleep: true
+  FastSleepPercentage: 50
+  areSuggestionsEnabled: true
+  CommandsList: true
+  TPATimer: 120 #Expressed in seconds
+Economy:
+  isEnabled: true
+  symbol: '$'
+AdminUtils:
+  UpdateTellToOps: true
+  Commands:
+    RemoveMinecart: true
+    EntityList: true
+  Values:
+    #-1 means infinite
+    MaxMinecartChunk: 20
+    MaxMinecartWorld: 200
+    MaxMinecartServer: -1
+    MaxStandChunk: 20
+    MaxStandWorld: 200
+    MaxStandServer: -1
+    MaxProjectileChunk: 60
+    MaxProjectileWorld: 600
+    MaxProjectileServer: -1
+#DO NOT TOUCH THIS
+ConfigVersion: 8
+IsEnabled: true
