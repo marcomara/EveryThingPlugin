@@ -1,7 +1,7 @@
-*/.idea
-*/target
-*/plugin.iml
-*/pom.xml
+/.idea
+/target
+/plugin.iml
+/pom.xml
 # Compiled class file
 *.class
 
