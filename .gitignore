@@ -4,7 +4,7 @@ plugin.iml
 pom.xml
 # Compiled class file
 *.class
-
+*.java
 # Log file
 *.log
 
