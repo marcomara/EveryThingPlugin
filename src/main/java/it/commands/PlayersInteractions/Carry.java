@@ -1,4 +1,4 @@
-package it.commands;
+package it.commands.PlayersInteractions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

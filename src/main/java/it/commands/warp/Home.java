@@ -1,4 +1,4 @@
-package it.commands;
+package it.commands.warp;
 
 import it.utils.Colors;
 import org.bukkit.Location;

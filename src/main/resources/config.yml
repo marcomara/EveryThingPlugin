@@ -16,6 +16,7 @@ Commands:
   isInvseeEnabled: true
   isAnvilEnabled: true
 Misc:
+  isSitEnabled: true
   isBellEnabled: true
   isLeashEnabled: true
   FastSleep: true

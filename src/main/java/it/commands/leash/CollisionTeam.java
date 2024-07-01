@@ -1,4 +1,4 @@
-package it.leash;
+package it.commands.leash;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.Scoreboard;

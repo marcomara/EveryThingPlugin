@@ -1,4 +1,4 @@
-package it.commands;
+package it.commands.Utils;
 
 import it.plugin.Plugin;
 import it.utils.Colors;

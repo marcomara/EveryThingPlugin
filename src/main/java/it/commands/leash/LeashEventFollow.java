@@ -1,4 +1,4 @@
-package it.leash;
+package it.commands.leash;
 
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

@@ -1,12 +1,15 @@
 package it.plugin;
 
+import it.commands.PlayersInteractions.FastSit;
+import it.commands.PlayersInteractions.Sit;
 import it.commands.tpa.Data;
-import it.leash.CollisionTeam;
+import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
 import it.utils.Colors;
 import it.utils.UpdateChecker;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import it.utils.Metrics;
 
@@ -15,13 +18,11 @@ import static it.utils.SaveUtility.*;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public final class Plugin extends JavaPlugin {
+    public static List<Entity> sitlist = new ArrayList<>();
     public boolean cancontinue = true;
     public CollisionTeam team;
     public static File pf;
@@ -78,6 +79,7 @@ public final class Plugin extends JavaPlugin {
             CommandTabCompleterHandler.Handler(this);
             MiscLoader.Loader(this);
             MiscLoader.EventLoader(this);
+            getServer().getPluginManager().registerEvents(new FastSit(),this);
         }
     }
 

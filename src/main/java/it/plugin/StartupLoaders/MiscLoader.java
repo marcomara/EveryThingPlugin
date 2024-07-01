@@ -1,17 +1,20 @@
 package it.plugin.StartupLoaders;
 
-import it.commands.CommandList;
+import it.commands.PlayersInteractions.Runner;
+import it.commands.PlayersInteractions.Sit;
+import it.commands.Utils.CommandList;
 import it.commands.DisabledCommandMessage;
 import it.commands.Suggestions;
-import it.economy.Balance;
+import it.commands.economy.Balance;
 import it.events.Join;
-import it.leash.LeashEvent;
+import it.commands.leash.LeashEvent;
 import it.events.Quit;
 import it.listeners.Bell;
 import it.listeners.FastSleep;
 import it.listeners.Misc;
 import it.plugin.Plugin;
-import it.leash.CollisionTeam;
+import it.commands.leash.CollisionTeam;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import static it.plugin.Plugin.*;
 
@@ -40,6 +43,11 @@ public class MiscLoader {
             commands.add("suggestion");
         } else {
             plugin.getCommand("suggestion").setExecutor(new DisabledCommandMessage());
+        }
+        if(booleanMap.get("Misc.isSitEnabled")){
+            plugin.getCommand("sit").setExecutor(new Sit());
+            BukkitRunnable b = new Runner();
+            b.runTaskTimer(plugin,200L,20L);
         }
     }
 

@@ -1,4 +1,4 @@
-package it.commands;
+package it.AdminUtility;
 import it.plugin.Plugin;
 import it.utils.Colors;
 import org.bukkit.command.Command;

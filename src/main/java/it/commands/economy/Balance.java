@@ -1,4 +1,4 @@
-package it.economy;
+package it.commands.economy;
 
 import it.plugin.Plugin;
 import it.utils.Colors;

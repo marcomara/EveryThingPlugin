@@ -1,4 +1,4 @@
-package it.leash;
+package it.commands.leash;
 
 import it.plugin.Plugin;
 import org.bukkit.Bukkit;
