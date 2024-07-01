@@ -33,16 +33,16 @@ public class MinecartClear implements CommandExecutor {
                 Entity[] ae = c.getEntities();
                 List<Entity> rm= new ArrayList<>();
                 for(Entity e : ae){
-                    if (e.getType()== EntityType.MINECART || e.getType()==EntityType.CHEST_MINECART || e.getType()==EntityType.FURNACE_MINECART || e.getType()==EntityType.HOPPER_MINECART) rm.add(e);
+                    if (e.getType() == EntityType.MINECART || e.getType()==EntityType.MINECART_CHEST || e.getType()==EntityType.MINECART_FURNACE || e.getType()==EntityType.MINECART_HOPPER) rm.add(e);
                 }
                 if(intMap.get("AdminUtils.Values.MaxMinecartChunk")==-1){
                     wrm.addAll(rm);
                     continue;
                 }
                 while(rm.size()>intMap.get("AdminUtils.Values.MaxMinecartChunk")){
-                    Bukkit.getEntity(rm.getLast().getUniqueId()).remove();
+                    Bukkit.getEntity(rm.get(rm.size()-1).getUniqueId()).remove();
                     i++;
-                    rm.removeLast();
+                    rm.remove(rm.size()-1);
                 }
                 wrm.addAll(rm);
             }
@@ -51,9 +51,9 @@ public class MinecartClear implements CommandExecutor {
                 continue;
             }
             while(wrm.size()>intMap.get("AdminUtils.Values.MaxMinecartWorld")){
-                Bukkit.getEntity(wrm.getLast().getUniqueId()).remove();
+                Bukkit.getEntity(wrm.get(wrm.size()-1).getUniqueId()).remove();
                 i++;
-                wrm.removeLast();
+                wrm.remove(wrm.size()-1);
             }
             srm.addAll(wrm);
         }
@@ -62,9 +62,9 @@ public class MinecartClear implements CommandExecutor {
             return true;
         }
         while(srm.size()>intMap.get("AdminUtils.Values.MaxMinecartServer")){
-            Bukkit.getEntity(srm.getLast().getUniqueId()).remove();
+            Bukkit.getEntity(srm.get(srm.size()-1).getUniqueId()).remove();
             i++;
-            srm.removeLast();
+            srm.remove(srm.size()-1);
         }
         commandSender.sendMessage(Component.text("Removed " + i + " minecart/s").color(NamedTextColor.WHITE));
         return true;

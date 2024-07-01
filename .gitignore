@@ -1,7 +1,6 @@
 .idea/
 target/
 plugin.iml
-pom.xml
 # Compiled class file
 *.class
 # Log file

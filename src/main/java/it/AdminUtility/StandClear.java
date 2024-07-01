@@ -40,9 +40,9 @@ public class StandClear implements CommandExecutor {
                     continue;
                 }
                 while(rm.size()>intMap.get("AdminUtils.Values.MaxStandChunk")){
-                    Bukkit.getEntity(rm.getLast().getUniqueId()).remove();
+                    Bukkit.getEntity(rm.get(rm.size()-1).getUniqueId()).remove();
                     i++;
-                    rm.removeLast();
+                    rm.remove(rm.size()-1);
                 }
                 wrm.addAll(rm);
             }
@@ -51,9 +51,9 @@ public class StandClear implements CommandExecutor {
                 continue;
             }
             while(wrm.size()>intMap.get("AdminUtils.Values.MaxStandWorld")){
-                Bukkit.getEntity(wrm.getLast().getUniqueId()).remove();
+                Bukkit.getEntity(wrm.get(wrm.size()-1).getUniqueId()).remove();
                 i++;
-                wrm.removeLast();
+                wrm.remove(wrm.size()-1);
             }
             srm.addAll(wrm);
         }
@@ -62,9 +62,9 @@ public class StandClear implements CommandExecutor {
             return true;
         }
         while(srm.size()>intMap.get("AdminUtils.Values.MaxStandServer")){
-            Bukkit.getEntity(srm.getLast().getUniqueId()).remove();
+            Bukkit.getEntity(srm.get(srm.size()-1).getUniqueId()).remove();
             i++;
-            srm.removeLast();
+            srm.remove(srm.size()-1);
         }
         commandSender.sendMessage(Component.text("Removed " + i + " armor stand/s").color(NamedTextColor.WHITE));
         return true;
