@@ -1,7 +1,5 @@
 package it.plugin;
 
-import it.commands.PlayersInteractions.FastSit;
-import it.commands.PlayersInteractions.Sit;
 import it.commands.tpa.Data;
 import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
@@ -79,7 +77,6 @@ public final class Plugin extends JavaPlugin {
             CommandTabCompleterHandler.Handler(this);
             MiscLoader.Loader(this);
             MiscLoader.EventLoader(this);
-            getServer().getPluginManager().registerEvents(new FastSit(),this);
         }
     }
 

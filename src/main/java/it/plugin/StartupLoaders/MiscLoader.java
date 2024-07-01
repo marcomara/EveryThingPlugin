@@ -1,5 +1,6 @@
 package it.plugin.StartupLoaders;
 
+import it.commands.PlayersInteractions.FastSit;
 import it.commands.PlayersInteractions.Runner;
 import it.commands.PlayersInteractions.Sit;
 import it.commands.Utils.CommandList;
@@ -47,6 +48,7 @@ public class MiscLoader {
         if(booleanMap.get("Misc.isSitEnabled")){
             plugin.getCommand("sit").setExecutor(new Sit());
             BukkitRunnable b = new Runner();
+            plugin.getServer().getPluginManager().registerEvents(new FastSit(),plugin);
             b.runTaskTimer(plugin,200L,20L);
         }
     }

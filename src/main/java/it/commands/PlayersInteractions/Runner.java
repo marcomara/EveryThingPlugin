@@ -16,7 +16,7 @@ public class Runner extends BukkitRunnable {
             if(e.getPassengers().isEmpty()){
                 e.remove();
                 sitlist.remove(i);
-                lgg.warning("removed slime with uuid: " + e.getUniqueId());
+                //lgg.warning("removed slime with uuid: " + e.getUniqueId());
                 m--;
                 continue;
             }

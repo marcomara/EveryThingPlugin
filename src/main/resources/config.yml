@@ -44,5 +44,5 @@ AdminUtils:
     MaxProjectileWorld: 600
     MaxProjectileServer: -1
 #DO NOT TOUCH THIS
-ConfigVersion: 8
+ConfigVersion: 9
 IsEnabled: true
