@@ -5,6 +5,7 @@ import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
 import it.utils.Colors;
 import it.utils.UpdateChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -45,6 +46,14 @@ public final class Plugin extends JavaPlugin {
     public static boolean updateTell=false;
     @Override
     public void onLoad(){
+        if(getServer().getMinecraftVersion().startsWith("1.1")&&!getServer().getMinecraftVersion().startsWith("1.19")){
+            Bukkit.getPluginManager().disablePlugin(this);
+            System.err.println("***MINECRAFT VERSION NOT SUPPORTED***");
+            System.err.println("Check the supported versions here:");
+            System.err.println("https://www.spigotmc.org/resources/everything-plugin.107875");
+            cancontinue = false;
+            return;
+        }
         err = System.err;
         dataFolder = getDataFolder();
         ver = getDescription().getVersion();
@@ -56,17 +65,19 @@ public final class Plugin extends JavaPlugin {
         pfyml = creatyml(pf);
         ValueLoaderMain(this);
         metrics = new Metrics(this, 22468);
-        UpdateChecker.init(this, 107875).requestUpdateCheck().whenComplete((result, e )-> {
-            if(result.getReason() == UpdateChecker.UpdateReason.NEW_UPDATE){
-                lgg.warning("!!!You are running an outdated version of " + this.getName() + "!!!");
-                lgg.warning(result.getNewestVersion() + " > " + this.getDescription().getVersion());
-                lgg.warning("Get the newest version here: https://www.spigotmc.org/resources/everything-plugin.107875/history");
-                if(booleanMap.get("AdminUtils.UpdateTellToOps")){
-                    updateTell = true;
-                    lgg.warning("Telling that to all ops");
+        if(!getServer().getMinecraftVersion().startsWith("1.19")) {
+            UpdateChecker.init(this, 107875).requestUpdateCheck().whenComplete((result, e) -> {
+                if (result.getReason() == UpdateChecker.UpdateReason.NEW_UPDATE) {
+                    lgg.warning("!!!You are running an outdated version of " + this.getName() + "!!!");
+                    lgg.warning(result.getNewestVersion() + " > " + this.getDescription().getVersion());
+                    lgg.warning("Get the newest version here: https://www.spigotmc.org/resources/everything-plugin.107875/history");
+                    if (booleanMap.get("AdminUtils.UpdateTellToOps")) {
+                        updateTell = true;
+                        lgg.warning("Telling that to all ops");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     @Override
     public void onEnable() {
@@ -82,11 +93,13 @@ public final class Plugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (FullDisable) {
-            save(pf, pfyml);
-            saveConfig();
+        if (cancontinue) {
+            if (FullDisable) {
+                save(pf, pfyml);
+                saveConfig();
+            }
+            ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
+            metrics.shutdown();
         }
-        ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
-        metrics.shutdown();
     }
 }

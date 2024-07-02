@@ -32,10 +32,10 @@ public class ValueLoader {
                 YamlConfiguration oldcfg = YamlConfiguration.loadConfiguration(new File(olddf, "config.yml"));
                 if (oldcfg.getInt("ConfigVersion") < 8) {
                     try {
-                        Files.move(new File(dataFolder.getParentFile(), "\\Plugin").toPath(), dataFolder.toPath(), StandardCopyOption.ATOMIC_MOVE);
+                        Files.move(new File(dataFolder.getParentFile(), "Plugin").toPath(), dataFolder.toPath(), StandardCopyOption.ATOMIC_MOVE);
                         lgg.warning("Plugin folder updated");
                     } catch (Exception e) {
-                        err.println(e.getCause());
+                        err.println(e.fillInStackTrace());
                         lgg.warning("Update went wrong, try to copy the files from ServerDirectory/plugins/Plugin to ServerDirectory/plugins/EveryThingPlugin");
                         plugin.FullDisable = false;
                         plugin.cancontinue = false;
