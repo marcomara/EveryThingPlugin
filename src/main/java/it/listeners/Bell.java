@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class Bell implements Listener {
     @EventHandler
     public void RightClick(PlayerInteractEvent e){
-        if(e.getPlayer().getItemInHand().equals(new ItemStack(Material.BELL))&&e.getAction().isRightClick()&&e.getClickedBlock().getType().equals(Material.AIR)){
+        if(e.getPlayer().getInventory().getItemInMainHand().equals(new ItemStack(Material.BELL))&&e.getAction().isRightClick()&&e.getClickedBlock()==null){
             e.getPlayer().getWorld().playSound(e.getPlayer(), Sound.BLOCK_BELL_USE, 10,1);
         }
     }

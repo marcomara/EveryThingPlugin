@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Minecart;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class MinecartClear implements CommandExecutor {
                 Entity[] ae = c.getEntities();
                 List<Entity> rm= new ArrayList<>();
                 for(Entity e : ae){
-                    if (e.getType() == EntityType.MINECART || e.getType()==EntityType.MINECART_CHEST || e.getType()==EntityType.MINECART_FURNACE || e.getType()==EntityType.MINECART_HOPPER) rm.add(e);
+                    if (e instanceof Minecart) rm.add(e);
                 }
                 if(intMap.get("AdminUtils.Values.MaxMinecartChunk")==-1){
                     wrm.addAll(rm);
