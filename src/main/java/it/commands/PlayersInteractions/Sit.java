@@ -38,7 +38,7 @@ public class Sit implements CommandExecutor {
         m.setInvulnerable(true);
         m.setSize(0);
         m.setSilent(true);
-        m.setPassenger(p);
+        m.addPassenger(p);
         sitlist.add(m);
     }
 }

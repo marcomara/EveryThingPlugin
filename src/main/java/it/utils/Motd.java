@@ -27,7 +27,7 @@ public class Motd {
                 p.sendMessage(replacements(line, p));
             }
         }catch(IOException e){
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
     }
     private static String replacements(String line, Player p){

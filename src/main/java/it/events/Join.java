@@ -18,7 +18,7 @@ public class Join implements Listener{
     @EventHandler
     public void onjoin(PlayerJoinEvent e) throws Exception{
         pfyml.set(e.getPlayer().getUniqueId() + ".originalName", e.getPlayer().getName());
-        onJoin(e.getPlayer(), plugin);
+        onJoin(e.getPlayer());
         e.joinMessage(ChatPlayerName.join(e.getPlayer()));
         new Motd(e.getPlayer(),plugin);
         save(pf,pfyml);

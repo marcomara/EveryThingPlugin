@@ -30,10 +30,10 @@ public class MiscLoader {
         }
         if (booleanMap.get("Misc.isLeashEnabled")) {
             plugin.getServer().getPluginManager().registerEvents(new LeashEvent(plugin), plugin);
-            plugin.team = new CollisionTeam();
+            team = new CollisionTeam();
         }
         if (booleanMap.get("Economy.isEnabled")) {
-            plugin.getCommand("balance").setExecutor(new Balance(plugin));
+            plugin.getCommand("balance").setExecutor(new Balance());
             ecotype = plugin.getConfig().getString("economy.symbol");
             commands.add("balance");
         } else {

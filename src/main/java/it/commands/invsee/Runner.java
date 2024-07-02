@@ -21,11 +21,6 @@ public class Runner extends BukkitRunnable {
     @Override
     public void run() {
         int n = 0;
-        /*for(ItemStack i : t.getInventory()){
-            dinv.setItem(n,i);
-            n++;
-        }
-        n = 0;*/
         for (ItemStack i : dinv){
             if(n<41){
                 t.getInventory().setItem(n, i);

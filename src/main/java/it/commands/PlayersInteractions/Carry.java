@@ -14,7 +14,7 @@ public class Carry implements CommandExecutor {
         Player p = Bukkit.getPlayer(args[0]);
         assert p != null;
         assert p != s;
-        s.setPassenger(p);
+        s.addPassenger(p);
         return true;
     }
 }

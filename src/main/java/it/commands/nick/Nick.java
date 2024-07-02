@@ -11,6 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import it.utils.SaveUtility;
 import it.utils.Colors;
+
+import static it.plugin.Plugin.pf;
+import static it.plugin.Plugin.pfyml;
+
 public class Nick implements CommandExecutor {
     private final Plugin plugin;
     public Nick(Plugin plugin){
@@ -19,14 +23,14 @@ public class Nick implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        File nicks = plugin.pf;
-        FileConfiguration nickyml = plugin.pfyml;
+        File nicks = pf;
+        FileConfiguration nickyml = pfyml;
         if(sender instanceof Player && args.length==1){
             Player p = (Player) sender;
             if(args[0].equals("reset")){
                 nickyml.set(p.getUniqueId()+".UsingNick", false);
                 SaveUtility.save(nicks, nickyml);
-                NickHandler.onCommandReset(p,plugin);
+                NickHandler.onCommandReset(p);
                 p.sendMessage("Your name has been reset to "+p.getName());
                 return true;
             }
@@ -43,7 +47,7 @@ public class Nick implements CommandExecutor {
             Player p = Bukkit.getPlayer(args[1]);
             sender.sendMessage(p.getName()
              + " original name is "
-            + plugin.pfyml.getString(p.getUniqueId()+".originalName"));
+            + pfyml.getString(p.getUniqueId()+".originalName"));
             return true;
         }
         if(args.length==2&&args[0].equals("warp")){
@@ -58,7 +62,7 @@ public class Nick implements CommandExecutor {
                 return true;
             }
             nickyml.set(p.getUniqueId()+".UsingNick", true);
-            String nick = Colors.AlternateColorCodes('&',args[1]).toString();
+            String nick = Colors.AlternateColorCodes('&',args[1]);
             NickHandler.onCommand(p,nick,plugin);
             return true;
         }

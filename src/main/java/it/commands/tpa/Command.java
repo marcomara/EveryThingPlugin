@@ -35,8 +35,7 @@ public class Command implements CommandExecutor {
         }
         if(args.length==2){
             if(args[0].equals("allow") || args[0].equals("deny")){
-                boolean condition=false;
-                if(args[0].equals("allow")) condition = true;
+                boolean condition= args[0].equals("allow");
                 new response(table,sender, args[1], condition , timer).response();
                 return true;
             }

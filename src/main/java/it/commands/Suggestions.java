@@ -25,13 +25,13 @@ public class Suggestions implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         create(file);
         FileConfiguration filec = SaveUtility.creatyml(file);
-        String suggestion ="";
+        StringBuilder suggestion = new StringBuilder();
         String name = sender.getName();
         for(String word : args){
-            suggestion += word + " ";
+            suggestion.append(word).append(" ");
         }
         List<String> suggestions = filec.getStringList(name);
-        suggestions.add(suggestion);
+        suggestions.add(suggestion.toString());
         filec.set(name,suggestions);
         SaveUtility.save(file,filec);
         Plugin.ccs.sendMessage(name + " says: " +suggestion);

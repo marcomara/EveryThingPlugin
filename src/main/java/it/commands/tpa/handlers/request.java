@@ -25,7 +25,7 @@ public class request {
         }
         List<Data> list;
         if(!table.containsKey(target)){
-            list = new ArrayList();
+            list = new ArrayList<>();
         }else{
             list = table.get(target);
         }

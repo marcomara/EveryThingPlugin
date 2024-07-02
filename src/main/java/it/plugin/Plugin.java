@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public final class Plugin extends JavaPlugin {
     public static List<Entity> sitlist = new ArrayList<>();
     public boolean cancontinue = true;
-    public CollisionTeam team;
+    public static CollisionTeam team;
     public static File pf;
     public static FileConfiguration pfyml;
     public static String ecotype;
@@ -43,10 +43,11 @@ public final class Plugin extends JavaPlugin {
     public static String ver;
     public static File dataFolder;
     private Metrics metrics;
-    public static boolean updateTell=false;
+    public static boolean updateTell = false;
+
     @Override
-    public void onLoad(){
-        if(getServer().getMinecraftVersion().startsWith("1.1")&&!getServer().getMinecraftVersion().startsWith("1.19")){
+    public void onLoad() {
+        if (getServer().getMinecraftVersion().startsWith("1.1") || (getServer().getMinecraftVersion().startsWith("1.20") && !getServer().getMinecraftVersion().equals("1.20.6"))){
             Bukkit.getPluginManager().disablePlugin(this);
             System.err.println("***MINECRAFT VERSION NOT SUPPORTED***");
             System.err.println("Check the supported versions here:");
@@ -56,7 +57,7 @@ public final class Plugin extends JavaPlugin {
         }
         err = System.err;
         dataFolder = getDataFolder();
-        ver = getDescription().getVersion();
+        ver = getPluginMeta().getVersion();
         lgg = getLogger();
         ccs = getServer().getConsoleSender();
         commands = new ArrayList<>();
@@ -65,23 +66,22 @@ public final class Plugin extends JavaPlugin {
         pfyml = creatyml(pf);
         ValueLoaderMain(this);
         metrics = new Metrics(this, 22468);
-        if(!getServer().getMinecraftVersion().startsWith("1.19")) {
-            UpdateChecker.init(this, 107875).requestUpdateCheck().whenComplete((result, e) -> {
-                if (result.getReason() == UpdateChecker.UpdateReason.NEW_UPDATE) {
-                    lgg.warning("!!!You are running an outdated version of " + this.getName() + "!!!");
-                    lgg.warning(result.getNewestVersion() + " > " + this.getDescription().getVersion());
-                    lgg.warning("Get the newest version here: https://www.spigotmc.org/resources/everything-plugin.107875/history");
-                    if (booleanMap.get("AdminUtils.UpdateTellToOps")) {
-                        updateTell = true;
-                        lgg.warning("Telling that to all ops");
-                    }
+        UpdateChecker.init(this, 107875).requestUpdateCheck().whenComplete((result, e) -> {
+            if (result.getReason() == UpdateChecker.UpdateReason.NEW_UPDATE) {
+                lgg.warning("!!!You are running an outdated version of " + this.getName() + "!!!");
+                lgg.warning(result.getNewestVersion() + " > " + ver);
+                lgg.warning("Get the newest version here: https://www.spigotmc.org/resources/everything-plugin.107875/history");
+                if (booleanMap.get("AdminUtils.UpdateTellToOps")) {
+                    updateTell = true;
+                    lgg.warning("Telling that to all ops");
                 }
-            });
-        }
+            }
+        });
     }
+
     @Override
     public void onEnable() {
-        if(cancontinue) {
+        if (cancontinue) {
             ccs.sendMessage(Colors.GREEN + "Plugin Enabled");
             CommandsLoader.CommandsLoader(this);
             AdminUtilsLoader.CommandRegister(this);

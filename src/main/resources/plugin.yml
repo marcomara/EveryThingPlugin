@@ -1,7 +1,7 @@
 name: EveryThingPlugin
-version: 0.7.6.1
+version: 0.8
 main: it.plugin.Plugin
-api-version: '1.20'
+api-version: '1.20.6'
 author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD

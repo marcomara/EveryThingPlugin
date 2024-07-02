@@ -40,9 +40,9 @@ public class ProjectileClear implements CommandExecutor {
                     continue;
                 }
                 while(rm.size()>intMap.get("AdminUtils.Values.MaxProjectileChunk")){
-                    Bukkit.getEntity(rm.get(rm.size()-1).getUniqueId()).remove();
+                    Bukkit.getEntity(rm.getLast().getUniqueId()).remove();
                     i++;
-                    rm.remove(rm.size()-1);
+                    rm.removeLast();
                 }
                 wrm.addAll(rm);
             }
@@ -51,9 +51,9 @@ public class ProjectileClear implements CommandExecutor {
                 continue;
             }
             while(wrm.size()>intMap.get("AdminUtils.Values.MaxProjectileWorld")){
-                Bukkit.getEntity(wrm.get(wrm.size()-1).getUniqueId()).remove();
+                Bukkit.getEntity(wrm.getLast().getUniqueId()).remove();
                 i++;
-                wrm.remove(wrm.size()-1);
+                wrm.removeLast();
             }
             srm.addAll(wrm);
         }
@@ -62,9 +62,9 @@ public class ProjectileClear implements CommandExecutor {
             return true;
         }
         while(srm.size()>intMap.get("AdminUtils.Values.MaxProjectileServer")){
-            Bukkit.getEntity(srm.get(srm.size()-1).getUniqueId()).remove();
+            Bukkit.getEntity(srm.getLast().getUniqueId()).remove();
             i++;
-            srm.remove(srm.size()-1);
+            srm.removeLast();
         }
         commandSender.sendMessage(Component.text("Removed " + i + " projectile/s").color(NamedTextColor.WHITE));
         return true;

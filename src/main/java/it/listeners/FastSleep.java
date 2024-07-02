@@ -1,6 +1,8 @@
 package it.listeners;
 
 import it.plugin.Plugin;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -29,7 +31,7 @@ public class FastSleep implements Listener {
             world.setTime(0);
             world.setStorm(false);
             world.setThundering(false);
-            Bukkit.broadcastMessage("The night has been skipped");
+            Bukkit.broadcast(Component.text("The night has been skipped").color(NamedTextColor.WHITE));
         }
     }
 }

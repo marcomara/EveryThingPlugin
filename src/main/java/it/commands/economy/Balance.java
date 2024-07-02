@@ -1,29 +1,22 @@
 package it.commands.economy;
 
-import it.plugin.Plugin;
 import it.utils.Colors;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import it.utils.SaveUtility;
 
-import java.io.File;
+
+import static it.plugin.Plugin.*;
 
 public class Balance implements CommandExecutor {
-    private final Plugin plugin;
-    public Balance(Plugin plugin){
-        this.plugin=plugin;
-    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        File pf = plugin.pf;
-        FileConfiguration pfyml = plugin.pfyml;
-        String et = plugin.ecotype;
+        String et = ecotype;
         if(sender instanceof Player){
             if(args.length==0){
                 sender.sendMessage(Colors.GOLD + "Your balance is: "+ Colors.WHITE + pfyml.getLong(((Player)sender).getUniqueId()+".balance") + et);

@@ -9,7 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,9 +40,9 @@ public class MinecartClear implements CommandExecutor {
                     continue;
                 }
                 while(rm.size()>intMap.get("AdminUtils.Values.MaxMinecartChunk")){
-                    Bukkit.getEntity(rm.get(rm.size()-1).getUniqueId()).remove();
+                    Bukkit.getEntity(rm.getLast().getUniqueId()).remove();
                     i++;
-                    rm.remove(rm.size()-1);
+                    rm.removeLast();
                 }
                 wrm.addAll(rm);
             }
@@ -52,9 +51,9 @@ public class MinecartClear implements CommandExecutor {
                 continue;
             }
             while(wrm.size()>intMap.get("AdminUtils.Values.MaxMinecartWorld")){
-                Bukkit.getEntity(wrm.get(wrm.size()-1).getUniqueId()).remove();
+                Bukkit.getEntity(wrm.getLast().getUniqueId()).remove();
                 i++;
-                wrm.remove(wrm.size()-1);
+                wrm.removeLast();
             }
             srm.addAll(wrm);
         }
@@ -63,9 +62,9 @@ public class MinecartClear implements CommandExecutor {
             return true;
         }
         while(srm.size()>intMap.get("AdminUtils.Values.MaxMinecartServer")){
-            Bukkit.getEntity(srm.get(srm.size()-1).getUniqueId()).remove();
+            Bukkit.getEntity(srm.getLast().getUniqueId()).remove();
             i++;
-            srm.remove(srm.size()-1);
+            srm.removeLast();
         }
         commandSender.sendMessage(Component.text("Removed " + i + " minecart/s").color(NamedTextColor.WHITE));
         return true;

@@ -17,15 +17,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class LeashEvent implements Listener{
-    private List<String> leashed = new ArrayList();
-    private Plugin plugin;
+import static it.plugin.Plugin.team;
 
-    public LeashEvent(Plugin plugin) {
-        this.plugin = plugin;
+public class LeashEvent implements Listener{
+    private final List<String> leashed = new ArrayList<>();
+
+    private final Plugin plugin;
+
+    public LeashEvent(Plugin plugin){
+        this.plugin=plugin;
     }
 
     @EventHandler
@@ -33,8 +35,7 @@ public class LeashEvent implements Listener{
         Player player = event.getPlayer();
         if (player.hasPermission("leashplayer.use")) {
             EquipmentSlot slot = event.getHand();
-            if (slot.equals(EquipmentSlot.HAND) && event.getRightClicked() instanceof Player) {
-                Player leashedPlayer = (Player)event.getRightClicked();
+            if (slot.equals(EquipmentSlot.HAND) && event.getRightClicked() instanceof Player leashedPlayer) {
                 if (!this.getLeashed().contains(leashedPlayer.getUniqueId().toString())) {
                     if (player.getInventory().getItemInMainHand().getType() == Material.LEAD) {
                         this.leashed.add(leashedPlayer.getUniqueId().toString());
@@ -44,15 +45,15 @@ public class LeashEvent implements Listener{
                         Slime slime = (Slime)leashedPlayer.getWorld().spawnEntity(leashedPlayer.getLocation().add(0.0, 1.0, 0.0), EntityType.SLIME);
                         slime.setSize(0);
                         slime.setAI(false);
-                        slime.setMetadata(leashedPlayer.getUniqueId().toString(), new FixedMetadataValue(this.plugin, "NoCollision"));
+                        slime.setMetadata(leashedPlayer.getUniqueId().toString(), new FixedMetadataValue(plugin, "NoCollision"));
                         slime.setGravity(false);
                         slime.setLeashHolder(player);
                         slime.setInvulnerable(true);
                         slime.setInvisible(true);
-                        this.plugin.team.getTeam().addEntry(slime.getUniqueId().toString());
-                        leashedPlayer.setScoreboard(this.plugin.team.getBoard());
-                        player.setMetadata(leashedPlayer.getUniqueId().toString(), new FixedMetadataValue(this.plugin, "Holder"));
-                        new LeashEventFollow(this, leashedPlayer, player).runTaskTimer(this.plugin, 0L, 0L);
+                        team.getTeam().addEntry(slime.getUniqueId().toString());
+                        leashedPlayer.setScoreboard(team.getBoard());
+                        player.setMetadata(leashedPlayer.getUniqueId().toString(), new FixedMetadataValue(plugin, "Holder"));
+                        new LeashEventFollow(this, leashedPlayer, player).runTaskTimer(plugin, 0L, 0L);
                     }
                 } else {
                     this.unleashPlayer(leashedPlayer, player);
@@ -64,14 +65,10 @@ public class LeashEvent implements Listener{
 
     @EventHandler
     public void onPlayerMoveEvent(PlayerMoveEvent event) {
-        if (this.getLeashed().contains(event.getPlayer().getUniqueId().toString())) {
+        if (getLeashed().contains(event.getPlayer().getUniqueId().toString())) {
             Player leashedPlayer = event.getPlayer();
-            Iterator var4 = leashedPlayer.getNearbyEntities(5.0, 5.0, 5.0).iterator();
-
-            while(var4.hasNext()) {
-                Entity entities = (Entity)var4.next();
-                if (entities instanceof Slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
-                    Slime slime = (Slime)entities;
+            for (Entity entities : leashedPlayer.getNearbyEntities(5.0, 5.0, 5.0)) {
+                if (entities instanceof Slime slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
                     slime.teleport(leashedPlayer.getLocation().add(0.0, 1.0, 0.0));
                 }
             }
@@ -81,12 +78,9 @@ public class LeashEvent implements Listener{
 
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        if (this.getLeashed().contains(event.getEntity().getUniqueId().toString())) {
+        if (getLeashed().contains(event.getEntity().getUniqueId().toString())) {
             Player leashedPlayer = event.getEntity();
-            Iterator var4 = Bukkit.getOnlinePlayers().iterator();
-
-            while(var4.hasNext()) {
-                Player players = (Player)var4.next();
+            for (Player players : Bukkit.getOnlinePlayers()) {
                 if (players.hasMetadata(leashedPlayer.getUniqueId().toString())) {
                     this.unleashPlayer(leashedPlayer, players);
                 }
@@ -99,10 +93,7 @@ public class LeashEvent implements Listener{
     public void onPlayerQuitEvent(PlayerQuitEvent event) {
         if (this.getLeashed().contains(event.getPlayer().getUniqueId().toString())) {
             Player leashedPlayer = event.getPlayer();
-            Iterator var4 = Bukkit.getOnlinePlayers().iterator();
-
-            while(var4.hasNext()) {
-                Player players = (Player)var4.next();
+            for (Player players : Bukkit.getOnlinePlayers()) {
                 if (players.hasMetadata(leashedPlayer.getUniqueId().toString())) {
                     this.unleashPlayer(leashedPlayer, players);
                 }
@@ -113,12 +104,8 @@ public class LeashEvent implements Listener{
 
     @EventHandler
     public void onHangingPlaceEvent(HangingPlaceEvent event) {
-        if (event.getEntity() instanceof LeashHitch) {
-            LeashHitch leash = (LeashHitch)event.getEntity();
-            Iterator var4 = leash.getNearbyEntities(7.0, 7.0, 7.0).iterator();
-
-            while(var4.hasNext()) {
-                Entity entities = (Entity)var4.next();
+        if (event.getEntity() instanceof LeashHitch leash) {
+            for (Entity entities : leash.getNearbyEntities(7.0, 7.0, 7.0)) {
                 if (this.getLeashed().contains(entities.getUniqueId().toString())) {
                     event.setCancelled(true);
                 }
@@ -128,18 +115,14 @@ public class LeashEvent implements Listener{
     }
 
     private void unleashPlayer(Player leashedPlayer, Player leashHolder) {
-        Iterator var4 = leashedPlayer.getNearbyEntities(1.0, 1.0, 1.0).iterator();
-
-        while(var4.hasNext()) {
-            Entity entities = (Entity)var4.next();
-            if (entities instanceof Slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
-                Slime slime = (Slime)entities;
-                slime.setLeashHolder((Entity)null);
-                this.plugin.team.getTeam().removeEntry(slime.getUniqueId().toString());
+        for (Entity entities : leashedPlayer.getNearbyEntities(1.0, 1.0, 1.0)) {
+            if (entities instanceof Slime slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
+                slime.setLeashHolder(null);
+                team.getTeam().removeEntry(slime.getUniqueId().toString());
                 slime.remove();
                 this.getLeashed().remove(leashedPlayer.getUniqueId().toString());
                 if (leashHolder.getGameMode() != GameMode.CREATIVE) {
-                    leashHolder.getInventory().addItem(new ItemStack[]{new ItemStack(Material.LEAD)});
+                    leashHolder.getInventory().addItem(new ItemStack(Material.LEAD));
                 }
             }
         }

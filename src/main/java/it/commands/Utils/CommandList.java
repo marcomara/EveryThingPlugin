@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import static it.plugin.Plugin.commands;
+
 public class CommandList implements CommandExecutor {
     private final Plugin plugin;
     public CommandList(Plugin plugin){
@@ -16,7 +18,7 @@ public class CommandList implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args){
         sender.sendMessage("The commands are the following:");
-        for(String name : plugin.commands){
+        for(String name : commands){
             if(sender.hasPermission(plugin.getCommand(name).getPermission())){
                 String description;
                 try{
