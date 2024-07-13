@@ -49,7 +49,7 @@ public class Command implements CommandExecutor {
         List<String> applicants = new ArrayList<>();
         if(!table.isEmpty()) {
             for (Data data : table.get(sender.getName())) {
-                applicants.add(data.getSender());
+                applicants.add(data.sender);
             }
         }
         return applicants;

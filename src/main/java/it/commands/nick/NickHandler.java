@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import static it.plugin.Plugin.lgg;
 import static it.plugin.Plugin.pfyml;
 
 public class NickHandler {
@@ -27,7 +28,7 @@ public class NickHandler {
                 p.setPlayerProfile(pp2);
             }catch (Exception e){
                 p.sendMessage("Something went wrong swapping your profile");
-                Plugin.err.println(e.fillInStackTrace());
+                lgg.warning(e.fillInStackTrace().toString());
             }
         }
     }
@@ -38,7 +39,7 @@ public class NickHandler {
             p.setPlayerProfile(pp);
         }catch (Exception e){
             p.sendMessage("Something went wrong creating your profile");
-            Plugin.err.println(e.fillInStackTrace());
+            lgg.warning(e.fillInStackTrace().toString());
         }
         pfyml.set(p.getUniqueId()+".CPP", pp);
     }
@@ -61,7 +62,7 @@ public class NickHandler {
             p.setPlayerProfile(pp);
         }catch (Exception e){
             p.sendMessage("Something went wrong creating your profile");
-            Plugin.err.println(e.fillInStackTrace());
+            lgg.warning(e.fillInStackTrace().toString());
         }
         pfyml.set(p.getUniqueId()+".CPP", pp);
     }
@@ -79,8 +80,8 @@ public class NickHandler {
 
             return new String[] {texture, signature};
         } catch (IOException e) {
-            Plugin.err.println("Could not get skin data from session servers!");
-            Plugin.err.println(e.fillInStackTrace());
+            lgg.warning("Could not get skin data from session servers!");
+            lgg.warning(e.fillInStackTrace().toString());
             return null;
         }
     }

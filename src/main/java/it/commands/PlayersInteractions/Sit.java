@@ -3,7 +3,9 @@ package it.commands.PlayersInteractions;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Slab;
+import org.bukkit.block.data.type.Stairs;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,18 +19,16 @@ public class Sit implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         Player p = (Player) commandSender;
-        SlimeSit(p, p.getLocation().getBlock().getRelative(BlockFace.DOWN), false);
+        SlimeSit(p, p.getLocation().getBlock().getRelative(BlockFace.DOWN));
         return true;
     }
 
-    public static void SlimeSit(Player p, Block b, boolean isSlab){
-        if(isSlab){
+    public static void SlimeSit(Player p, Block b){
+        BlockData bd = b.getBlockData();
+        if((bd instanceof Slab&&((Slab)bd).getType() == Slab.Type.BOTTOM)|| bd instanceof Stairs ||  b.getType() == Material.STONECUTTER) {
             func(p, b, 0.0);
-            return;
         }
-        if(b.getBlockData() instanceof Slab || b.getType() == Material.STONECUTTER) {
-            func(p, b, 0.0);
-        } else func(p, b, +0.5);
+        else func(p, b, +0.5);
     }
 
     private static void func(Player p, Block b, double y){

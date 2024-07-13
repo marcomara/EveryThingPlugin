@@ -18,7 +18,7 @@ public class CommandTabCompleter implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         final List<String> collection = new ArrayList<>();
         try {
-            String[] da = command.getUsage().split(" ");
+            String[] da = command.getUsage().split("\s");
             String[] fa = da[args.length].split("\\|");
             ARGUMENTS.addAll(List.of(fa));
         }catch (Exception e){

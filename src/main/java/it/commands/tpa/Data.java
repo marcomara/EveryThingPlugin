@@ -10,13 +10,4 @@ public class Data {
         this.target=target;
         this.sender=sender;
     }
-    public int getTime(){
-        return time;
-    }
-    public String getTarget(){
-        return target;
-    }
-    public String getSender(){
-        return sender;
-    }
 }

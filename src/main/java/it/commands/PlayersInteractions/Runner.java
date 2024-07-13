@@ -3,7 +3,6 @@ package it.commands.PlayersInteractions;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static it.plugin.Plugin.lgg;
 import static it.plugin.Plugin.sitlist;
 
 public class Runner extends BukkitRunnable {

@@ -5,7 +5,6 @@ import it.commands.ChunkLoader.ChunkLoaderCommand;
 import it.commands.PlayersInteractions.Carry;
 import it.commands.Utils.*;
 import it.commands.warp.Home;
-import it.commands.*;
 import it.commands.invsee.invsee;
 import it.commands.tpa.Command;
 import it.commands.warp.WarpCommand;
@@ -19,15 +18,18 @@ import static it.utils.SaveUtility.*;
 
 public class CommandsLoader {
     static public void CommandsLoader(Plugin plugin) {
-        DisabledCommandMessage executor = new DisabledCommandMessage();
         /*if (plugin.booleanMap.get("Commands.isNickEnabled")) {
             plugin.getCommand("nick").setExecutor(new Nick(plugin));
             plugin.getCommand("skin").setExecutor(new Command(plugin));
             plugin.commands.add("nick");
         } else {plugin.getCommand("nick").setExecutor(executor);plugin.getCommand("skin").setExecutor(executor);}*/
+        if(booleanMap.get("Misc.isSizeEnabled")){
+            plugin.getCommand("setsize").setExecutor(new SetSize());
+            commands.add("setsize");
+        }else plugin.getCommand("setsize").setExecutor(executor);
         if(booleanMap.get("Commands.isAnvilEnabled")){
-            plugin.getCommand("oa").setExecutor(new Anvil());
-        }else plugin.getCommand("oa").setExecutor(executor);
+            plugin.getCommand("anvil").setExecutor(new Anvil());
+        }else plugin.getCommand("anvil").setExecutor(executor);
         if(booleanMap.get("Commands.isInvseeEnabled")){
             plugin.getCommand("invsee").setExecutor(new invsee(plugin));
             commands.add("invsee");
@@ -38,7 +40,6 @@ public class CommandsLoader {
         }else plugin.getCommand("ec").setExecutor(executor);
         if(booleanMap.get("Commands.isCraftingTableEnabled")){
             plugin.getCommand("ct").setExecutor(new CraftingTable());
-            commands.add("ct");
         }else plugin.getCommand("ct").setExecutor(executor);
         if (booleanMap.get("Commands.isWarpEnabled")) {
             plugin.getCommand("warp").setExecutor(new WarpCommand());
@@ -85,7 +86,7 @@ public class CommandsLoader {
             plugin.getCommand("chunk").setExecutor(new ChunkLoaderCommand());
             CFile = new File(plugin.getDataFolder(), "LoadedChunks.chunks");
             create(CFile);
-            CFC = creatyml(CFile);
+            CFC = createyml(CFile);
             LoadedChunks = CFC.getStringList("LoadedChunks");
             ChunkLoaderHandler.LoadChunksFromList();
             commands.add("chunk");

@@ -24,7 +24,7 @@ public class Suggestions implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         create(file);
-        FileConfiguration filec = SaveUtility.creatyml(file);
+        FileConfiguration filec = SaveUtility.createyml(file);
         StringBuilder suggestion = new StringBuilder();
         String name = sender.getName();
         for(String word : args){

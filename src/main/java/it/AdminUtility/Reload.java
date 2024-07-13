@@ -8,7 +8,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static it.plugin.Plugin.err;
 import static it.plugin.Plugin.lgg;
 
 public class Reload implements CommandExecutor {
@@ -48,7 +47,7 @@ public class Reload implements CommandExecutor {
         else{
             if(sender instanceof Player){
                 sender.sendMessage(Colors.RED + "Wrong use of args");}
-            if(sender instanceof ConsoleCommandSender){err.println("Wrong use of args");}
+            if(sender instanceof ConsoleCommandSender){lgg.warning("Wrong use of args");}
             return true;
         }
         }

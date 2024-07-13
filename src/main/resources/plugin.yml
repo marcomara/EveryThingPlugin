@@ -6,9 +6,12 @@ author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
 commands:
+  setsize:
+    usage: /command 0.05-16 player
+    description: Change the player size
   sit:
     usage: /command
-  oa:
+  anvil:
     usage: /command
     description: allows players to open anvil on the go
   projectile-cleaner:

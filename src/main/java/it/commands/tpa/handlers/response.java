@@ -30,11 +30,11 @@ public class response {
         }
         int position = 0;
         for(Data data : list){
-            if(data.getSender().equals(applicant)){
+            if(data.sender.equals(applicant)){
                 position=list.indexOf(data);
                 if(condition){
                     int time = (int) (System.currentTimeMillis()/1000);
-                    if(time>(data.getTime()+timer)){
+                    if(time>(data.time+timer)){
                         sender.sendMessage("The request from " + applicant + " has expired");
                         p.sendMessage("Your request has expired and " + sender.getName() + " can't accept it");
                         break;

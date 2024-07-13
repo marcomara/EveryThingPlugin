@@ -25,7 +25,7 @@ public class WarpCommand implements CommandExecutor {
     public WarpCommand() {
         file = new File(dataFolder, "warps.yml");
         create(file);
-        fc = creatyml(file);
+        fc = createyml(file);
         try {
             list = fc.getMapList("warps");
             if (list.isEmpty()) return;
@@ -74,21 +74,20 @@ public class WarpCommand implements CommandExecutor {
                         return true;
                     }
                     WarpPoint point = new WarpPoint(map.get(args[1]), args[1]);
-                    if (map.get(args[1]) != null && list.contains(point)) {
-                        list.remove(point);
-                        map.remove(args[1]);
-                        fc.set("warp", list);
-                        save(file, fc);
-                        return true;
-                    }
+                    list.remove(point.serialize());
+                    map.remove(args[1]);
+                    saveList(list, fc, "warps", file);
+                    return true;
                 }
             } else {
                 sender.sendMessage(Colors.RED + "Wrong use of the command");
                 return true;
             }
-        }
+        }else {
             sender.sendMessage("Only players can perform this command");
             return true;
+        }
+        return false;
     }
 
     public static Set<String> TabComplete() {

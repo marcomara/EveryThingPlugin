@@ -16,6 +16,7 @@ Commands:
   isInvseeEnabled: true
   isAnvilEnabled: true
 Misc:
+  isSizeEnabled: true
   isSitEnabled: true
   isBellEnabled: true
   isLeashEnabled: true
@@ -31,6 +32,8 @@ AdminUtils:
   UpdateTellToOps: true
   Commands:
     RemoveMinecart: true
+    RemoveProjectiles: true
+    RemoveStands: true
     EntityList: true
   Values:
     #-1 means infinite
@@ -44,5 +47,5 @@ AdminUtils:
     MaxProjectileWorld: 600
     MaxProjectileServer: -1
 #DO NOT TOUCH THIS
-ConfigVersion: 9
+ConfigVersion: 12
 IsEnabled: true

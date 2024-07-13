@@ -35,7 +35,7 @@ public class ValueLoader {
                         Files.move(new File(dataFolder.getParentFile(), "Plugin").toPath(), dataFolder.toPath(), StandardCopyOption.ATOMIC_MOVE);
                         lgg.warning("Plugin folder updated");
                     } catch (Exception e) {
-                        err.println(e.fillInStackTrace());
+                        lgg.warning(e.fillInStackTrace().toString());
                         lgg.warning("Update went wrong, try to copy the files from ServerDirectory/plugins/Plugin to ServerDirectory/plugins/EveryThingPlugin");
                         plugin.FullDisable = false;
                         plugin.cancontinue = false;
@@ -59,7 +59,7 @@ public class ValueLoader {
             return;
         }
         plugin.cancontinue = false;
-        err.println("You are trying to run an older version of this plugin, disabling it");
+        lgg.warning("You are trying to run an older version of this plugin, disabling it");
         plugin.FullDisable = false;
         plugin.cancontinue = false;
         Bukkit.getPluginManager().disablePlugin(plugin);
@@ -91,7 +91,7 @@ public class ValueLoader {
             fw.close();
             is.close();
         }catch (Exception e){
-            err.println(e.fillInStackTrace());
+            lgg.warning(e.fillInStackTrace().toString());
         }
         plugin.reloadConfig();
         for(String s : oldcfg.keySet()){

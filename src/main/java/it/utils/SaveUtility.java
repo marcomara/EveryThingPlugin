@@ -27,7 +27,7 @@ public class SaveUtility {
             }
         }
     }
-    public static FileConfiguration creatyml(File file){
+    public static FileConfiguration createyml(File file){
         return YamlConfiguration.loadConfiguration(file);
     }
     public static void saveList(List<?> list, FileConfiguration fileC, String path , File file){

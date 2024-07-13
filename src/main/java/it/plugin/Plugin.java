@@ -1,5 +1,6 @@
 package it.plugin;
 
+import it.commands.DisabledCommandMessage;
 import it.commands.tpa.Data;
 import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
@@ -16,7 +17,6 @@ import static it.plugin.ConfigLoader.ValueLoader.*;
 import static it.utils.SaveUtility.*;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -39,23 +39,22 @@ public final class Plugin extends JavaPlugin {
     public static Map<String, Integer> intMap = new HashMap<>();
     public static ConsoleCommandSender ccs;
     public static Logger lgg;
-    public static PrintStream err;
     public static String ver;
     public static File dataFolder;
     private Metrics metrics;
     public static boolean updateTell = false;
+    public static DisabledCommandMessage executor = new DisabledCommandMessage();
 
     @Override
     public void onLoad() {
         if (getServer().getMinecraftVersion().startsWith("1.1") || (getServer().getMinecraftVersion().startsWith("1.20") && !getServer().getMinecraftVersion().equals("1.20.6"))){
             Bukkit.getPluginManager().disablePlugin(this);
-            System.err.println("***MINECRAFT VERSION NOT SUPPORTED***");
-            System.err.println("Check the supported versions here:");
-            System.err.println("https://www.spigotmc.org/resources/everything-plugin.107875");
+            getLogger().warning("***MINECRAFT VERSION NOT SUPPORTED***");
+            getLogger().warning("Check the supported versions here:");
+            getLogger().warning("https://www.spigotmc.org/resources/everything-plugin.107875");
             cancontinue = false;
             return;
         }
-        err = System.err;
         dataFolder = getDataFolder();
         ver = getPluginMeta().getVersion();
         lgg = getLogger();
@@ -63,17 +62,16 @@ public final class Plugin extends JavaPlugin {
         commands = new ArrayList<>();
         pf = new File(getDataFolder(), "players.yml");
         create(pf);
-        pfyml = creatyml(pf);
+        pfyml = createyml(pf);
         ValueLoaderMain(this);
         metrics = new Metrics(this, 22468);
         UpdateChecker.init(this, 107875).requestUpdateCheck().whenComplete((result, e) -> {
             if (result.getReason() == UpdateChecker.UpdateReason.NEW_UPDATE) {
                 lgg.warning("!!!You are running an outdated version of " + this.getName() + "!!!");
-                lgg.warning(result.getNewestVersion() + " > " + ver);
-                lgg.warning("Get the newest version here: https://www.spigotmc.org/resources/everything-plugin.107875/history");
+                lgg.warning(ver + " < " + result.getNewestVersion());
+                lgg.warning("Get version " + result.getNewestVersion() + " here: https://www.spigotmc.org/resources/everything-plugin.107875/history");
                 if (booleanMap.get("AdminUtils.UpdateTellToOps")) {
                     updateTell = true;
-                    lgg.warning("Telling that to all ops");
                 }
             }
         });
@@ -94,10 +92,6 @@ public final class Plugin extends JavaPlugin {
     @Override
     public void onDisable() {
         if (cancontinue) {
-            if (FullDisable) {
-                save(pf, pfyml);
-                saveConfig();
-            }
             ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
             metrics.shutdown();
         }
