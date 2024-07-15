@@ -3,6 +3,7 @@ package it.plugin.StartupLoaders;
 import it.AdminUtility.Reload;
 import it.commands.ChunkLoader.ChunkLoaderCommand;
 import it.commands.PlayersInteractions.Carry;
+import it.commands.ResourcePacks.Starter;
 import it.commands.Utils.*;
 import it.commands.warp.Home;
 import it.commands.invsee.invsee;
@@ -23,6 +24,11 @@ public class CommandsLoader {
             plugin.getCommand("skin").setExecutor(new Command(plugin));
             plugin.commands.add("nick");
         } else {plugin.getCommand("nick").setExecutor(executor);plugin.getCommand("skin").setExecutor(executor);}*/
+        if(booleanMap.get("ResourcePacks.isEnabled")){
+            plugin.getCommand("resourcepackset").setExecutor(new it.commands.ResourcePacks.Command());
+            plugin.getCommand("resourcepackset").setTabCompleter(new it.commands.ResourcePacks.Command());
+            new Starter(new File(dataFolder , "ResourcePacks"),plugin);
+        }else plugin.getCommand("resourcepackset").setExecutor(executor);
         if(booleanMap.get("Misc.isSizeEnabled")){
             plugin.getCommand("setsize").setExecutor(new SetSize());
             commands.add("setsize");

@@ -28,6 +28,9 @@ Misc:
 Economy:
   isEnabled: true
   symbol: '$'
+ResourcePacks:
+  isEnabled: true
+  #you can find the configuration file for this function in the ResourcePacks folder
 AdminUtils:
   UpdateTellToOps: true
   Commands:
@@ -47,5 +50,5 @@ AdminUtils:
     MaxProjectileWorld: 600
     MaxProjectileServer: -1
 #DO NOT TOUCH THIS
-ConfigVersion: 12
+ConfigVersion: 14
 IsEnabled: true

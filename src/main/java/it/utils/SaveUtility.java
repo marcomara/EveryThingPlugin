@@ -4,8 +4,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -46,5 +50,17 @@ public class SaveUtility {
         }
         s.close();
         tw.close();
+    }
+    public static void saveFile(String url, File file){
+        try{
+            file.getParentFile().mkdirs();
+            URL website = new URL(url);
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
     }
 }

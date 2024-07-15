@@ -1,6 +1,10 @@
 package it.plugin;
 
 import it.commands.DisabledCommandMessage;
+import it.commands.ResourcePacks.Command;
+import it.commands.ResourcePacks.Instance;
+import it.commands.ResourcePacks.Server.Server;
+import it.commands.ResourcePacks.Starter;
 import it.commands.tpa.Data;
 import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
@@ -21,6 +25,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public final class Plugin extends JavaPlugin {
+    public static Instance instance;
     public static List<Entity> sitlist = new ArrayList<>();
     public boolean cancontinue = true;
     public static CollisionTeam team;
@@ -95,5 +100,6 @@ public final class Plugin extends JavaPlugin {
             ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
             metrics.shutdown();
         }
+        Server.terminate();
     }
 }

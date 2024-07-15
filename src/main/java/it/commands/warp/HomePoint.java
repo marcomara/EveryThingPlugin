@@ -1,41 +1,31 @@
 package it.commands.warp;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-public class HomePoint implements ConfigurationSerializable {
+public class HomePoint {
     public double x,y,z;
-    public World w;
-    public HomePoint(double x, double y, double z, UUID w){
+    public float p,yaw;
+    public String w;
+    public HomePoint(double x, double y, double z, String UUID, float p, float yaw){
         this.x=x;
         this.y=y;
         this.z=z;
-        this.w= Bukkit.getWorld(w);
+        this.w= UUID;
+        this.p=p;
+        this.yaw=yaw;
     }
-    public void set(double x, double y, double z, World w){
-        this.x= x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+    public List<String> serialize(){
+        List<String> list = new ArrayList<>();
+        list.add(String.valueOf(x));
+        list.add(String.valueOf(y));
+        list.add(String.valueOf(z));
+        list.add(w);
+        list.add(String.valueOf(p));
+        list.add(String.valueOf(yaw));
+        return list;
     }
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
-        Map<String , Object> map = new HashMap<>();
-        map.put("x", x);
-        map.put("y", y);
-        map.put("z",z);
-        map.put("World", w.getUID().toString());
-        return map;
-    }
-
-    public static HomePoint deserialize(Map<String,Object> map){
-        return new HomePoint((Double) map.get("x"), (Double) map.get("y"), (Double) map.get("z"), UUID.fromString((String) map.get("World")));
+    public static HomePoint deserialize(List<String> in){
+        return new HomePoint(Double.parseDouble(in.get(0)),Double.parseDouble(in.get(1)),Double.parseDouble(in.get(2)),in.get(3),Float.parseFloat(in.get(4)),Float.parseFloat(in.get(5)));
     }
 }

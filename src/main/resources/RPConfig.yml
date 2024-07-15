@@ -1,0 +1,4 @@
+port: 40021
+localhost: false
+packs:
+  example: "packname.zip"

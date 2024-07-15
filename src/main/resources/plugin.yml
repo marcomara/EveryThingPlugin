@@ -1,11 +1,13 @@
 name: EveryThingPlugin
-version: 0.8
+version: 0.9
 main: it.plugin.Plugin
 api-version: '1.20.6'
 author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
 commands:
+  resourcepackset:
+    usage: /command
   setsize:
     usage: /command 0.05-16 player
     description: Change the player size
