@@ -14,8 +14,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import it.utils.Metrics;
 
-import javax.swing.*;
-
 import static it.plugin.ConfigLoader.ValueLoader.*;
 import static it.utils.SaveUtility.*;
 
