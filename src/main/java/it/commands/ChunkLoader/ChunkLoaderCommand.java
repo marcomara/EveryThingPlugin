@@ -7,16 +7,21 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import it.utils.Colors;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static it.plugin.Plugin.*;
 
-public class ChunkLoaderCommand implements CommandExecutor {
-
+public class ChunkLoaderCommand implements CommandExecutor, TabCompleter {
+    public static final String[] arguments1 = {"load", "unload", "list"};
+    public static final String[] arguments2 = {"world", "nether", "end"};
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!sender.isOp()){
@@ -67,13 +72,13 @@ public class ChunkLoaderCommand implements CommandExecutor {
             }
             if(args.length==4){
                 World w=Bukkit.getWorld("world");
-                if(args[1].equals("1")){
+                if(args[1].equals("world")){
                     w = Bukkit.getWorld("world");
                 }
-                if(args[1].equals("2")){
+                if(args[1].equals("nether")){
                     w = Bukkit.getWorld("world_nether");
                 }
-                if(args[1].equals("3")){
+                if(args[1].equals("end")){
                     w = Bukkit.getWorld("world_the_end");
                 }
                 unloadChunk(w,args,null,sender);
@@ -97,6 +102,13 @@ public class ChunkLoaderCommand implements CommandExecutor {
             return true;
         }
         return false;
+    }
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        List<String> toreturn = new ArrayList<>();
+        if(args.length==1) toreturn.addAll(Arrays.stream(arguments1).toList());
+        if(args.length==2) toreturn.addAll(Arrays.asList(arguments2));
+        return toreturn;
     }
     private static void loadChunk(@Nullable World w, @Nullable String[] args, @Nullable Chunk chunk, CommandSender sender){
         if(w!=null && args!=null) {

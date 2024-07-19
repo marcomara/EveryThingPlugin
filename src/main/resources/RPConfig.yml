@@ -1,4 +1,6 @@
 port: 40021
 localhost: false
+ForcedPack: "example"
+ConfigVersion: 4.5
 packs:
   example: "packname.zip"

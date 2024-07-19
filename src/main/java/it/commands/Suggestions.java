@@ -5,17 +5,20 @@ import it.utils.Colors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import it.utils.SaveUtility;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.plugin.Plugin.dataFolder;
 import static it.utils.SaveUtility.create;
 
-public class Suggestions implements CommandExecutor {
+public class Suggestions implements CommandExecutor, TabCompleter {
     private final File file;
 
     public Suggestions(){
@@ -37,5 +40,10 @@ public class Suggestions implements CommandExecutor {
         Plugin.ccs.sendMessage(name + " says: " +suggestion);
         sender.sendMessage(Colors.GREEN +"Thank you for your suggestion(s)!");
         return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        return new ArrayList<>();
     }
 }

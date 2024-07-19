@@ -1,18 +1,27 @@
 package it.commands.economy;
 
 import it.utils.Colors;
+import it.utils.TabCompleteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import it.utils.SaveUtility;
+import org.jetbrains.annotations.Nullable;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static it.plugin.Plugin.*;
 
-public class Balance implements CommandExecutor {
+public class Balance implements CommandExecutor, TabCompleter {
+    public static final String[] arguments1 = {"send", "add", "sub", "set"};
+    public static final String[] arguments2 = {"getOtherOnlinePlayers"};
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -70,5 +79,19 @@ public class Balance implements CommandExecutor {
         return true;
         }
         return false;
+    }
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        List<String> toreturn = new ArrayList<>();
+        if(args.length==1) {
+            if (commandSender.isOp()) {
+                toreturn.addAll(Arrays.asList(arguments1));
+                return toreturn;
+            }
+            toreturn.add(arguments1[0]);
+            return toreturn;
+        }
+        if(args.length==2) return TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender);
+        return toreturn;
     }
 }

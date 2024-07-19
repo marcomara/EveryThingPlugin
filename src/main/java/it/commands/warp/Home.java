@@ -6,14 +6,19 @@ import org.bukkit.Location;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static it.plugin.Plugin.*;
 import static it.utils.SaveUtility.*;
 
 
-public class Home implements CommandExecutor{
+public class Home implements CommandExecutor, TabCompleter{
+    public static final String[] arguments1 = {"set", "remove"};
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player){
@@ -56,5 +61,11 @@ public class Home implements CommandExecutor{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        if (args.length == 1) return new ArrayList<>(Arrays.asList(arguments1));
+        return new ArrayList<>();
     }
 }

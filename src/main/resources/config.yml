@@ -25,14 +25,17 @@ Misc:
   areSuggestionsEnabled: true
   CommandsList: true
   TPATimer: 120 #Expressed in seconds
+Worlds:
+  isEnable: true
 Economy:
   isEnabled: true
   symbol: '$'
 ResourcePacks:
   isEnabled: true
+  forcePack: false
   #you can find the configuration file for this function in the ResourcePacks folder
 AdminUtils:
-  UpdateTellToOps: true
+  UpdateTellToOps: false
   Commands:
     RemoveMinecart: true
     RemoveProjectiles: true
@@ -50,5 +53,4 @@ AdminUtils:
     MaxProjectileWorld: 600
     MaxProjectileServer: -1
 #DO NOT TOUCH THIS
-ConfigVersion: 14
-IsEnabled: true
+ConfigVersion: 21.0

@@ -1,5 +1,6 @@
 package it.events;
 
+import it.commands.ResourcePacks.Starter;
 import it.plugin.Plugin;
 import it.utils.*;
 import org.bukkit.event.EventHandler;
@@ -18,12 +19,17 @@ public class Join implements Listener{
     @EventHandler
     public void onjoin(PlayerJoinEvent e) throws Exception{
         pfyml.set(e.getPlayer().getUniqueId() + ".originalName", e.getPlayer().getName());
-        onJoin(e.getPlayer());
+        //onJoin(e.getPlayer());
         e.joinMessage(ChatPlayerName.join(e.getPlayer()));
         new Motd(e.getPlayer(),plugin);
         save(pf,pfyml);
         if(updateTell && e.getPlayer().isOp()){
             e.getPlayer().sendMessage(plugin.getName() + " can be upgraded to a newer version!");
+        }
+        if(booleanMap.get("ResourcePacks.forcePack")){
+            if(Starter.config.get("ForcedPack") != null){
+                it.commands.ResourcePacks.Command.sendResourcePack(e.getPlayer(), Starter.config.getString("ForcedPack"));
+            }
         }
     }
 }

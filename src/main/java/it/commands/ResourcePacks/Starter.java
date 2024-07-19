@@ -2,12 +2,11 @@ package it.commands.ResourcePacks;
 
 import it.commands.ResourcePacks.Server.Server;
 import it.plugin.Plugin;
+import it.utils.FileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -15,11 +14,10 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 
-import static it.plugin.Plugin.lgg;
-import static it.plugin.Plugin.instance;
+import static it.plugin.Plugin.*;
 
 public class Starter {
-
+    public static YamlConfiguration config;
 
     public Starter(File folder, Plugin plugin) {
         File configFile = new File(folder, "RPConfig.yml");
@@ -37,7 +35,20 @@ public class Starter {
         } catch (Exception e) {
             e.fillInStackTrace();
         }
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        config = YamlConfiguration.loadConfiguration(configFile);
+        double newVersion = 0.0;
+        InputStream is = plugin.getResource("RPConfig.yml");
+        Scanner s = new Scanner(is);
+        while (s.hasNextLine()){
+            String str = s.nextLine();
+            if(str.startsWith("ConfigVersion")){
+                str = str.substring("ConfigVersion: ".length());
+                newVersion = Double.parseDouble(str);
+            }
+        }
+        if(config.getInt("ConfigVersion")<newVersion||config.get("ConfigVersion")==null){
+            FileUtil.updateConfigFromFile(configFile, plugin.getResource("RPConfig.yml"),true);
+        }
         Map<String, File> map = new HashMap<>();
         if (config.contains("packs")) {
             for (String key : config.getConfigurationSection("packs").getKeys(false)) {

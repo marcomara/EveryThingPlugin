@@ -49,12 +49,13 @@ public class FileUtil {
                 }
             }
         }
-
+        old.set("ConfigVersion", config.get("ConfigVersion"));
         try {
             old.save( toUpdate );
         } catch ( Exception exception ) {
             exception.printStackTrace();
         }
+
     }
 
     public static boolean move( File original, File dest, boolean force ) {

@@ -8,13 +8,16 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class EntityList implements CommandExecutor {
+public class EntityList implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] strings) {
         if(!commandSender.isOp()) {
@@ -41,7 +44,15 @@ public class EntityList implements CommandExecutor {
             }
         }
         commandSender.sendMessage(Component.text("There are:\n").color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD).append(
-                Component.text(" -"+a + " armor stand/s\n -"+m+" minecart/s\n -"+pr+" projectile/s\n -"+pl+" player/s").color(NamedTextColor.WHITE).decorate(TextDecoration.BOLD)));
+                Component.text(" -"+a + " armor stand/s\n " +
+                        "-"+m+" minecart/s\n " +
+                        "-"+pr+" projectile/s\n " +
+                        "-"+pl+" player/s").color(NamedTextColor.WHITE).decorate(TextDecoration.BOLD)));
         return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        return new ArrayList<>();
     }
 }

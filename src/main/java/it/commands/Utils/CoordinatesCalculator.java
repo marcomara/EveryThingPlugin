@@ -3,10 +3,17 @@ package it.commands.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class CoordinatesCalculator implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class CoordinatesCalculator implements CommandExecutor, TabCompleter {
+    public static final String[] arguments1 = {"toOverWorld","toNether"};
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -28,5 +35,9 @@ public class CoordinatesCalculator implements CommandExecutor {
             }
         }
         return true;
+    }
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        return new ArrayList<>(Arrays.asList(arguments1));
     }
 }

@@ -5,11 +5,16 @@ import it.utils.Colors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static it.plugin.Plugin.commands;
 
-public class CommandList implements CommandExecutor {
+public class CommandList implements CommandExecutor, TabCompleter {
     private final Plugin plugin;
     public CommandList(Plugin plugin){
         this.plugin=plugin;
@@ -31,5 +36,9 @@ public class CommandList implements CommandExecutor {
             }
         }
         return true;
+    }
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        return new ArrayList<>();
     }
 }

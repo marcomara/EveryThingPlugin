@@ -1,18 +1,20 @@
 package it.commands.invsee;
 
 import it.plugin.Plugin;
+import it.utils.TabCompleteUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class invsee implements CommandExecutor {
+import java.util.List;
+
+public class invsee implements CommandExecutor, TabCompleter {
+    public static final String[] arguments1 = {"getOtherOnlinePlayers"};
     private final Plugin plugin;
     public invsee (Plugin plugin){
         this.plugin=plugin;
@@ -40,5 +42,10 @@ public class invsee implements CommandExecutor {
         plugin.getServer().getPluginManager().registerEvents(l,plugin);
         r.runTaskTimer(plugin,0,1L);
         return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        return TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender);
     }
 }

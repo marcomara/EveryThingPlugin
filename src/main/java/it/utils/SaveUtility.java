@@ -42,14 +42,18 @@ public class SaveUtility {
         fileC.set(path,list);
         save(file,fileC);
     }
-    public static void copyFile(File source, File target) throws Exception {
-        Scanner s = new Scanner(source);
-        FileWriter tw = new FileWriter(target);
-        while(s.hasNextLine()){
-            tw.write(s.next());
+    public static void copyFile(File source, File target) {
+        try {
+            Scanner s = new Scanner(source);
+            FileWriter tw = new FileWriter(target);
+            while (s.hasNextLine()) {
+                tw.write(s.next());
+            }
+            s.close();
+            tw.close();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        s.close();
-        tw.close();
     }
     public static void saveFile(String url, File file){
         try{

@@ -1,6 +1,8 @@
 package it.utils;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class Colors {
     public static String BLACK="\u00A70";
     public static String DARKBLUE="\u00A71";
@@ -46,6 +48,9 @@ public class Colors {
     public static String RESET="\u00A7r";
 
     public static String AlternateColorCodes(@Nullable Character c, String str){
+        if (!List.of(str.toCharArray()).contains(c)){
+            return str;
+        }
         String[] stra = str.split("\s");
         StringBuilder f = new StringBuilder();
         for(String s : stra){

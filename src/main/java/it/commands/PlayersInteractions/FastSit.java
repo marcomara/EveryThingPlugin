@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import static it.commands.PlayersInteractions.Sit.SlimeSit;
 
 public class FastSit implements Listener {
-
     @EventHandler
     public void FastSitListener(PlayerInteractEvent e){
         if(e.getAction().isRightClick()){

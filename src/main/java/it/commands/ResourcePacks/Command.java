@@ -40,7 +40,7 @@ public class Command implements CommandExecutor, TabCompleter {
         }else return false;
     }
 
-    private void sendResourcePack(Player p, String resourcepack){
+    public static void sendResourcePack(Player p, String resourcepack){
         try{
             File file = instance.getRP().get(resourcepack);
             p.setResourcePack("http://"+instance.getIp()+":"+instance.getPort()+"/"+resourcepack, Codecs.calcSHA1String(file));

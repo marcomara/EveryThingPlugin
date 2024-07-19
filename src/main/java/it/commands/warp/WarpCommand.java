@@ -5,9 +5,12 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import static it.plugin.Plugin.ccs;
 
 import static it.plugin.Plugin.dataFolder;
@@ -16,11 +19,12 @@ import static it.utils.SaveUtility.*;
 import java.io.File;
 import java.util.*;
 
-public class WarpCommand implements CommandExecutor {
+public class WarpCommand implements CommandExecutor, TabCompleter {
+
     public @NotNull List<Map<?, ?>> list;
     private static final HashMap<String, Location> map = new HashMap<>();
-    private final File file;
-    private final FileConfiguration fc;
+    private File file;
+    private FileConfiguration fc;
 
     public WarpCommand() {
         file = new File(dataFolder, "warps.yml");
@@ -34,12 +38,10 @@ public class WarpCommand implements CommandExecutor {
             fc.set("warps", list);
             return;
         }
-        ccs.sendMessage(Colors.GREEN + "[WarpConstructor]" + Colors.WHITE + "Recording " + list.size() + " warp location(s)");
         for (Map data : list) {
             WarpPoint point = WarpPoint.deserialize(data);
             map.put(point.getName(), point.getLocation());
         }
-        ccs.sendMessage(Colors.GREEN + "[WarpContructor]" + Colors.WHITE + "Done");
     }
 
     @Override
@@ -89,8 +91,17 @@ public class WarpCommand implements CommandExecutor {
         }
         return false;
     }
-
-    public static Set<String> TabComplete() {
-        return map.keySet();
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        if (args.length==1) return arguments1();
+        if(args.length == 2 && args[0].equals("remove")) return new ArrayList<>(map.keySet());
+        return new ArrayList<>();
+    }
+    public static List<String> arguments1() {
+        List<String> keyset = new ArrayList<>();
+        keyset.add("add");
+        keyset.add("remove");
+        keyset.addAll(map.keySet());
+        return keyset;
     }
 }

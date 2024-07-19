@@ -7,9 +7,9 @@ import com.google.gson.JsonParser;
 import it.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -33,7 +33,7 @@ public class NickHandler {
         }
     }
     public static void onCommand(Player p, String var,Plugin plugin){
-        PlayerProfile pp = plugin.getServer().createProfileExact(p.getUniqueId(),var);
+        PlayerProfile pp = Bukkit.createProfileExact(p.getUniqueId(), var);
         pp.setTextures(p.getPlayerProfile().getTextures());
         try {
             p.setPlayerProfile(pp);
@@ -49,15 +49,15 @@ public class NickHandler {
         p.setPlayerProfile(pp);
         pfyml.set(p.getUniqueId() + ".CPP", null);
     }
-    public static void warp(Player p, String name, Plugin plugin){
-        PlayerProfile pp = plugin.getServer().createProfileExact(p.getUniqueId(),name);
+    public static void wrap(Player p, String name, Plugin plugin){
+        PlayerProfile pp = Bukkit.createProfileExact(p.getUniqueId(),name);
         String[] spfn = getFromName(name);
         if(spfn == null){
             p.sendMessage(Component.text("Something went wrong, try again").color(NamedTextColor.RED));
             return;
         }
-        ProfileProperty sp = new ProfileProperty("textures", spfn[0], spfn[1]);
-        pp.setProperty(sp);
+        ProfileProperty Pp = new ProfileProperty("textures", spfn[0], spfn[1]);
+        pp.setProperty(Pp);
         try {
             p.setPlayerProfile(pp);
         }catch (Exception e){
@@ -69,7 +69,6 @@ public class NickHandler {
     private static String[] getFromName(String name) {
         try {
             URL url_0 = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-            DocFlavor.URL url = new DocFlavor.URL("https://api.mojang.com/users/profiles/minecraft/" + name);
             InputStreamReader reader_0 = new InputStreamReader(url_0.openStream());
             String uuid = new JsonParser().parse(reader_0).getAsJsonObject().get("id").getAsString();
             URL url_1 = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");

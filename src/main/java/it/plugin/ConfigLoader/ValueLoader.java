@@ -1,9 +1,11 @@
 package it.plugin.ConfigLoader;
 
 import it.plugin.Plugin;
+import it.utils.FileUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -12,8 +14,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Map;
+import java.util.Scanner;
 
 import static it.plugin.Plugin.*;
+import static it.utils.SaveUtility.save;
 
 public class ValueLoader {
     static Plugin plugin ;
@@ -45,8 +49,12 @@ public class ValueLoader {
                 }
             }
         }
+        if(!new File(dataFolder, "config.yml").exists()){
+            plugin.saveDefaultConfig();
+            return;
+        }
         if(plugin.getConfig().get(ver) instanceof Double){
-            ConfigUpdater();
+            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"), true);
             return;
         }
         int av = plugin.getConfig().getInt(ver), bv = plugin.getConfig().getDefaults().getInt(ver);
@@ -55,7 +63,7 @@ public class ValueLoader {
             return;
         }
         if(av<bv){
-            ConfigUpdater();
+            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"), true);
             return;
         }
         plugin.cancontinue = false;
@@ -78,27 +86,5 @@ public class ValueLoader {
             }
         }
         ccs.sendMessage(Component.text("Values Registered").color(NamedTextColor.WHITE));
-    }
-    private static void ConfigUpdater(){
-        Map<String, Object> oldcfg = plugin.getConfig().getValues(true);
-        InputStream is = plugin.getResource("config.yml");
-        try {
-            FileWriter fw = new FileWriter(new File(plugin.getDataFolder(), "config.yml"));
-            assert is != null;
-            for(byte b : is.readAllBytes()){
-                fw.write(b);
-            }
-            fw.close();
-            is.close();
-        }catch (Exception e){
-            lgg.warning(e.fillInStackTrace().toString());
-        }
-        plugin.reloadConfig();
-        for(String s : oldcfg.keySet()){
-            plugin.getConfig().set(s, oldcfg.get(s));
-        }
-        plugin.getConfig().set(ver, plugin.getConfig().getDefaults().get(ver));
-        plugin.saveConfig();
-        lgg.warning("Configuration updated");
     }
 }

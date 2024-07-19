@@ -1,21 +1,27 @@
 package it.commands.nick;
 
 import it.plugin.Plugin;
+import it.utils.TabCompleteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import it.utils.SaveUtility;
 import it.utils.Colors;
+import org.jetbrains.annotations.Nullable;
 
 import static it.plugin.Plugin.pf;
 import static it.plugin.Plugin.pfyml;
 
-public class Nick implements CommandExecutor {
+public class Nick implements CommandExecutor, TabCompleter {
     private final Plugin plugin;
     public Nick(Plugin plugin){
         this.plugin=plugin;
@@ -36,8 +42,7 @@ public class Nick implements CommandExecutor {
             }
             if(args[0].length()<=16) {
                 nickyml.set(p.getUniqueId()+".UsingNick", true);
-                String nick = Colors.AlternateColorCodes('&',args[0]);
-                NickHandler.onCommand(p,nick,plugin);
+                NickHandler.onCommand(p,args[0],plugin);
                 return true;
             }
             p.sendMessage("Too many characters, max 16!!");
@@ -50,9 +55,9 @@ public class Nick implements CommandExecutor {
             + pfyml.getString(p.getUniqueId()+".originalName"));
             return true;
         }
-        if(args.length==2&&args[0].equals("warp")){
+        if(args.length==2&&args[0].equals("wrap")){
             Player p = (Player) sender;
-            NickHandler.warp(p,args[1],plugin);
+            NickHandler.wrap(p,args[1],plugin);
             return true;
         }
         if(sender instanceof Player && sender.isOp() && args.length==2){
@@ -69,4 +74,23 @@ public class Nick implements CommandExecutor {
         return false;
     }
 
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        if(args.length==1 && commandSender.isOp()){
+            List<String> toreturn = new ArrayList<>();
+            toreturn.add("getOriginalName");
+            toreturn.addAll(TabCompleteUtils.getOtherOnlinePlayers((Player)commandSender));
+            return toreturn;
+        }
+        if(args.length==1){
+            return new ArrayList<>(List.of("wrap"));
+        }
+        if(args.length==2&&args[0].equals("wrap")){
+            return new ArrayList<>();
+        }
+        if(args.length==2&&args[0].equals("getOriginalName")){
+            return new ArrayList<>(TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender));
+        }
+        return new ArrayList<>();
+    }
 }

@@ -1,10 +1,7 @@
 package it.plugin;
 
 import it.commands.DisabledCommandMessage;
-import it.commands.ResourcePacks.Command;
 import it.commands.ResourcePacks.Instance;
-import it.commands.ResourcePacks.Server.Server;
-import it.commands.ResourcePacks.Starter;
 import it.commands.tpa.Data;
 import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
@@ -16,6 +13,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import it.utils.Metrics;
+
+import javax.swing.*;
 
 import static it.plugin.ConfigLoader.ValueLoader.*;
 import static it.utils.SaveUtility.*;
@@ -86,20 +85,19 @@ public final class Plugin extends JavaPlugin {
     public void onEnable() {
         if (cancontinue) {
             ccs.sendMessage(Colors.GREEN + "Plugin Enabled");
-            CommandsLoader.CommandsLoader(this);
-            AdminUtilsLoader.CommandRegister(this);
-            CommandTabCompleterHandler.Handler(this);
             MiscLoader.Loader(this);
             MiscLoader.EventLoader(this);
+            AdminUtilsLoader.CommandRegister(this);
+            CommandsLoader.CommandsLoader(this);
         }
     }
 
     @Override
     public void onDisable() {
         if (cancontinue) {
+            MiscLoader.Stop(this);
             ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
             metrics.shutdown();
         }
-        Server.terminate();
     }
 }
