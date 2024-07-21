@@ -47,7 +47,7 @@ public class Starter {
             }
         }
         if(config.getInt("ConfigVersion")<newVersion||config.get("ConfigVersion")==null){
-            FileUtil.updateConfigFromFile(configFile, plugin.getResource("RPConfig.yml"),true);
+            FileUtil.updateConfigFromFile(configFile, plugin.getResource("RPConfig.yml"));
         }
         Map<String, File> map = new HashMap<>();
         if (config.contains("packs")) {

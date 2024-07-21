@@ -49,6 +49,7 @@ public class FileUtil {
                 }
             }
         }
+
         old.set("ConfigVersion", config.get("ConfigVersion"));
         try {
             old.save( toUpdate );

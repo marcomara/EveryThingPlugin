@@ -1,7 +1,10 @@
 package it.plugin;
 
+import it.BackupUtils.BKUPCommand;
 import it.commands.DisabledCommandMessage;
+import it.commands.ResourcePacks.Command;
 import it.commands.ResourcePacks.Instance;
+import it.commands.Utils.Fly;
 import it.commands.tpa.Data;
 import it.commands.leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
@@ -10,6 +13,7 @@ import it.utils.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import it.utils.Metrics;
@@ -46,6 +50,8 @@ public final class Plugin extends JavaPlugin {
     private Metrics metrics;
     public static boolean updateTell = false;
     public static DisabledCommandMessage executor = new DisabledCommandMessage();
+    public static YamlConfiguration worlds;
+    public static File bkfolder;
 
     @Override
     public void onLoad() {
@@ -93,7 +99,7 @@ public final class Plugin extends JavaPlugin {
     @Override
     public void onDisable() {
         if (cancontinue) {
-            MiscLoader.Stop(this);
+            MiscLoader.Stop();
             ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
             metrics.shutdown();
         }

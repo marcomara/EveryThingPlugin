@@ -15,6 +15,7 @@ Commands:
   isCraftingTableEnabled: true
   isInvseeEnabled: true
   isAnvilEnabled: true
+  isFlightEnabled: true
 Misc:
   isSizeEnabled: true
   isSitEnabled: true
@@ -52,5 +53,9 @@ AdminUtils:
     MaxProjectileChunk: 60
     MaxProjectileWorld: 600
     MaxProjectileServer: -1
+Backup:
+  Enabled: true
+  BKTimer: 20 #Expressed in minutes, backs up all the worlds
+  NumOfBackups: 5
 #DO NOT TOUCH THIS
-ConfigVersion: 21.0
+ConfigVersion: 23.0

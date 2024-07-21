@@ -54,7 +54,7 @@ public class ValueLoader {
             return;
         }
         if(plugin.getConfig().get(ver) instanceof Double){
-            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"), true);
+            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"));
             return;
         }
         int av = plugin.getConfig().getInt(ver), bv = plugin.getConfig().getDefaults().getInt(ver);
@@ -63,7 +63,7 @@ public class ValueLoader {
             return;
         }
         if(av<bv){
-            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"), true);
+            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"));
             return;
         }
         plugin.cancontinue = false;

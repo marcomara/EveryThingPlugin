@@ -1,3 +1,3 @@
-welcome %Player%
-there are %OnlinePlayers% players online
+Welcome %Player%
+There are %OnlinePlayers% players online
 %WorldTime% server time

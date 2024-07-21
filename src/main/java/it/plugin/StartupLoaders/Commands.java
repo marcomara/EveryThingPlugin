@@ -17,7 +17,8 @@ public class Commands {
         toreturn.putAll(Map.of("warp", WarpCommand.class,
                 "resourcepackset", Command.class,
                 "setsize", SetSize.class,
-                "anvil", Anvil.class));
+                "anvil", Anvil.class,
+                "fly", Fly.class));
         toreturn.putAll(Map.of(
                 "ct", CraftingTable.class,
                 "ec", EnderChest.class,
@@ -37,7 +38,8 @@ public class Commands {
         toreturn.putAll(Map.of("warp", WarpCommand.class,
                 "resourcepackset", Command.class,
                 "setsize", SetSize.class,
-                "anvil", Anvil.class));
+                "anvil", Anvil.class,
+                "fly", Fly.class));
         toreturn.putAll(Map.of(
                 "ct", CraftingTable.class,
                 "ec", EnderChest.class,
@@ -67,7 +69,8 @@ public class Commands {
                 "carry", "Commands.isCarryEnabled",
                 "ldl", "Commands.isLDLEnabled",
                 "sendposition", "Commands.isSendCordsEnabled",
-                "coords", "Commands.isCoordsEnabled"));
+                "coords", "Commands.isCoordsEnabled",
+                "fly", "Commands.isFlightEnabled"));
         return toreturn;
     }
 }

@@ -6,7 +6,9 @@ author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
 commands:
-  world:
+  backup:
+    usage: /command worldName
+  fly:
     usage: /command
   nick:
     usage: /command
