@@ -57,14 +57,17 @@ public class MiscLoader {
         }*/
         if(booleanMap.get("Backup.Enabled")){
             plugin.getCommand("backup").setExecutor(new BKUPCommand(plugin));
+            plugin.getCommand("backup").setTabCompleter(new BKUPCommand(plugin));
             bkfolder = new File(dataFolder.getParentFile().getParentFile(), "Backups");
             if(!bkfolder.exists()){
                 bkfolder.mkdir();
             }
-            Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-                lgg.warning("Backup started");
-                new AllWorldsRun(bkfolder).runTaskAsynchronously(plugin);
-            }, 20L*60*intMap.get("Backup.BKTimer"), 20L*60*intMap.get("Backup.BKTimer"));
+            if(booleanMap.get("Backup.AutomaticBackups")) {
+                Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+                    lgg.warning("Backup started");
+                    new AllWorldsRun(bkfolder).runTaskAsynchronously(plugin);
+                }, 20L * 60 * intMap.get("Backup.BKTimer"), 20L * 60 * intMap.get("Backup.BKTimer"));
+            }
         }
         if(booleanMap.get("Commands.isNickEnabled")){
             plugin.getCommand("nick").setExecutor(new Nick(plugin));

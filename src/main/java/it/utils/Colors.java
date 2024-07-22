@@ -1,7 +1,9 @@
 package it.utils;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Colors {
     public static String BLACK="\u00A70";
@@ -48,51 +50,51 @@ public class Colors {
     public static String RESET="\u00A7r";
 
     public static String AlternateColorCodes(@Nullable Character c, String str){
-        if (!List.of(str.toCharArray()).contains(c)){
+        if (!Lists.charactersOf(str).contains(c)){
             return str;
         }
-        String[] stra = str.split("\s");
+        String[] stra = str.split(" ");
         StringBuilder f = new StringBuilder();
         for(String s : stra){
             char ch = s.charAt(0);
             if(c==null){
                 if(ch=='&'){
-                    f.append(MYColor.fromChar(s) + "\s");
+                    f.append(MYColor.fromChar(s) + " ");
                     continue;
                 }
                 if(ch=='#'){
-                    f.append(MYColor.fromHex(s)+ "\s");
+                    f.append(MYColor.fromHex(s)+ " ");
                     continue;
                 }
                 f.append(s);
                 continue;
             }
             if(ch==c&&c=='&'){
-                f.append(MYColor.fromChar(s)+ "\s");
+                f.append(MYColor.fromChar(s)+ " ");
                 continue;
             }
             if(ch==c&&c=='#'){
-                f.append(MYColor.fromHex(s)+ "\s");
+                f.append(MYColor.fromHex(s)+ " ");
                 continue;
             }
-            f.append(s+ "\s");
+            f.append(s+ " ");
         }
         return f.toString();
     }
     public static String StripColor(String str){
-        String[] stra = str.split("\s");
+        String[] stra = str.split(" ");
         StringBuilder f = new StringBuilder();
         for(String s :stra){
             char a = s.charAt(0);
             if(a=='&'){
-                f.append(s.substring(2)+ "\s");
+                f.append(s.substring(2)+ " ");
                 continue;
             }
             if(a=='#'){
-                f.append(s.substring(7)+ "\s");
+                f.append(s.substring(7)+ " ");
                 continue;
             }
-            f.append(s+ "\s");
+            f.append(s+ " ");
         }
         return f.toString();
     }

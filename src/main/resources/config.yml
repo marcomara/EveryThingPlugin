@@ -55,7 +55,8 @@ AdminUtils:
     MaxProjectileServer: -1
 Backup:
   Enabled: true
+  AutomaticBackups: true
   BKTimer: 20 #Expressed in minutes, backs up all the worlds
   NumOfBackups: 5
 #DO NOT TOUCH THIS
-ConfigVersion: 23.0
+ConfigVersion: 24.0

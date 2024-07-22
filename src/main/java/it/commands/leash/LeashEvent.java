@@ -35,7 +35,8 @@ public class LeashEvent implements Listener{
         Player player = event.getPlayer();
         if (player.hasPermission("leashplayer.use")) {
             EquipmentSlot slot = event.getHand();
-            if (slot.equals(EquipmentSlot.HAND) && event.getRightClicked() instanceof Player leashedPlayer) {
+            if (slot.equals(EquipmentSlot.HAND) && event.getRightClicked() instanceof Player) {
+                Player leashedPlayer = (Player) event.getRightClicked();
                 if (!this.getLeashed().contains(leashedPlayer.getUniqueId().toString())) {
                     if (player.getInventory().getItemInMainHand().getType() == Material.LEAD) {
                         this.leashed.add(leashedPlayer.getUniqueId().toString());
@@ -68,7 +69,8 @@ public class LeashEvent implements Listener{
         if (getLeashed().contains(event.getPlayer().getUniqueId().toString())) {
             Player leashedPlayer = event.getPlayer();
             for (Entity entities : leashedPlayer.getNearbyEntities(5.0, 5.0, 5.0)) {
-                if (entities instanceof Slime slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
+                if (entities instanceof Slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
+                    Slime slime = (Slime) entities;
                     slime.teleport(leashedPlayer.getLocation().add(0.0, 1.0, 0.0));
                 }
             }
@@ -104,7 +106,8 @@ public class LeashEvent implements Listener{
 
     @EventHandler
     public void onHangingPlaceEvent(HangingPlaceEvent event) {
-        if (event.getEntity() instanceof LeashHitch leash) {
+        if (event.getEntity() instanceof LeashHitch) {
+            LeashHitch leash = (LeashHitch) event.getEntity();
             for (Entity entities : leash.getNearbyEntities(7.0, 7.0, 7.0)) {
                 if (this.getLeashed().contains(entities.getUniqueId().toString())) {
                     event.setCancelled(true);
@@ -116,7 +119,8 @@ public class LeashEvent implements Listener{
 
     private void unleashPlayer(Player leashedPlayer, Player leashHolder) {
         for (Entity entities : leashedPlayer.getNearbyEntities(1.0, 1.0, 1.0)) {
-            if (entities instanceof Slime slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
+            if (entities instanceof Slime && entities.hasMetadata(leashedPlayer.getUniqueId().toString())) {
+                Slime slime = (Slime) entities;
                 slime.setLeashHolder(null);
                 team.getTeam().removeEntry(slime.getUniqueId().toString());
                 slime.remove();

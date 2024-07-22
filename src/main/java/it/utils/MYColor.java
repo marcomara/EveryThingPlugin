@@ -179,55 +179,55 @@ public class MYColor{
         return this.MC_Color_Code;
     }
     public static String fromChar(String str) {
-        return switch (str.substring(0,2).toLowerCase()) {
-            case "&0" -> Colors.BLACK+str.substring(2);
-            case "&1" -> Colors.DARKBLUE+str.substring(2);
-            case "&2" -> Colors.DARKGREEN+str.substring(2);
-            case "&3" -> Colors.DARKAQUA+str.substring(2);
-            case "&4" -> Colors.DARKRED+str.substring(2);
-            case "&5" -> Colors.DARKPURPLE+str.substring(2);
-            case "&6" -> Colors.GOLD+str.substring(2);
-            case "&7" -> Colors.GRAY+str.substring(2);
-            case "&8" -> Colors.DARKGRAY+str.substring(2);
-            case "&9" -> Colors.BLUE+str.substring(2);
-            case "&a" -> Colors.GREEN+str.substring(2);
-            case "&b" -> Colors.AQUA+str.substring(2);
-            case "&c" -> Colors.RED+str.substring(2);
-            case "&d" -> Colors.LIGHTPURPLE+str.substring(2);
-            case "&e" -> Colors.YELLOW+str.substring(2);
-            case "&f" -> Colors.WHITE+str.substring(2);
-            case "&k" -> Colors.OBFUSCATED+str.substring(2);
-            case "&l" -> Colors.BOLD+str.substring(2);
-            case "&m" -> Colors.STRIKETHROUGH+str.substring(2);
-            case "&n" -> Colors.UNDERLINE+str.substring(2);
-            case "&o" -> Colors.ITALIC+str.substring(2);
-            case "&r" -> Colors.RESET+str.substring(2);
+        return switch (str.substring(0, 2).toLowerCase()) {
+            case "&0" -> Colors.BLACK + str.substring(2);
+            case "&1" -> Colors.DARKBLUE + str.substring(2);
+            case "&2" -> Colors.DARKGREEN + str.substring(2);
+            case "&3" -> Colors.DARKAQUA + str.substring(2);
+            case "&4" -> Colors.DARKRED + str.substring(2);
+            case "&5" -> Colors.DARKPURPLE + str.substring(2);
+            case "&6" -> Colors.GOLD + str.substring(2);
+            case "&7" -> Colors.GRAY + str.substring(2);
+            case "&8" -> Colors.DARKGRAY + str.substring(2);
+            case "&9" -> Colors.BLUE + str.substring(2);
+            case "&a" -> Colors.GREEN + str.substring(2);
+            case "&b" -> Colors.AQUA + str.substring(2);
+            case "&c" -> Colors.RED + str.substring(2);
+            case "&d" -> Colors.LIGHTPURPLE + str.substring(2);
+            case "&e" -> Colors.YELLOW + str.substring(2);
+            case "&f" -> Colors.WHITE + str.substring(2);
+            case "&k" -> Colors.OBFUSCATED + str.substring(2);
+            case "&l" -> Colors.BOLD + str.substring(2);
+            case "&m" -> Colors.STRIKETHROUGH + str.substring(2);
+            case "&n" -> Colors.UNDERLINE + str.substring(2);
+            case "&o" -> Colors.ITALIC + str.substring(2);
+            case "&r" -> Colors.RESET + str.substring(2);
             default -> str.substring(2);
         };
     }
     public static String fromHex(String str) {
-        return switch (str.substring(0,7).toUpperCase()) {
-            case "#000000" -> Colors.BLACK+str.substring(7);
-            case "#0000AA" -> Colors.DARKBLUE+str.substring(7);
-            case "#00AA00" -> Colors.DARKGREEN+str.substring(7);
-            case "#00AAAA" -> Colors.DARKAQUA+str.substring(7);
-            case "#AA0000" -> Colors.DARKRED+str.substring(7);
-            case "#AA00AA" -> Colors.DARKPURPLE+str.substring(7);
-            case "#FFAA00" -> Colors.GOLD+str.substring(7);
-            case "#AAAAAA" -> Colors.GRAY+str.substring(7);
-            case "#555555" -> Colors.DARKGRAY+str.substring(7);
-            case "#5555FF" -> Colors.BLUE+str.substring(7);
-            case "#55FF55" -> Colors.GREEN+str.substring(7);
-            case "#55FFFF" -> Colors.AQUA+str.substring(7);
-            case "#FF5555" -> Colors.RED+str.substring(7);
-            case "#FF55FF" -> Colors.LIGHTPURPLE+str.substring(7);
-            case "#FFFF55" -> Colors.YELLOW+str.substring(7);
-            case "#FFFFFF" -> Colors.WHITE+str.substring(7);
+        return switch (str.substring(0, 7).toUpperCase()) {
+            case "#000000" -> Colors.BLACK + str.substring(7);
+            case "#0000AA" -> Colors.DARKBLUE + str.substring(7);
+            case "#00AA00" -> Colors.DARKGREEN + str.substring(7);
+            case "#00AAAA" -> Colors.DARKAQUA + str.substring(7);
+            case "#AA0000" -> Colors.DARKRED + str.substring(7);
+            case "#AA00AA" -> Colors.DARKPURPLE + str.substring(7);
+            case "#FFAA00" -> Colors.GOLD + str.substring(7);
+            case "#AAAAAA" -> Colors.GRAY + str.substring(7);
+            case "#555555" -> Colors.DARKGRAY + str.substring(7);
+            case "#5555FF" -> Colors.BLUE + str.substring(7);
+            case "#55FF55" -> Colors.GREEN + str.substring(7);
+            case "#55FFFF" -> Colors.AQUA + str.substring(7);
+            case "#FF5555" -> Colors.RED + str.substring(7);
+            case "#FF55FF" -> Colors.LIGHTPURPLE + str.substring(7);
+            case "#FFFF55" -> Colors.YELLOW + str.substring(7);
+            case "#FFFFFF" -> Colors.WHITE + str.substring(7);
             default -> str.substring(7);
         };
     }
     public static MYColor fromName(String name){
-        return switch (name){
+        return switch (name) {
             case "BLACK" -> new MYColor("&0");
             case "DARKBLUE" -> new MYColor("&1");
             case "DARKGREN" -> new MYColor("&2");

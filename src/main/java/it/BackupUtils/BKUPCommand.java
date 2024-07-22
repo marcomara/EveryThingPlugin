@@ -51,6 +51,7 @@ public class BKUPCommand implements CommandExecutor, TabCompleter {
         for (World w : Bukkit.getWorlds()) {
             str.add(w.getName());
         }
+        str.add("all");
         return str;
     }
 }

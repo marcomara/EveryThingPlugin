@@ -75,13 +75,16 @@ public class ValueLoader {
     public static void ValueRegister(){
         for(String str : plugin.getConfig().getDefaults().getValues(true).keySet()){
             Object obj = plugin.getConfig().get(str);
-            if(obj instanceof Boolean bool){
+            if(obj instanceof Boolean){
+                boolean bool =(boolean) obj;
                 booleanMap.put(str,bool);
             }
-            if(obj instanceof String s){
+            if(obj instanceof String){
+                String s = (String) obj;
                 strMap.put(str,s);
             }
-            if(obj instanceof Integer i){
+            if(obj instanceof Integer){
+                int i = (int) obj;
                 intMap.put(str,i);
             }
         }
