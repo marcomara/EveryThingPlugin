@@ -47,7 +47,13 @@ public class Starter {
             }
         }
         if(config.getInt("ConfigVersion")<newVersion||config.get("ConfigVersion")==null){
-            FileUtil.updateConfigFromFile(configFile, plugin.getResource("RPConfig.yml"));
+            try {
+                FileUtil.updateConfigPurge(configFile, plugin.getResource("RPConfig.yml"));
+            }catch (Exception e){
+                e.printStackTrace();
+                lgg.severe("ResourcePack by EveryThingPlugin could not be started, try to remove the config.yml file from the ResourcePacks folder");
+                return;
+            }
         }
         Map<String, File> map = new HashMap<>();
         if (config.contains("packs")) {

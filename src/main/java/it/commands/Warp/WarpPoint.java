@@ -1,4 +1,4 @@
-package it.commands.warp;
+package it.commands.Warp;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

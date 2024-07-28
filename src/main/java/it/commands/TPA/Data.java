@@ -1,4 +1,4 @@
-package it.commands.tpa;
+package it.commands.TPA;
 
 public class Data {
     public int time;

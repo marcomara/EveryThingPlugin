@@ -1,6 +1,6 @@
-package it.commands.tpa;
+package it.commands.TPA;
 
-import it.commands.tpa.handlers.*;
+import it.commands.TPA.handlers.*;
 import it.utils.TabCompleteUtils;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;

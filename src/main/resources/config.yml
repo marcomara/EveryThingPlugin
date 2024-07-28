@@ -1,33 +1,31 @@
 Commands:
   isSuicideEnabled: true
   isGMEnabled: true
-  isRELEnabled: true
   isHomeEnabled: true
   isCarryEnabled: true
   isSendCordsEnabled: true
   isLDLEnabled: true
-  isChunkLoaderEnabled: true
   isCoordsEnabled: true
-  isTPAEnabled: true
   isWarpEnabled: true
   isNickEnabled: true
   isEnderChestEnabled: true
   isCraftingTableEnabled: true
-  isInvseeEnabled: true
   isAnvilEnabled: true
   isFlightEnabled: true
 Misc:
+  isBedrockBridgeBuildEnabled: true
+  isChunkLoaderEnabled: true
   isSizeEnabled: true
   isSitEnabled: true
+  isCrawlEnabled: true
   isBellEnabled: true
   isLeashEnabled: true
-  FastSleep: true
+  isFastSleepEnabled: true
   FastSleepPercentage: 50
   areSuggestionsEnabled: true
   CommandsList: true
+  isTPAEnabled: true
   TPATimer: 120 #Expressed in seconds
-Worlds:
-  isEnable: true
 Economy:
   isEnabled: true
   symbol: '$'
@@ -36,6 +34,8 @@ ResourcePacks:
   forcePack: false
   #you can find the configuration file for this function in the ResourcePacks folder
 AdminUtils:
+  isInvseeEnabled: true
+  isRELEnabled: true
   UpdateTellToOps: false
   Commands:
     RemoveMinecart: true
@@ -58,5 +58,10 @@ Backup:
   AutomaticBackups: true
   BKTimer: 20 #Expressed in minutes, backs up all the worlds
   NumOfBackups: 5
+ClearLag:
+  EnableItemsCheck: true
+  CheckTimer: 10 #Expressed in minutes
+  MaxAmountOfEntitiesInChunk: 20
+  OPsVerbose: false
 #DO NOT TOUCH THIS
-ConfigVersion: 24.0
+ConfigVersion: 25.0

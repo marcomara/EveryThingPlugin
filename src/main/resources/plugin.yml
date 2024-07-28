@@ -1,11 +1,15 @@
 name: EveryThingPlugin
-version: 1.0
+version: 1.2
 main: it.plugin.Plugin
 api-version: '1.20.6'
 author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
 commands:
+  killplayer:
+    usage: /command target
+  crawl:
+    usage: /command
   backup:
     usage: /command worldName
   fly:

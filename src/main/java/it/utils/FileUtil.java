@@ -4,6 +4,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 
 public class FileUtil {
     static final int BUFFER_SIZE = 8192;
@@ -57,6 +60,29 @@ public class FileUtil {
             exception.printStackTrace();
         }
 
+    }
+
+    public static void updateConfigPurge(File toUpdate, InputStream toCopy) throws Exception{
+        FileConfiguration nvc = YamlConfiguration.loadConfiguration(new InputStreamReader(toCopy));
+        FileConfiguration old = YamlConfiguration.loadConfiguration(toUpdate);
+        Map<String, Object> oldmap = old.getValues(true);
+        Map<String, Object> nvalues = nvc.getValues(true);
+        Files.delete(Paths.get(toUpdate.getAbsolutePath()));
+        toUpdate.createNewFile();
+        FileConfiguration nfc = YamlConfiguration.loadConfiguration(toUpdate);
+        for (String s : nvalues.keySet()){
+            if (s.endsWith("example")){
+                String parent = s.substring(0, s.length()-8);
+                if (!old.getConfigurationSection(parent).getKeys(false).contains("example")){
+                    continue;
+                }
+            }
+            if (oldmap.containsKey(s)){
+                nfc.set(s, oldmap.get(s));
+            }else nfc.set(s, nvalues.get(s));
+        }
+        nfc.set("ConfigVersion", nvalues.get("ConfigVersion"));
+        nfc.save(toUpdate);
     }
 
     public static boolean move( File original, File dest, boolean force ) {

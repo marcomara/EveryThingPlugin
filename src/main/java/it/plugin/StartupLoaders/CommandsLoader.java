@@ -1,14 +1,12 @@
 package it.plugin.StartupLoaders;
 
-import it.plugin.Plugin;
-
 import java.util.Map;
 
 import static it.plugin.Plugin.*;
 
 
 public class CommandsLoader {
-    public static void CommandsLoader(Plugin plugin) {
+    public static void CommandsLoader() {
         Map<String, String> map = Commands.ConfigMap();
         for (String str : map.keySet()){
             if(booleanMap.get(map.get(str))) {

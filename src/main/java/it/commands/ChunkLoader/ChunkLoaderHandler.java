@@ -5,9 +5,10 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import static it.plugin.Plugin.LoadedChunks;
-import static it.plugin.Plugin.ccs;
+import static it.plugin.Plugin.lgg;
 
 public class ChunkLoaderHandler{
     public static void LoadChunksFromList(){
@@ -20,7 +21,7 @@ public class ChunkLoaderHandler{
                 LoadChunk(chunk);
             }
         }catch (NullPointerException e){
-            ccs.sendMessage("There are no chunks to load");
+            lgg.log(Level.INFO, "There are no chunks to load");
         }
     }
     public static void LoadChunk(Chunk chunk){

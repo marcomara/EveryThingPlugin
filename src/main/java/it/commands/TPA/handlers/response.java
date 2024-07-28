@@ -1,8 +1,8 @@
-package it.commands.tpa.handlers;
+package it.commands.TPA.handlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import it.commands.tpa.Data;
+import it.commands.TPA.Data;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

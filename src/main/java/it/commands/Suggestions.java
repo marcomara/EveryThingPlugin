@@ -1,6 +1,5 @@
 package it.commands;
 
-import it.plugin.Plugin;
 import it.utils.Colors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.plugin.Plugin.dataFolder;
+import static it.plugin.Plugin.lgg;
 import static it.utils.SaveUtility.create;
 
 public class Suggestions implements CommandExecutor, TabCompleter {
@@ -37,7 +37,7 @@ public class Suggestions implements CommandExecutor, TabCompleter {
         suggestions.add(suggestion.toString());
         filec.set(name,suggestions);
         SaveUtility.save(file,filec);
-        Plugin.ccs.sendMessage(name + " says: " +suggestion);
+        lgg.info(name + " says: " +suggestion);
         sender.sendMessage(Colors.GREEN +"Thank you for your suggestion(s)!");
         return true;
     }

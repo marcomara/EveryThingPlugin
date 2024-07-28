@@ -1,4 +1,4 @@
-package it.commands.invsee;
+package it.commands.Invsee;
 
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import it.plugin.Plugin;

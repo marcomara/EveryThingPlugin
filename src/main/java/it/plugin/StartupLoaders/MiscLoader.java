@@ -1,5 +1,6 @@
 package it.plugin.StartupLoaders;
 
+import it.AdminUtility.ClearLagTasks;
 import it.BackupUtils.AllWorldsRun;
 import it.BackupUtils.BKUPCommand;
 import it.commands.ChunkLoader.ChunkLoaderCommand;
@@ -10,36 +11,32 @@ import it.commands.PlayersInteractions.Runner;
 import it.commands.PlayersInteractions.Sit;
 import it.commands.ResourcePacks.Server.Server;
 import it.commands.ResourcePacks.Starter;
+import it.commands.Utils.BedrockBuild;
 import it.commands.Utils.CommandList;
 import it.commands.DisabledCommandMessage;
 import it.commands.Suggestions;
-import it.commands.Worlds.Command;
-import it.commands.Worlds.WorldHandler;
-import it.commands.economy.Balance;
-import it.commands.invsee.invsee;
-import it.commands.nick.Nick;
+import it.commands.Economy.Balance;
+import it.commands.Invsee.invsee;
 import it.events.Join;
-import it.commands.leash.LeashEvent;
+import it.commands.Leash.LeashEvent;
 import it.events.Quit;
 import it.listeners.Bell;
 import it.listeners.FastSleep;
 import it.listeners.Misc;
 import it.plugin.Plugin;
-import it.commands.leash.CollisionTeam;
+import it.commands.Leash.CollisionTeam;
 import it.utils.SaveUtility;
 import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import static it.plugin.Plugin.*;
 import static it.utils.SaveUtility.*;
+import static it.plugin.Plugin.plugin;
 
 public class MiscLoader {
-    public static void Loader(Plugin plugin) {
+    public static void Loader() {
         if(booleanMap.get("ResourcePacks.isEnabled")){
             new Starter(new File(dataFolder, "ResourcePacks"), plugin);
         }
@@ -55,6 +52,15 @@ public class MiscLoader {
             }else worlds.set("worlds", new ArrayList<String>());
             save(conff, worlds);
         }*/
+        if (booleanMap.get("ClearLag.EnableItemsCheck")){
+            new ClearLagTasks.ItemRemoveMsg().runTaskTimerAsynchronously(plugin,
+                    20L*60*(intMap.get("ClearLag.CheckTimer")-1) ,
+                    20L*60*intMap.get("ClearLag.CheckTimer"));
+            new ClearLagTasks.ItemsRemove().runTaskTimerAsynchronously(plugin,
+                    20L*60*intMap.get("ClearLag.CheckTimer"),
+                    20L*60*intMap.get("ClearLag.CheckTimer"));
+
+        }
         if(booleanMap.get("Backup.Enabled")){
             plugin.getCommand("backup").setExecutor(new BKUPCommand(plugin));
             plugin.getCommand("backup").setTabCompleter(new BKUPCommand(plugin));
@@ -66,20 +72,16 @@ public class MiscLoader {
                 Bukkit.getScheduler().runTaskTimer(plugin, () -> {
                     lgg.warning("Backup started");
                     new AllWorldsRun(bkfolder).runTaskAsynchronously(plugin);
-                }, 20L * 60 * intMap.get("Backup.BKTimer"), 20L * 60 * intMap.get("Backup.BKTimer"));
+                }, 20L * 60 * intMap.get("Backup.BKTimer"),
+                        20L * 60 * intMap.get("Backup.BKTimer"));
             }
         }
-        if(booleanMap.get("Commands.isNickEnabled")){
-            plugin.getCommand("nick").setExecutor(new Nick(plugin));
-            plugin.getCommand("nick").setTabCompleter(new Nick(plugin));
-            commands.add("nick");
-        }
-        if (booleanMap.get("Commands.isTPAEnabled")) {
+        if (booleanMap.get("Misc.isTPAEnabled")) {
             tpatimer = plugin.getConfig().getInt("misc.TPATimer");
-            plugin.getCommand("tpa").setExecutor(new it.commands.tpa.Command());
+            plugin.getCommand("tpa").setExecutor(new it.commands.TPA.Command());
             commands.add("tpa");
         } else plugin.getCommand("tpa").setExecutor(executor);
-        if (booleanMap.get("Commands.isChunkLoaderEnabled")) {
+        if (booleanMap.get("Misc.isChunkLoaderEnabled")) {
             plugin.getCommand("chunk").setExecutor(new ChunkLoaderCommand());
             CFile = new File(plugin.getDataFolder(), "LoadedChunks.chunks");
             create(CFile);
@@ -88,12 +90,12 @@ public class MiscLoader {
             ChunkLoaderHandler.LoadChunksFromList();
             commands.add("chunk");
         } else plugin.getCommand("chunk").setExecutor(executor);
-        if(booleanMap.get("Commands.isInvseeEnabled")){
+        if(booleanMap.get("AdminUtils.isInvseeEnabled")){
             plugin.getCommand("invsee").setExecutor(new invsee(plugin));
             plugin.getCommand("invsee").setTabCompleter(new invsee(plugin));
             commands.add("invsee");
         }else plugin.getCommand("invsee").setExecutor(executor);
-        if (booleanMap.get("Misc.FastSleep")) {
+        if (booleanMap.get("Misc.isFastSleepEnabled")) {
             plugin.getServer().getPluginManager().registerEvents(new FastSleep(plugin), plugin);
         }
         if (booleanMap.get("Misc.CommandsList")) {
@@ -128,12 +130,15 @@ public class MiscLoader {
         }
     }
 
-    public static void EventLoader(Plugin plugin) {
+    public static void EventLoader() {
         plugin.getServer().getPluginManager().registerEvents(new Join(plugin), plugin);
         plugin.getServer().getPluginManager().registerEvents(new Quit(plugin), plugin);
         plugin.getServer().getPluginManager().registerEvents(new Misc(), plugin);
         if(booleanMap.get("Misc.isBellEnabled")){
             plugin.getServer().getPluginManager().registerEvents(new Bell(), plugin);
+        }
+        if(booleanMap.get("Misc.isBedrockBridgeBuildEnabled")){
+            plugin.getServer().getPluginManager().registerEvents(new BedrockBuild(), plugin);
         }
     }
     public static void Stop(){

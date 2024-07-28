@@ -1,4 +1,4 @@
-package it.commands.economy;
+package it.commands.Economy;
 
 import it.utils.Colors;
 import it.utils.TabCompleteUtils;

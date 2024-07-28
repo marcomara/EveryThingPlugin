@@ -1,4 +1,4 @@
-package it.commands.warp;
+package it.commands.Warp;
 
 import it.utils.Colors;
 import org.bukkit.Bukkit;

@@ -7,25 +7,25 @@ import it.plugin.Plugin;
 import static it.plugin.Plugin.*;
 
 public class AdminUtilsLoader {
-    static public void CommandRegister(Plugin p){
+    static public void CommandRegister(){
         String s = "AdminUtils.Commands.";
         if(booleanMap.get(s+"EntityList")) {
-            p.getCommand("el").setExecutor(new EntityList());
+            plugin.getCommand("el").setExecutor(new EntityList());
             commands.add("el");
-        }else p.getCommand("el").setExecutor(executor);
+        }else plugin.getCommand("el").setExecutor(executor);
         if(booleanMap.get(s+"RemoveMinecart")){
-            p.getCommand("minecart-cleaner").setExecutor(new MinecartClear());
+            plugin.getCommand("minecart-cleaner").setExecutor(new MinecartClear());
             commands.add("minecart-cleaner");
-        }else p.getCommand("minecart-cleaner").setExecutor(executor);
+        }else plugin.getCommand("minecart-cleaner").setExecutor(executor);
         if(booleanMap.get(s+"RemoveProjectiles")){
-            p.getCommand("projectile-cleaner").setExecutor(new ProjectileClear());
+            plugin.getCommand("projectile-cleaner").setExecutor(new ProjectileClear());
             commands.add("projectile-cleaner");
-        }else p.getCommand("projectile-cleaner").setExecutor( executor);
-        p.getCommand("info").setExecutor(new PluginInfo());
+        }else plugin.getCommand("projectile-cleaner").setExecutor( executor);
+        plugin.getCommand("info").setExecutor(new PluginInfo());
         if(booleanMap.get(s+"RemoveStands")){
-            p.getCommand("stand-cleaner").setExecutor(new StandClear());
+            plugin.getCommand("stand-cleaner").setExecutor(new StandClear());
             commands.add("stand-cleaner");
-        }else p.getCommand("stand-cleaner").setExecutor( executor);
+        }else plugin.getCommand("stand-cleaner").setExecutor( executor);
 
     }
 }

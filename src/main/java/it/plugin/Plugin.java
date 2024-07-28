@@ -2,13 +2,12 @@ package it.plugin;
 
 import it.commands.DisabledCommandMessage;
 import it.commands.ResourcePacks.Instance;
-import it.commands.tpa.Data;
-import it.commands.leash.CollisionTeam;
+import it.commands.TPA.Data;
+import it.commands.Leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
-import it.utils.Colors;
 import it.utils.UpdateChecker;
+import it.web.Host;
 import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -20,6 +19,7 @@ import static it.utils.SaveUtility.*;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Plugin extends JavaPlugin {
@@ -40,7 +40,6 @@ public final class Plugin extends JavaPlugin {
     public static Map<String, Boolean> booleanMap = new HashMap<>();
     public static Map<String, String> strMap = new HashMap<>();
     public static Map<String, Integer> intMap = new HashMap<>();
-    public static ConsoleCommandSender ccs;
     public static Logger lgg;
     public static String ver;
     public static File dataFolder;
@@ -49,6 +48,7 @@ public final class Plugin extends JavaPlugin {
     public static DisabledCommandMessage executor = new DisabledCommandMessage();
     public static YamlConfiguration worlds;
     public static File bkfolder;
+    public static it.plugin.Plugin plugin;
 
     @Override
     public void onLoad() {
@@ -60,15 +60,15 @@ public final class Plugin extends JavaPlugin {
             cancontinue = false;
             return;
         }
+        plugin = this;
         dataFolder = getDataFolder();
         ver = getPluginMeta().getVersion();
         lgg = getLogger();
-        ccs = getServer().getConsoleSender();
         commands = new ArrayList<>();
         pf = new File(getDataFolder(), "players.yml");
         create(pf);
         pfyml = createyml(pf);
-        ValueLoaderMain(this);
+        ValueLoaderMain();
         metrics = new Metrics(this, 22468);
         UpdateChecker.init(this, 107875).requestUpdateCheck().whenComplete((result, e) -> {
             if (result.getReason() == UpdateChecker.UpdateReason.NEW_UPDATE) {
@@ -85,11 +85,18 @@ public final class Plugin extends JavaPlugin {
     @Override
     public void onEnable() {
         if (cancontinue) {
-            ccs.sendMessage(Colors.GREEN + "Plugin Enabled");
-            MiscLoader.Loader(this);
-            MiscLoader.EventLoader(this);
-            AdminUtilsLoader.CommandRegister(this);
-            CommandsLoader.CommandsLoader(this);
+            lgg.log(Level.INFO, "Enabled");
+            MiscLoader.Loader();
+            MiscLoader.EventLoader();
+            AdminUtilsLoader.CommandRegister();
+            CommandsLoader.CommandsLoader();
+            /*Bukkit.getScheduler().runTaskAsynchronously(this, ()->{
+                try {
+                    Host.main(8080);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            });*/
         }
     }
 
@@ -97,8 +104,13 @@ public final class Plugin extends JavaPlugin {
     public void onDisable() {
         if (cancontinue) {
             MiscLoader.Stop();
-            ccs.sendMessage(Colors.DARKRED + "Plugin Disabled");
+            lgg.log(Level.INFO, "Disabled");
             metrics.shutdown();
         }
+        /*try{
+            Host.stop();
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
     }
 }

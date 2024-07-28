@@ -1,6 +1,6 @@
-package it.commands.tpa.handlers;
+package it.commands.TPA.handlers;
 
-import it.commands.tpa.Data;
+import it.commands.TPA.Data;
 import it.utils.Colors;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

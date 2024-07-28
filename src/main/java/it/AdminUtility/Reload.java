@@ -12,15 +12,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import static it.plugin.Plugin.lgg;
+import static it.plugin.Plugin.plugin;
 
 public class Reload implements CommandExecutor, TabCompleter {
-    public static final String[] arguments1 = {"config", "server", "all"};
+    public static final String[] arguments1 = {"config", "server"};
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player && sender.isOp() || sender instanceof ConsoleCommandSender) {
             if (args[0].equals("config")) {
-                Bukkit.getPluginManager().getPlugin("EveryThingPlugin").reloadConfig();
+                plugin.reloadConfig();
                 if (sender instanceof Player) {
                     lgg.warning("Config Reloaded by " + sender.getName());
                     sender.sendMessage(Colors.GOLD + "Config Reloaded");
@@ -29,28 +30,18 @@ public class Reload implements CommandExecutor, TabCompleter {
                     lgg.warning("Config Reloaded");
                 }
                 return true;
-            }
-            if (args[0].equals("server")) {
-                Bukkit.getServer().reload();
+            } if (args[0].equals("server")) {
                 if (sender instanceof Player) {
                     lgg.warning("Server Reloaded by " + sender.getName());
                     sender.sendMessage(Colors.GOLD + "Server Reloaded");
                 }
                 if (sender instanceof ConsoleCommandSender) {
-                    lgg.warning("Server Reloaded");
+                    lgg.warning("Reloading Server");
+                    lgg.warning("If you updated any plugin please consider to restart the server instead of reloading it!!");
                 }
-                return true;
-            }
-            if (args[0].equals("all")) {
-                Bukkit.getPluginManager().getPlugin("EveryThingPlugin").reloadConfig();
-                Bukkit.getServer().reload();
-                if (sender instanceof Player) {
-                    lgg.warning("Everything Reloaded by " + sender.getName());
-                    sender.sendMessage(Colors.GOLD + "Everything Reloaded");
-                }
-                if (sender instanceof ConsoleCommandSender) {
-                    lgg.warning("Everything Reloaded");
-                }
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    Bukkit.getServer().reload();
+                }, 60L);
                 return true;
             } else {
                 if (sender instanceof Player) {

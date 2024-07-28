@@ -1,6 +1,5 @@
-package it.commands.nick;
+package it.commands.Nick;
 
-import it.plugin.Plugin;
 import it.utils.TabCompleteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,10 +21,6 @@ import static it.plugin.Plugin.pf;
 import static it.plugin.Plugin.pfyml;
 
 public class Nick implements CommandExecutor, TabCompleter {
-    private final Plugin plugin;
-    public Nick(Plugin plugin){
-        this.plugin=plugin;
-    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -42,7 +37,7 @@ public class Nick implements CommandExecutor, TabCompleter {
             }
             if(args[0].length()<=16) {
                 nickyml.set(p.getUniqueId()+".UsingNick", true);
-                NickHandler.onCommand(p,args[0],plugin);
+                NickHandler.onCommand(p,args[0]);
                 return true;
             }
             p.sendMessage("Too many characters, max 16!!");
@@ -57,7 +52,7 @@ public class Nick implements CommandExecutor, TabCompleter {
         }
         if(args.length==2&&args[0].equals("wrap")){
             Player p = (Player) sender;
-            NickHandler.wrap(p,args[1],plugin);
+            NickHandler.wrap(p,args[1]);
             return true;
         }
         if(sender instanceof Player && sender.isOp() && args.length==2){
@@ -68,7 +63,7 @@ public class Nick implements CommandExecutor, TabCompleter {
             }
             nickyml.set(p.getUniqueId()+".UsingNick", true);
             String nick = Colors.AlternateColorCodes('&',args[1]);
-            NickHandler.onCommand(p,nick,plugin);
+            NickHandler.onCommand(p,nick);
             return true;
         }
         return false;
@@ -76,21 +71,18 @@ public class Nick implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        List<String> toreturn = new ArrayList<>();
         if(args.length==1 && commandSender.isOp()){
-            List<String> toreturn = new ArrayList<>();
             toreturn.add("getOriginalName");
             toreturn.addAll(TabCompleteUtils.getOtherOnlinePlayers((Player)commandSender));
-            return toreturn;
+
         }
         if(args.length==1){
-            return new ArrayList<>(List.of("wrap"));
-        }
-        if(args.length==2&&args[0].equals("wrap")){
-            return new ArrayList<>();
+            toreturn.add("wrap");
         }
         if(args.length==2&&args[0].equals("getOriginalName")){
-            return new ArrayList<>(TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender));
+            toreturn.addAll(TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender));
         }
-        return new ArrayList<>();
+        return toreturn;
     }
 }

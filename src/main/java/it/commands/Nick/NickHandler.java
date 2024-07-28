@@ -1,10 +1,9 @@
-package it.commands.nick;
+package it.commands.Nick;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -32,7 +31,7 @@ public class NickHandler {
             }
         }
     }
-    public static void onCommand(Player p, String var,Plugin plugin){
+    public static void onCommand(Player p, String var){
         PlayerProfile pp = Bukkit.createProfileExact(p.getUniqueId(), var);
         pp.setTextures(p.getPlayerProfile().getTextures());
         try {
@@ -49,7 +48,7 @@ public class NickHandler {
         p.setPlayerProfile(pp);
         pfyml.set(p.getUniqueId() + ".CPP", null);
     }
-    public static void wrap(Player p, String name, Plugin plugin){
+    public static void wrap(Player p, String name){
         PlayerProfile pp = Bukkit.createProfileExact(p.getUniqueId(),name);
         String[] spfn = getFromName(name);
         if(spfn == null){

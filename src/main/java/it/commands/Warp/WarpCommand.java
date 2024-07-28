@@ -1,4 +1,4 @@
-package it.commands.warp;
+package it.commands.Warp;
 
 import it.utils.Colors;
 import org.bukkit.Location;
@@ -10,8 +10,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static it.plugin.Plugin.ccs;
 
 import static it.plugin.Plugin.dataFolder;
 import static it.utils.SaveUtility.*;

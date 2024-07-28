@@ -1,4 +1,4 @@
-package it.commands.invsee;
+package it.commands.Invsee;
 
 import it.plugin.Plugin;
 import it.utils.TabCompleteUtils;
@@ -12,6 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.logging.Level;
+
+import static it.plugin.Plugin.lgg;
 
 public class invsee implements CommandExecutor, TabCompleter {
     public static final String[] arguments1 = {"getOtherOnlinePlayers"};
@@ -22,7 +25,7 @@ public class invsee implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if(!commandSender.isOp()){commandSender.sendMessage("Only operators can do that!");return true;}
-        if(commandSender instanceof ConsoleCommandSender){ Plugin.ccs.sendMessage("Only players can do that"); return true;}
+        if(commandSender instanceof ConsoleCommandSender){ lgg.log(Level.WARNING,  "Only players can do that"); return true;}
         if(args.length!=1&&!Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))){commandSender.sendMessage("You need to specify a player");return true;}
         Player p = (Player) commandSender;
         Player t = Bukkit.getPlayer(args[0]);

@@ -1,29 +1,18 @@
 package it.plugin.ConfigLoader;
 
-import it.plugin.Plugin;
 import it.utils.FileUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Map;
-import java.util.Scanner;
 
 import static it.plugin.Plugin.*;
-import static it.utils.SaveUtility.save;
 
 public class ValueLoader {
-    static Plugin plugin ;
     private static final String ver = "ConfigVersion";
-    public static void ValueLoaderMain(Plugin plugin){
-        ValueLoader.plugin=plugin;
+    public static void ValueLoaderMain(){
         ConfigurationCheck();
         if(plugin.cancontinue) {
             ValueRegister();
@@ -54,16 +43,30 @@ public class ValueLoader {
             return;
         }
         if(plugin.getConfig().get(ver) instanceof Double){
-            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"));
+            try {
+                FileUtil.updateConfigPurge(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"));
+            }catch (Exception e){
+                e.printStackTrace();
+                plugin.FullDisable = false;
+                plugin.cancontinue = false;
+                Bukkit.getPluginManager().disablePlugin(plugin);
+            }
             return;
         }
         int av = plugin.getConfig().getInt(ver), bv = plugin.getConfig().getDefaults().getInt(ver);
         if(av==bv){
-            ccs.sendMessage("Configuration checked correctly");
+            lgg.info("Configuration checked");
             return;
         }
         if(av<bv){
-            FileUtil.updateConfigFromFile(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"));
+            try {
+                FileUtil.updateConfigPurge(new File(dataFolder, "config.yml"), plugin.getResource("config.yml"));
+            }catch (Exception e){
+                e.printStackTrace();
+                plugin.FullDisable = false;
+                plugin.cancontinue = false;
+                Bukkit.getPluginManager().disablePlugin(plugin);
+            }
             return;
         }
         plugin.cancontinue = false;
@@ -88,6 +91,6 @@ public class ValueLoader {
                 intMap.put(str,i);
             }
         }
-        ccs.sendMessage(Component.text("Values Registered").color(NamedTextColor.WHITE));
+        lgg.info("Configuration Loaded");
     }
 }
