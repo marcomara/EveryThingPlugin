@@ -19,7 +19,7 @@ public class Reload implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player && sender.isOp() || sender instanceof ConsoleCommandSender) {
+        if (sender instanceof Player && sender.hasPermission(command.getPermission()) || sender instanceof ConsoleCommandSender) {
             if (args[0].equals("config")) {
                 plugin.reloadConfig();
                 if (sender instanceof Player) {
@@ -32,8 +32,8 @@ public class Reload implements CommandExecutor, TabCompleter {
                 return true;
             } if (args[0].equals("server")) {
                 if (sender instanceof Player) {
-                    lgg.warning("Server Reloaded by " + sender.getName());
-                    sender.sendMessage(Colors.GOLD + "Server Reloaded");
+                    lgg.warning("Server Reloading by " + sender.getName());
+                    sender.sendMessage(Colors.GOLD + "Server Reloading");
                 }
                 if (sender instanceof ConsoleCommandSender) {
                     lgg.warning("Reloading Server");

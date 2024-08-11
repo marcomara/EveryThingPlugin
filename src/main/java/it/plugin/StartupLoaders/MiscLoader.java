@@ -7,27 +7,25 @@ import it.commands.ChunkLoader.ChunkLoaderCommand;
 import it.commands.ChunkLoader.ChunkLoaderHandler;
 import it.commands.PlayersInteractions.Carry;
 import it.commands.PlayersInteractions.FastSit;
-import it.commands.PlayersInteractions.Runner;
 import it.commands.PlayersInteractions.Sit;
 import it.commands.ResourcePacks.Server.Server;
 import it.commands.ResourcePacks.Starter;
+import it.commands.TPA.Command;
 import it.commands.Utils.BedrockBuild;
 import it.commands.Utils.CommandList;
 import it.commands.DisabledCommandMessage;
 import it.commands.Suggestions;
 import it.commands.Economy.Balance;
-import it.commands.Invsee.invsee;
+import it.AdminUtility.Invsee.invsee;
 import it.events.Join;
 import it.commands.Leash.LeashEvent;
 import it.events.Quit;
 import it.listeners.Bell;
 import it.listeners.FastSleep;
 import it.listeners.Misc;
-import it.plugin.Plugin;
 import it.commands.Leash.CollisionTeam;
 import it.utils.SaveUtility;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 
@@ -63,7 +61,7 @@ public class MiscLoader {
         }
         if(booleanMap.get("Backup.Enabled")){
             plugin.getCommand("backup").setExecutor(new BKUPCommand(plugin));
-            plugin.getCommand("backup").setTabCompleter(new BKUPCommand(plugin));
+            plugin.getCommand("backup").setTabCompleter(new BKUPCommand.BKUPTab());
             bkfolder = new File(dataFolder.getParentFile().getParentFile(), "Backups");
             if(!bkfolder.exists()){
                 bkfolder.mkdir();
@@ -78,11 +76,13 @@ public class MiscLoader {
         }
         if (booleanMap.get("Misc.isTPAEnabled")) {
             tpatimer = plugin.getConfig().getInt("misc.TPATimer");
-            plugin.getCommand("tpa").setExecutor(new it.commands.TPA.Command());
+            plugin.getCommand("tpa").setExecutor(new Command());
+            plugin.getCommand("tpa").setTabCompleter(new Command());
             commands.add("tpa");
         } else plugin.getCommand("tpa").setExecutor(executor);
         if (booleanMap.get("Misc.isChunkLoaderEnabled")) {
             plugin.getCommand("chunk").setExecutor(new ChunkLoaderCommand());
+            plugin.getCommand("chunk").setTabCompleter(new ChunkLoaderCommand.ChunkLoaderTab());
             CFile = new File(plugin.getDataFolder(), "LoadedChunks.chunks");
             create(CFile);
             CFC = SaveUtility.createyml(CFile);
@@ -92,22 +92,23 @@ public class MiscLoader {
         } else plugin.getCommand("chunk").setExecutor(executor);
         if(booleanMap.get("AdminUtils.isInvseeEnabled")){
             plugin.getCommand("invsee").setExecutor(new invsee(plugin));
-            plugin.getCommand("invsee").setTabCompleter(new invsee(plugin));
+            plugin.getCommand("invsee").setTabCompleter(new invsee.InvSeeTab());
             commands.add("invsee");
         }else plugin.getCommand("invsee").setExecutor(executor);
         if (booleanMap.get("Misc.isFastSleepEnabled")) {
-            plugin.getServer().getPluginManager().registerEvents(new FastSleep(plugin), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new FastSleep(plugin), plugin);
         }
         if (booleanMap.get("Misc.CommandsList")) {
             plugin.getCommand("commands").setExecutor(new CommandList(plugin));
             commands.add("commands");
         }
         if (booleanMap.get("Misc.isLeashEnabled")) {
-            plugin.getServer().getPluginManager().registerEvents(new LeashEvent(plugin), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new LeashEvent(plugin), plugin);
             team = new CollisionTeam();
         }
         if (booleanMap.get("Economy.isEnabled")) {
             plugin.getCommand("balance").setExecutor(new Balance());
+            plugin.getCommand("balance").setTabCompleter(new Balance());
             ecotype = plugin.getConfig().getString("economy.symbol");
             commands.add("balance");
         } else {
@@ -115,34 +116,40 @@ public class MiscLoader {
         }
         if (booleanMap.get("Misc.areSuggestionsEnabled")) {
             plugin.getCommand("suggestion").setExecutor(new Suggestions());
+            plugin.getCommand("suggestion").setTabCompleter(new Suggestions());
             commands.add("suggestion");
         } else {
             plugin.getCommand("suggestion").setExecutor(new DisabledCommandMessage());
         }
         if(booleanMap.get("Misc.isSitEnabled")){
             plugin.getCommand("sit").setExecutor(new Sit());
-            BukkitRunnable b = new Runner();
-            plugin.getServer().getPluginManager().registerEvents(new FastSit(),plugin);
-            b.runTaskTimer(plugin,200L,20L);
+            plugin.getCommand("sit").setTabCompleter(new Sit());
+            Bukkit.getServer().getPluginManager().registerEvents(new FastSit(),plugin);
         }
         if(booleanMap.get("Commands.isCarryEnabled")){
-            plugin.getServer().getPluginManager().registerEvents(new Carry(), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new Carry(), plugin);
         }
     }
 
     public static void EventLoader() {
-        plugin.getServer().getPluginManager().registerEvents(new Join(plugin), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new Quit(plugin), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new Misc(), plugin);
+        if (booleanMap.get("Roles.Enable")){
+            Bukkit.getServer().getPluginManager().registerEvents(new it.commands.Roles.ListenerMod.Join(plugin), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new it.commands.Roles.ListenerMod.Quit(), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new it.commands.Roles.ListenerMod.Misc(), plugin);
+        }else {
+            Bukkit.getServer().getPluginManager().registerEvents(new Join(plugin), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new Quit(plugin), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new Misc(), plugin);
+        }
         if(booleanMap.get("Misc.isBellEnabled")){
-            plugin.getServer().getPluginManager().registerEvents(new Bell(), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new Bell(), plugin);
         }
         if(booleanMap.get("Misc.isBedrockBridgeBuildEnabled")){
-            plugin.getServer().getPluginManager().registerEvents(new BedrockBuild(), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new BedrockBuild(), plugin);
         }
     }
     public static void Stop(){
-        if(booleanMap.get("ResourcePacks.isEnabled")){
+        if(booleanMap.get("ResourcePacks.isEnabled")&&Server.isActive){
             Server.terminate();
         }
     }

@@ -20,7 +20,7 @@ import java.util.List;
 public class EntityList implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] strings) {
-        if(!commandSender.isOp()) {
+        if(!commandSender.hasPermission(command.getPermission())) {
             commandSender.sendMessage("Only ops can do that");
             return true;
         }

@@ -20,6 +20,9 @@ public class Starter {
     public static YamlConfiguration config;
 
     public Starter(File folder, Plugin plugin) {
+        if (!folder.exists()){
+            folder.mkdirs();
+        }
         File configFile = new File(folder, "RPConfig.yml");
         try {
             if (!configFile.exists()) {

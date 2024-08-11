@@ -63,5 +63,7 @@ ClearLag:
   CheckTimer: 10 #Expressed in minutes
   MaxAmountOfEntitiesInChunk: 20
   OPsVerbose: false
+Roles:
+  Enable: true
 #DO NOT TOUCH THIS
 ConfigVersion: 25.0

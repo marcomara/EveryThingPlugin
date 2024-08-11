@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class Server {
     private static HttpServer httpServer;
+    public static boolean isActive = false;
     public static void main(int port, Map<String,File> rpcks) throws IOException {
         httpServer = HttpServer.create(new InetSocketAddress(port), 0);
         for(String rp: rpcks.keySet()){
@@ -22,10 +23,12 @@ public class Server {
         }
         httpServer.setExecutor(null);
         httpServer.start();
+        isActive=true;
     }
     public static void terminate(){
         httpServer.stop(0);
     }
+
     static class ResourcePackHandler implements HttpHandler{
         private File folder;
 

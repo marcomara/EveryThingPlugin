@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,5 +51,20 @@ public class Sit implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         return new ArrayList<>();
+    }
+
+    public static class SlimeFollow extends BukkitRunnable {
+        Player p;
+        Slime s;
+        public SlimeFollow(Player p,Slime s){
+            this.p=p;
+            this.s=s;
+        }
+        @Override
+        public void run() {
+            if (!s.isDead()) {
+                s.getLocation().setYaw(p.getYaw());
+            }else this.cancel();
+        }
     }
 }

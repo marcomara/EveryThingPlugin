@@ -21,7 +21,6 @@ import static it.plugin.Plugin.*;
 
 public class Balance implements CommandExecutor, TabCompleter {
     public static final String[] arguments1 = {"send", "add", "sub", "set"};
-    public static final String[] arguments2 = {"getOtherOnlinePlayers"};
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,7 +44,7 @@ public class Balance implements CommandExecutor, TabCompleter {
                     don.sendMessage(Colors.GOLD + "Your balance is now: "+ Colors.WHITE +pfyml.getLong(don.getUniqueId()+".balance") + et);
                 }
             }
-            if(sender.isOp()){
+            if(sender.hasPermission("admin.mmod")){
                 if (args.length == 1) {
                     Player t = Bukkit.getPlayer(args[0]);
                     long balance = pfyml.getLong(t.getUniqueId() + ".balance");

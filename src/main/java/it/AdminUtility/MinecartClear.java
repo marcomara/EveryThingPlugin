@@ -22,7 +22,7 @@ import static it.plugin.Plugin.intMap;
 public class MinecartClear implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] strings) {
-        if(!commandSender.isOp()){
+        if(!commandSender.hasPermission(command.getPermission())){
             return false;
         }
         int i=0;

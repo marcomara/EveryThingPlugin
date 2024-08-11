@@ -2,17 +2,22 @@ package it.plugin;
 
 import it.commands.DisabledCommandMessage;
 import it.commands.ResourcePacks.Instance;
+import it.commands.Roles.Command;
 import it.commands.TPA.Data;
 import it.commands.Leash.CollisionTeam;
+import it.commands.Utils.MinecartSpawn;
 import it.plugin.StartupLoaders.*;
 import it.utils.UpdateChecker;
-import it.web.Host;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import it.utils.Metrics;
+import org.bukkit.scoreboard.Scoreboard;
+import org.jetbrains.annotations.NotNull;
 
 import static it.plugin.ConfigLoader.ValueLoader.*;
 import static it.utils.SaveUtility.*;
@@ -23,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Plugin extends JavaPlugin {
+    public static Scoreboard roles;
     public static Instance instance;
     public static List<Entity> sitlist = new ArrayList<>();
     public boolean cancontinue = true;
@@ -50,9 +56,14 @@ public final class Plugin extends JavaPlugin {
     public static File bkfolder;
     public static it.plugin.Plugin plugin;
 
+    @NotNull private static String APIV = "1.21";
+
     @Override
     public void onLoad() {
-        if (getServer().getMinecraftVersion().startsWith("1.1") || (getServer().getMinecraftVersion().startsWith("1.20") && !getServer().getMinecraftVersion().equals("1.20.6"))){
+        if (getPluginMeta().getAPIVersion() != null) {
+            APIV = getPluginMeta().getAPIVersion();
+        }
+        if (!getServer().getMinecraftVersion().startsWith(APIV)){
             Bukkit.getPluginManager().disablePlugin(this);
             getLogger().warning("***MINECRAFT VERSION NOT SUPPORTED***");
             getLogger().warning("Check the supported versions here:");
@@ -98,6 +109,13 @@ public final class Plugin extends JavaPlugin {
                 }
             });*/
         }
+        getServer().getPluginManager().registerEvents(new MinecartSpawn(), this);
+        roles = Bukkit.getScoreboardManager().getNewScoreboard();
+        roles.registerNewTeam("Owner")
+                .prefix(Component.text("[").color(NamedTextColor.GRAY)
+                        .append(Component.text("OWNER").color(NamedTextColor.DARK_PURPLE))
+                        .append(Component.text("] ").color(NamedTextColor.GRAY)));
+        getCommand("role").setExecutor(new Command());
     }
 
     @Override

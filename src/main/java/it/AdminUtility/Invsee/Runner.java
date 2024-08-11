@@ -1,4 +1,4 @@
-package it.commands.Invsee;
+package it.AdminUtility.Invsee;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;

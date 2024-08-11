@@ -17,7 +17,6 @@ import java.util.List;
 
 public class SetSize implements CommandExecutor, TabCompleter {
     public static final String[] arguments1 = {"0.05 - 16"};
-    public static final String[] arguments2 = {"getOtherOnlinePlayers"};
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,  String[] args) {

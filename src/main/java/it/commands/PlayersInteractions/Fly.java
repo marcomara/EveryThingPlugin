@@ -1,4 +1,4 @@
-package it.commands.Utils;
+package it.commands.PlayersInteractions;
 
 import net.kyori.adventure.util.TriState;
 import org.bukkit.command.Command;

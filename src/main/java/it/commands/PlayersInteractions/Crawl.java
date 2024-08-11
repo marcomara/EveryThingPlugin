@@ -32,8 +32,7 @@ public class Crawl implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
         ls =new PlayerMovement();
         Location l = player.getLocation();
-        World w = l.getWorld();
-        w.getBlockAt(l.getBlockX(), l.getBlockY()+1, l.getBlockZ()).setType(Material.BARRIER, true);
+        l.getBlock().getRelative(BlockFace.UP).setType(Material.BARRIER, true);
         player.setPose(Pose.SWIMMING);
         Bukkit.getPluginManager().registerEvents(ls, plugin);
         Bukkit.getPluginManager().registerEvents(new StopCrawling(), plugin);
@@ -53,14 +52,22 @@ public class Crawl implements CommandExecutor, TabCompleter {
             e.getPlayer().getLocation().getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
         }
     }
-    public static class PlayerMovement implements Listener{
+    public class PlayerMovement implements Listener{
         @EventHandler
         public void listener(PlayerMoveEvent e){
+            if(e.getPlayer().isFlying()){
+                new StopCrawling().playerSneak(new PlayerToggleSneakEvent(e.getPlayer(), true));
+            }
             Block from = e.getFrom().getBlock();
             Block to = e.getTo().getBlock();
             if(from.getX()!=to.getX()||from.getZ()!=to.getZ()){
-                to.getWorld().getBlockAt(to.getX(), to.getY()+1, to.getZ()).setType(Material.BARRIER, true);
-                from.getRelative(BlockFace.UP).setType(Material.AIR);
+                Block toReplace = to.getRelative(BlockFace.UP);
+                if (toReplace.getType() == Material.AIR) {
+                    toReplace.setType(Material.BARRIER, true);
+                }
+                if (from.getRelative(BlockFace.UP).getType() == Material.BARRIER){
+                    from.getRelative(BlockFace.UP).setType(Material.AIR);
+                }
             }
         }
 

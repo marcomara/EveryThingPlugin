@@ -4,9 +4,12 @@ import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Stairs;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import static it.commands.PlayersInteractions.Sit.SlimeSit;
 
@@ -32,5 +35,17 @@ public class FastSit implements Listener {
             }
         }
 
+    }
+
+    @EventHandler
+    public void ExitEvent(PlayerToggleSneakEvent e){
+        if (e.getPlayer().getVehicle()!=null) {
+            e.setCancelled(true);
+            Entity en = e.getPlayer().getVehicle();
+            en.getPassengers().remove(e.getPlayer());
+            if (en.getType() == EntityType.SLIME && en.isInvisible()) {
+                en.remove();
+            }
+        }
     }
 }

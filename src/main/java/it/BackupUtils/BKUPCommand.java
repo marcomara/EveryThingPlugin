@@ -15,7 +15,7 @@ import java.util.List;
 
 import static it.plugin.Plugin.bkfolder;
 
-public class BKUPCommand implements CommandExecutor, TabCompleter {
+public class BKUPCommand implements CommandExecutor {
     Plugin plugin;
 
     public BKUPCommand(Plugin plugin) {
@@ -25,7 +25,7 @@ public class BKUPCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (commandSender.isOp()) {
+        if (commandSender.hasPermission(command.getPermission())) {
             if (args[0].equals("all")) {
                 new AllWorldsRun(bkfolder).runTaskAsynchronously(plugin);
             } else {
@@ -38,12 +38,14 @@ public class BKUPCommand implements CommandExecutor, TabCompleter {
         return false;
     }
 
-    @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (args.length == 1) {
-            return getWorldsNames();
+    public static class BKUPTab implements TabCompleter {
+        @Override
+        public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+            if (args.length == 1) {
+                return getWorldsNames();
+            }
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
 
     private static List<String> getWorldsNames() {

@@ -55,7 +55,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             }
             if (args.length == 2) {
                 if (args[0].equals("add")) {
-                    if (!sender.isOp()) {
+                    if (!sender.hasPermission("admin.wset")) {
                         sender.sendMessage(Colors.RED + "Only OPs can do that!");
                         return true;
                     }
@@ -69,7 +69,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 if (args[0].equals("remove")) {
-                    if (!sender.isOp()) {
+                    if (!sender.hasPermission("admin.wset")) {
                         sender.sendMessage(Colors.RED + "Only OPs can do that!");
                         return true;
                     }
