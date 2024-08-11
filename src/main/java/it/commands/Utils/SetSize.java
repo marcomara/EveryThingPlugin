@@ -36,7 +36,7 @@ public class SetSize implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if(args.length==1)return new ArrayList<>(Arrays.asList(arguments1));
-        if (args.length == 2 && commandSender.isOp()) return TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender);
+        if (args.length == 2 && commandSender.hasPermission("admin.ssize")) return TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender);
         return new ArrayList<>();
     }
 }

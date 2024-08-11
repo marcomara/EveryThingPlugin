@@ -48,7 +48,7 @@ public class ChatUtils {
 
     public static void BroadcastToOPs(String msg, NamedTextColor color){
         for (Player p : Bukkit.getOnlinePlayers()){
-            if (p.isOp()) p.sendMessage(Component.text(msg).color(color));
+            if (p.hasPermission("broadcast.op")) p.sendMessage(Component.text(msg).color(color));
         }
     }
 }

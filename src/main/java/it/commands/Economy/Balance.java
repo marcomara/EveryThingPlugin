@@ -83,7 +83,7 @@ public class Balance implements CommandExecutor, TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         List<String> toreturn = new ArrayList<>();
         if(args.length==1) {
-            if (commandSender.isOp()) {
+            if (commandSender.hasPermission("admin.mmod")) {
                 toreturn.addAll(Arrays.asList(arguments1));
                 return toreturn;
             }

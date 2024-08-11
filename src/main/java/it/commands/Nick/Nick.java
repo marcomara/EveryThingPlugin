@@ -55,7 +55,7 @@ public class Nick implements CommandExecutor, TabCompleter {
             NickHandler.wrap(p,args[1]);
             return true;
         }
-        if(sender instanceof Player && sender.isOp() && args.length==2){
+        if(sender instanceof Player && sender.hasPermission("admin.nick") && args.length==2){
             Player p = Bukkit.getPlayer(args[0]);
             if(p==null){
                 sender.sendMessage("No player found");
@@ -72,7 +72,7 @@ public class Nick implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         List<String> toreturn = new ArrayList<>();
-        if(args.length==1 && commandSender.isOp()){
+        if(args.length==1 && commandSender.hasPermission("admin.nick")){
             toreturn.add("getOriginalName");
             toreturn.addAll(TabCompleteUtils.getOtherOnlinePlayers((Player)commandSender));
 

@@ -22,7 +22,7 @@ public class EnderChest implements CommandExecutor, TabCompleter {
             p.openInventory(p.getEnderChest());
             return true;
         }
-        if(args.length==1&&commandSender.isOp()){
+        if(args.length==1&&commandSender.hasPermission("admin.ecsee")){
             if(Bukkit.getPlayer(args[0]).isOnline()) {
                 p.openInventory(Bukkit.getPlayer(args[0]).getEnderChest()).setTitle(args[0] + "'s enderchest");
             }else if(Bukkit.getOfflinePlayerIfCached(args[0]).hasPlayedBefore()){
@@ -33,7 +33,7 @@ public class EnderChest implements CommandExecutor, TabCompleter {
     }
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if(commandSender.isOp()) return TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender);
+        if(commandSender.hasPermission("admin.ecsee")) return TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender);
         return new ArrayList<>();
     }
 }

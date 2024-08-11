@@ -65,7 +65,7 @@ public class Command implements CommandExecutor, TabCompleter {
         if(args.length==1){
             return StringUtil.copyPartialMatches(args[args.length -1], instance.getRPListForCommand(),  new ArrayList<>());
         }
-        if(commandSender.isOp()&&args.length==2){
+        if(commandSender.hasPermission("admin.rpset")&&args.length==2){
             List<String> playernames= new ArrayList<>();
             for (Player p : Bukkit.getOnlinePlayers()){
                 playernames.add(p.getName());

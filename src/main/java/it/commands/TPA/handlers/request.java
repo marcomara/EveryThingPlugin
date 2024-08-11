@@ -32,7 +32,7 @@ public class request {
         if(list==null){
             sender.sendMessage("An error occurred, this will be auto-reported to the server admins");
             for(Player all : Bukkit.getOnlinePlayers()){
-                if(all.isOp()){
+                if(all.hasPermission("broadcast.op")){
                     all.sendMessage("An error in the tpa command execution occurred");
                 }
             }

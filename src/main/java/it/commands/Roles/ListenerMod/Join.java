@@ -22,7 +22,7 @@ public class Join implements Listener{
         e.joinMessage(ChatUtils.rjoin(e.getPlayer()));
         new Motd(e.getPlayer(),plugin);
         save(pf,pfyml);
-        if(updateTell && e.getPlayer().isOp()){
+        if(updateTell && e.getPlayer().hasPermission("broadcast.op")){
             e.getPlayer().sendMessage(plugin.getName() + " can be upgraded to a newer version!");
         }
         if(booleanMap.get("ResourcePacks.forcePack")){

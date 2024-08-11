@@ -5,6 +5,7 @@ api-version: '1.21'
 author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
+prefix: "[EveryThingPlugin]"
 commands:
   role:
     usage: /command
@@ -171,6 +172,10 @@ permissions:
       admin.roles: true
       admin.mmod: true
       admin.chunk: true
+      admin.ecsee: true
+      admin.rpset: true
+      admin.nick: true
+      admin.ssize: true
   commands.all:
     default: not op
     children:
@@ -197,3 +202,8 @@ permissions:
       commands.rpset: true
       commands.fly: true
       commands.crawl: true
+  broadcast.generic:
+    default: not op
+    children:
+      broadcast.op: false
+      broadcast.normal: true
