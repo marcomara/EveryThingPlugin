@@ -3,6 +3,7 @@ package it.plugin;
 import it.commands.DisabledCommandMessage;
 import it.commands.ResourcePacks.Instance;
 import it.commands.Roles.Command;
+import it.commands.Roles.Role;
 import it.commands.TPA.Data;
 import it.commands.Leash.CollisionTeam;
 import it.commands.Utils.MinecartSpawn;
@@ -55,6 +56,7 @@ public final class Plugin extends JavaPlugin {
     public static YamlConfiguration worlds;
     public static File bkfolder;
     public static it.plugin.Plugin plugin;
+    public static List<Role> rolesl;
 
     @NotNull private static String APIV = "1.21";
 
@@ -101,15 +103,9 @@ public final class Plugin extends JavaPlugin {
             MiscLoader.EventLoader();
             AdminUtilsLoader.CommandRegister();
             CommandsLoader.CommandsLoader();
-            /*Bukkit.getScheduler().runTaskAsynchronously(this, ()->{
-                try {
-                    Host.main(8080);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            });*/
         }
         getServer().getPluginManager().registerEvents(new MinecartSpawn(), this);
+        rolesl = new ArrayList<>();
         roles = Bukkit.getScoreboardManager().getNewScoreboard();
         roles.registerNewTeam("Owner")
                 .prefix(Component.text("[").color(NamedTextColor.GRAY)
@@ -125,10 +121,5 @@ public final class Plugin extends JavaPlugin {
             lgg.log(Level.INFO, "Disabled");
             metrics.shutdown();
         }
-        /*try{
-            Host.stop();
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
     }
 }

@@ -1,36 +1,38 @@
 package it.commands.Roles;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.jetbrains.annotations.NotNull;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 
 import java.util.Map;
 
-public class Role implements ConfigurationSerializable {
+
+public class Role {
     private String name;
-    private Component prefix;
-    private int position;
+    private String prefix;
+    private String Hex;
 
-    public Role(String name, Component prefix, int position){
-        this.name=name;
-        this.prefix=prefix;
-        this.position=position;
+
+    public Role(String name, String prefix, String hex){
+        this.name = name;
+        this.prefix = prefix;
+        this.Hex = hex;
     }
-
-    @Override
-    public @NotNull Map<String, Object> serialize() {
+    public Map<String, String> serialize() {
         return Map.of("Name" , name,
                 "Prefix", prefix,
-                "Position", position);
+                "Color", Hex);
     }
 
     public String getName(){return name;}
 
-    public Component getPrefix(){return prefix;}
+    public Component getPrefix() {
+        return Component.text(prefix).color(TextColor.fromHexString(Hex));
+    }
 
-    public int getPosition(){return position;}
-
-    public Role deserialize(Map<String, Object> map){
-        return new Role((String) map.get("Name"), (Component) map.get("Prefix"), (Integer) map.get("Position"));
+    public Component getDisplayPrefix(){
+        return Component.text("[").color(NamedTextColor.GRAY)
+                .append(Component.text(prefix).color(TextColor.fromHexString(Hex)))
+                .append(Component.text("] ").color(NamedTextColor.GRAY));
     }
 }

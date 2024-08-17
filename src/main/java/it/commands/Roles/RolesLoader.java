@@ -1,21 +1,23 @@
 package it.commands.Roles;
 
-import java.util.HashMap;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import static it.plugin.Plugin.roles;
+import static it.plugin.Plugin.*;
 
-public class RolesLoader {
-    public RolesLoader(List<Role> croles){
-        Map<Integer , Role> map = new HashMap<>();
-        for (Role r : croles){
-            map.put(r.getPosition(), r);
-        }
-        int i =0;
-        while(i< map.size()-1){
-            Role a = map.get(i);
-            roles.registerNewTeam(a.getName()).prefix(a.getPrefix());
+public class RolesLoader{
+    public RolesLoader() throws Exception{
+        File rfile = new File(dataFolder, "Roles.yml");
+        rfile.createNewFile();
+        YamlConfiguration rcfg = YamlConfiguration.loadConfiguration(rfile);
+        List<Map<?, ?>> list = rcfg.getMapList("Roles");
+        for (Map m : list){
+            Role r = new Role((String) m.get("Name"), (String) m.get("Prefix"), (String) m.get("Color"));
+            roles.registerNewTeam(r.getName()).prefix(r.getDisplayPrefix());
+            rolesl.add(r);
         }
     }
 }

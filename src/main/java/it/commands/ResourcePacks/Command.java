@@ -2,9 +2,6 @@ package it.commands.ResourcePacks;
 
 import it.utils.Codecs;
 import it.utils.Colors;
-import net.kyori.adventure.resource.ResourcePackInfo;
-import net.kyori.adventure.resource.ResourcePackRequest;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,10 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static it.plugin.Plugin.instance;
 

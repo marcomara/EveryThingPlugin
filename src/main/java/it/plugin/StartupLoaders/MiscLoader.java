@@ -26,6 +26,8 @@ import it.listeners.Misc;
 import it.commands.Leash.CollisionTeam;
 import it.utils.SaveUtility;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 
 import java.io.File;
 
@@ -96,7 +98,10 @@ public class MiscLoader {
             commands.add("invsee");
         }else plugin.getCommand("invsee").setExecutor(executor);
         if (booleanMap.get("Misc.isFastSleepEnabled")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new FastSleep(plugin), plugin);
+            for (World w : Bukkit.getWorlds() ){
+                Bukkit.getPluginManager().registerEvents(new FastSleep(plugin), plugin);
+                w.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, intMap.get("Misc.FastSleepPercentage"));
+            }
         }
         if (booleanMap.get("Misc.CommandsList")) {
             plugin.getCommand("commands").setExecutor(new CommandList(plugin));
