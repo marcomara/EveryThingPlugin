@@ -1,7 +1,5 @@
 package it.plugin;
 
-import it.Misc.KnockDown.KnockListener;
-import it.Misc.KnockDown.Reanimate;
 import it.commands.DisabledCommandMessage;
 import it.commands.ResourcePacks.Instance;
 import it.commands.Roles.Command;
@@ -114,8 +112,7 @@ public final class Plugin extends JavaPlugin {
                         .append(Component.text("OWNER").color(NamedTextColor.DARK_PURPLE))
                         .append(Component.text("] ").color(NamedTextColor.GRAY)));
         getCommand("role").setExecutor(new Command());
-        Bukkit.getPluginManager().registerEvents(new KnockListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new Reanimate(this), this);
+
     }
 
     @Override

@@ -1,5 +1,7 @@
 package it.Misc.KnockDown;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
@@ -38,7 +40,7 @@ public class KnockListener implements Listener {
         e.getPlayer().setUnsaturatedRegenRate(999999999);
         e.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
         e.getPlayer().getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.4);
-        BukkitTask br = new D(e.getPlayer()).runTaskTimer(p,0L,1L);
+        BukkitTask br = new D(e.getPlayer()).runTaskTimer(p,0L,0L);
         down.put(e.getPlayer(), br);
     }
     public class D extends BukkitRunnable{
@@ -50,6 +52,14 @@ public class KnockListener implements Listener {
         }
         @Override
         public void run() {
+            if(i==200){
+                p.sendMessage(Component.text("10").color(NamedTextColor.GOLD));
+            }
+            if (i<101){
+                if (i%20==0){
+                    p.sendMessage(Component.text(i/20).color(NamedTextColor.RED));
+                }
+            }
             if (i==0){
                 p.setHealth(0);
             }

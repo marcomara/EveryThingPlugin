@@ -3,6 +3,8 @@ package it.plugin.StartupLoaders;
 import it.AdminUtility.ClearLagTasks;
 import it.BackupUtils.AllWorldsRun;
 import it.BackupUtils.BKUPCommand;
+import it.Misc.KnockDown.KnockListener;
+import it.Misc.KnockDown.Reanimate;
 import it.commands.ChunkLoader.ChunkLoaderCommand;
 import it.commands.ChunkLoader.ChunkLoaderHandler;
 import it.commands.PlayersInteractions.Carry;
@@ -52,6 +54,10 @@ public class MiscLoader {
             }else worlds.set("worlds", new ArrayList<String>());
             save(conff, worlds);
         }*/
+        if (booleanMap.get("KnockDown.isEnabled")){
+                Bukkit.getPluginManager().registerEvents(new KnockListener(plugin), plugin);
+            Bukkit.getPluginManager().registerEvents(new Reanimate(plugin), plugin);
+        }
         if (booleanMap.get("ClearLag.EnableItemsCheck")){
             new ClearLagTasks.ItemRemoveMsg().runTaskTimerAsynchronously(plugin,
                     20L*60*(intMap.get("ClearLag.CheckTimer")-1) ,

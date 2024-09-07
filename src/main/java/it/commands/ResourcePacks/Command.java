@@ -67,6 +67,6 @@ public class Command implements CommandExecutor, TabCompleter {
             }
             return StringUtil.copyPartialMatches(args[args.length -1], playernames, new ArrayList<>());
         }
-        return null;
+        return new ArrayList<>();
     }
 }

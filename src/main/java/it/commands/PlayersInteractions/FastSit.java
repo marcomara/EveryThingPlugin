@@ -40,7 +40,6 @@ public class FastSit implements Listener {
     @EventHandler
     public void ExitEvent(PlayerToggleSneakEvent e){
         if (e.getPlayer().getVehicle()!=null) {
-            e.setCancelled(true);
             Entity en = e.getPlayer().getVehicle();
             en.getPassengers().remove(e.getPlayer());
             if (en.getType() == EntityType.SLIME && en.isInvisible()) {

@@ -1,5 +1,6 @@
 package it.commands.Utils;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.block.data.Rail;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -20,7 +21,7 @@ public class MinecartSpawn implements Listener {
             }
             Entity m = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation(), Minecart.class);
             m.setPersistent(false);
-            m.setCustomName("temp");
+            m.customName(Component.text("temp"));
             m.setCustomNameVisible(false);
         }
     }
