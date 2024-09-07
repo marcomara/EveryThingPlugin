@@ -1,11 +1,15 @@
 package it.commands.Warp;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static it.plugin.Plugin.lgg;
 
 public class WarpPoint implements ConfigurationSerializable{
     private String name;
@@ -36,8 +40,12 @@ public class WarpPoint implements ConfigurationSerializable{
         data.put("location",location);
         return data;
     }
-    @NotNull
     public static WarpPoint deserialize(@NotNull Map<String,Object> data){
-        return new WarpPoint((Location)data.get("location"),(String)data.get("name"));
+        try {
+            return new WarpPoint((Location) data.get("location"), (String) data.get("name"));
+        }catch (IllegalArgumentException e){
+            lgg.warning("Some of your warp point to other worlds and will not work, worlds are not supported yet");
+            return null;
+        }
     }
 }

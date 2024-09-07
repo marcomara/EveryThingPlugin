@@ -5,7 +5,7 @@ api-version: '1.21'
 author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
-prefix: "[EveryThingPlugin]"
+prefix: "EveryThingPlugin"
 commands:
   role:
     usage: /command

@@ -58,6 +58,9 @@ Backup:
   AutomaticBackups: true
   BKTimer: 20 #Expressed in minutes, backs up all the worlds
   NumOfBackups: 5
+KnockDown:
+  isEnabled: true
+  Timer: 20 #Expressed in seconds, time before a knocked player will die. A negative number represents an infinite amount of time
 ClearLag:
   EnableItemsCheck: true
   CheckTimer: 10 #Expressed in minutes
@@ -66,4 +69,4 @@ ClearLag:
 Roles:
   Enable: true
 #DO NOT TOUCH THIS
-ConfigVersion: 25.0
+ConfigVersion: 27.0

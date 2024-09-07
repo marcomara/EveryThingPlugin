@@ -38,6 +38,9 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
         }
         for (Map data : list) {
             WarpPoint point = WarpPoint.deserialize(data);
+            if (point == null){
+                continue;
+            }
             map.put(point.getName(), point.getLocation());
         }
     }
