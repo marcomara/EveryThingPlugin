@@ -66,11 +66,6 @@ public class MiscLoader {
         }*/
         if (booleanMap.get("KnockDown.isEnabled")){
             boolean i=false;
-            if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null){
-                new ProtocolLibOn().start();
-                new KnockListenerLib().Start();
-                i = true;
-            }
             Bukkit.getPluginManager().registerEvents(new KnockListener(plugin,i), plugin);
             Bukkit.getPluginManager().registerEvents(new Reanimate(plugin,i), plugin);
         }

@@ -1,7 +1,6 @@
 package it.commands.PlayersInteractions;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
-import it.Misc.KnockDown.TRY;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
