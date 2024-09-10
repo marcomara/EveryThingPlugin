@@ -26,6 +26,7 @@ Misc:
   CommandsList: true
   isTPAEnabled: true
   TPATimer: 120 #Expressed in seconds
+  MinecartSpawn: true
 Economy:
   isEnabled: true
   symbol: '$'

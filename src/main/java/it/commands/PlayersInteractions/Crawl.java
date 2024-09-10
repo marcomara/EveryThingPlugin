@@ -1,6 +1,7 @@
 package it.commands.PlayersInteractions;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import it.Misc.KnockDown.TRY;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -29,13 +30,16 @@ public class Crawl implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        Player player = (Player) sender;
+        /*Player player = (Player) sender;
         ls =new PlayerMovement();
         Location l = player.getLocation();
         l.getBlock().getRelative(BlockFace.UP).setType(Material.BARRIER, true);
         player.setPose(Pose.SWIMMING);
         Bukkit.getPluginManager().registerEvents(ls, plugin);
-        Bukkit.getPluginManager().registerEvents(new StopCrawling(), plugin);
+        Bukkit.getPluginManager().registerEvents(new StopCrawling(), plugin);*/
+        Bukkit.getScheduler().runTaskTimer(plugin, ()->{
+            new TRY().a((Player) sender);
+        },0L,0L);
         return true;
     }
 

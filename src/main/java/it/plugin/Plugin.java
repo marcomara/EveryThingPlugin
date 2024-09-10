@@ -1,16 +1,12 @@
 package it.plugin;
 
+import it.AdminUtility.OnTime;
 import it.commands.DisabledCommandMessage;
 import it.commands.ResourcePacks.Instance;
-import it.commands.Roles.Command;
 import it.commands.Roles.Role;
-import it.commands.TPA.Data;
 import it.commands.Leash.CollisionTeam;
-import it.commands.Utils.MinecartSpawn;
 import it.plugin.StartupLoaders.*;
 import it.utils.UpdateChecker;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -41,8 +37,6 @@ public final class Plugin extends JavaPlugin {
     public static FileConfiguration CFC;
     public static List<String> LoadedChunks = new ArrayList<>();
     public static List<String> commands = new ArrayList<>();
-    public static int tpatimer;
-    public static HashMap<String, List<Data>> tpatable = new HashMap<>();
     public boolean FullDisable = true;
     public static Map<String, Boolean> booleanMap = new HashMap<>();
     public static Map<String, String> strMap = new HashMap<>();
@@ -59,6 +53,8 @@ public final class Plugin extends JavaPlugin {
     public static List<Role> rolesl;
 
     @NotNull private static String APIV = "1.21";
+
+    public static OnTime.Timer timerc = new OnTime.Timer();
 
     @Override
     public void onLoad() {
@@ -104,15 +100,6 @@ public final class Plugin extends JavaPlugin {
             AdminUtilsLoader.CommandRegister();
             CommandsLoader.CommandsLoader();
         }
-        getServer().getPluginManager().registerEvents(new MinecartSpawn(), this);
-        rolesl = new ArrayList<>();
-        roles = Bukkit.getScoreboardManager().getNewScoreboard();
-        roles.registerNewTeam("Owner")
-                .prefix(Component.text("[").color(NamedTextColor.GRAY)
-                        .append(Component.text("OWNER").color(NamedTextColor.DARK_PURPLE))
-                        .append(Component.text("] ").color(NamedTextColor.GRAY)));
-        getCommand("role").setExecutor(new Command());
-
     }
 
     @Override

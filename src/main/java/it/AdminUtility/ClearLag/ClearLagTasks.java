@@ -1,4 +1,4 @@
-package it.AdminUtility;
+package it.AdminUtility.ClearLag;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

@@ -19,29 +19,25 @@ import static it.plugin.Plugin.intMap;
 public class KnockListener implements Listener {
     public static Map<Player, BukkitTask> down = new HashMap<>();
     Plugin p;
-    public KnockListener(Plugin p){
+    boolean prtclb;
+    public KnockListener(Plugin p, boolean prtclb){
         this.p = p;
+        this.prtclb = prtclb;
     }
     @EventHandler
     public void Listener(PlayerDeathEvent e) {
         if (down.keySet().contains(e.getPlayer())){
             down.get(e.getPlayer()).cancel();
             down.remove(e.getPlayer());
-            e.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.10000000149011612);
-            e.getPlayer().getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.41999998688697815);
-            e.getPlayer().setSaturatedRegenRate(10);
-            e.getPlayer().setUnsaturatedRegenRate(80);
+            onRess(e.getPlayer());
             return;
         }
         e.setCancelled(true);
-        e.getPlayer().setHealth(1);
-        e.getPlayer().setPose(Pose.SWIMMING);
-        e.getPlayer().setSaturatedRegenRate(999999999);
-        e.getPlayer().setUnsaturatedRegenRate(999999999);
-        e.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
-        e.getPlayer().getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.4);
-        BukkitTask br = new D(e.getPlayer()).runTaskTimer(p,0L,0L);
-        down.put(e.getPlayer(), br);
+        onDeath(e.getPlayer());
+            e.getPlayer().setPose(Pose.SWIMMING);
+            BukkitTask br= new D(e.getPlayer()).runTaskTimer(p, 0L, 0L);
+            down.put(e.getPlayer(), br);
+
     }
     public class D extends BukkitRunnable{
         Player p;
@@ -55,7 +51,7 @@ public class KnockListener implements Listener {
             if(i==200){
                 p.sendMessage(Component.text("10").color(NamedTextColor.GOLD));
             }
-            if (i<101){
+            if (i<101&&i>0){
                 if (i%20==0){
                     p.sendMessage(Component.text(i/20).color(NamedTextColor.RED));
                 }
@@ -65,6 +61,21 @@ public class KnockListener implements Listener {
             }
             i--;
             p.setPose(Pose.SWIMMING);
+
         }
+    }
+
+    public static void onDeath(Player p){
+        p.setHealth(1);
+        p.setSaturatedRegenRate(999999999);
+        p.setUnsaturatedRegenRate(999999999);
+        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
+        p.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.4);
+    }
+    public static void onRess(Player p){
+        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.10000000149011612);
+        p.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.41999998688697815);
+        p.setSaturatedRegenRate(10);
+        p.setUnsaturatedRegenRate(80);
     }
 }

@@ -1,9 +1,10 @@
 package it.plugin.StartupLoaders;
 
-import it.AdminUtility.ClearLagTasks;
+import it.AdminUtility.ClearLag.ClearLagCommand;
 import it.BackupUtils.AllWorldsRun;
 import it.BackupUtils.BKUPCommand;
 import it.Misc.KnockDown.KnockListener;
+import it.Misc.KnockDown.KnockListenerLib;
 import it.Misc.KnockDown.Reanimate;
 import it.commands.ChunkLoader.ChunkLoaderCommand;
 import it.commands.ChunkLoader.ChunkLoaderHandler;
@@ -12,6 +13,7 @@ import it.commands.PlayersInteractions.FastSit;
 import it.commands.PlayersInteractions.Sit;
 import it.commands.ResourcePacks.Server.Server;
 import it.commands.ResourcePacks.Starter;
+import it.commands.Roles.RolesLoader;
 import it.commands.TPA.Command;
 import it.commands.Utils.BedrockBuild;
 import it.commands.Utils.CommandList;
@@ -19,6 +21,7 @@ import it.commands.DisabledCommandMessage;
 import it.commands.Suggestions;
 import it.commands.Economy.Balance;
 import it.AdminUtility.Invsee.invsee;
+import it.commands.Utils.MinecartSpawn;
 import it.events.Join;
 import it.commands.Leash.LeashEvent;
 import it.events.Quit;
@@ -26,12 +29,16 @@ import it.listeners.Bell;
 import it.listeners.FastSleep;
 import it.listeners.Misc;
 import it.commands.Leash.CollisionTeam;
+import it.plugin.ProtocolLibOn;
 import it.utils.SaveUtility;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static it.plugin.Plugin.*;
 import static it.utils.SaveUtility.*;
@@ -41,6 +48,9 @@ public class MiscLoader {
     public static void Loader() {
         if(booleanMap.get("ResourcePacks.isEnabled")){
             new Starter(new File(dataFolder, "ResourcePacks"), plugin);
+        }
+        if (booleanMap.get("Misc.MinecartSpawn")){
+            plugin.getServer().getPluginManager().registerEvents(new MinecartSpawn(), plugin);
         }
         /*if (booleanMap.get("Worlds.isEnable")){
             plugin.getCommand("world").setExecutor(new Command());
@@ -55,17 +65,17 @@ public class MiscLoader {
             save(conff, worlds);
         }*/
         if (booleanMap.get("KnockDown.isEnabled")){
-                Bukkit.getPluginManager().registerEvents(new KnockListener(plugin), plugin);
-            Bukkit.getPluginManager().registerEvents(new Reanimate(plugin), plugin);
+            boolean i=false;
+            if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null){
+                new ProtocolLibOn().start();
+                new KnockListenerLib().Start();
+                i = true;
+            }
+            Bukkit.getPluginManager().registerEvents(new KnockListener(plugin,i), plugin);
+            Bukkit.getPluginManager().registerEvents(new Reanimate(plugin,i), plugin);
         }
         if (booleanMap.get("ClearLag.EnableItemsCheck")){
-            new ClearLagTasks.ItemRemoveMsg().runTaskTimerAsynchronously(plugin,
-                    20L*60*(intMap.get("ClearLag.CheckTimer")-1) ,
-                    20L*60*intMap.get("ClearLag.CheckTimer"));
-            new ClearLagTasks.ItemsRemove().runTaskTimerAsynchronously(plugin,
-                    20L*60*intMap.get("ClearLag.CheckTimer"),
-                    20L*60*intMap.get("ClearLag.CheckTimer"));
-
+            plugin.getCommand("clearlag").setExecutor(new ClearLagCommand());
         }
         if(booleanMap.get("Backup.Enabled")){
             plugin.getCommand("backup").setExecutor(new BKUPCommand(plugin));
@@ -83,9 +93,8 @@ public class MiscLoader {
             }
         }
         if (booleanMap.get("Misc.isTPAEnabled")) {
-            tpatimer = plugin.getConfig().getInt("misc.TPATimer");
-            plugin.getCommand("tpa").setExecutor(new Command());
-            plugin.getCommand("tpa").setTabCompleter(new Command());
+            plugin.getCommand("tpa").setExecutor(new Command(plugin.getConfig().getInt("Misc.TPATimer")));
+            plugin.getCommand("tpa").setTabCompleter(new Command.TPACommandCompleter());
             commands.add("tpa");
         } else plugin.getCommand("tpa").setExecutor(executor);
         if (booleanMap.get("Misc.isChunkLoaderEnabled")) {
@@ -144,6 +153,18 @@ public class MiscLoader {
 
     public static void EventLoader() {
         if (booleanMap.get("Roles.Enable")){
+            rolesl = new ArrayList<>();
+            roles = Bukkit.getScoreboardManager().getNewScoreboard();
+            roles.registerNewTeam("Owner")
+                    .prefix(Component.text("[").color(NamedTextColor.GRAY)
+                            .append(Component.text("OWNER").color(NamedTextColor.DARK_PURPLE))
+                            .append(Component.text("] ").color(NamedTextColor.GRAY)));
+            plugin.getCommand("role").setExecutor(new it.commands.Roles.Command());
+            try {
+                new RolesLoader();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             Bukkit.getServer().getPluginManager().registerEvents(new it.commands.Roles.ListenerMod.Join(plugin), plugin);
             Bukkit.getServer().getPluginManager().registerEvents(new it.commands.Roles.ListenerMod.Quit(), plugin);
             Bukkit.getServer().getPluginManager().registerEvents(new it.commands.Roles.ListenerMod.Misc(), plugin);

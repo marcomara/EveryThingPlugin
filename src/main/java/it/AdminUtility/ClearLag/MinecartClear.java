@@ -1,4 +1,4 @@
-package it.AdminUtility;
+package it.AdminUtility.ClearLag;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -9,9 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Minecart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +19,7 @@ import java.util.List;
 
 import static it.plugin.Plugin.intMap;
 
-public class StandClear implements CommandExecutor, TabCompleter {
+public class MinecartClear implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] strings) {
         if(!commandSender.hasPermission(command.getPermission())){
@@ -36,40 +35,40 @@ public class StandClear implements CommandExecutor, TabCompleter {
                 Entity[] ae = c.getEntities();
                 List<Entity> rm= new ArrayList<>();
                 for(Entity e : ae){
-                    if (e.getType()== EntityType.ARMOR_STAND) rm.add(e);
+                    if (e instanceof Minecart) rm.add(e);
                 }
-                if(intMap.get("AdminUtils.Values.MaxStandChunk")==-1){
+                if(intMap.get("AdminUtils.Values.MaxMinecartChunk")==-1){
                     wrm.addAll(rm);
                     continue;
                 }
-                while(rm.size()>intMap.get("AdminUtils.Values.MaxStandChunk")){
+                while(rm.size()>intMap.get("AdminUtils.Values.MaxMinecartChunk")){
                     Bukkit.getEntity(rm.getLast().getUniqueId()).remove();
                     i++;
                     rm.removeLast();
                 }
                 wrm.addAll(rm);
             }
-            if(intMap.get("AdminUtils.Values.MaxStandWorld")==-1){
+            if(intMap.get("AdminUtils.Values.MaxMinecartWorld")==-1){
                 srm.addAll(wrm);
                 continue;
             }
-            while(wrm.size()>intMap.get("AdminUtils.Values.MaxStandWorld")){
+            while(wrm.size()>intMap.get("AdminUtils.Values.MaxMinecartWorld")){
                 Bukkit.getEntity(wrm.getLast().getUniqueId()).remove();
                 i++;
                 wrm.removeLast();
             }
             srm.addAll(wrm);
         }
-        if(intMap.get("AdminUtils.Values.MaxStandServer")==-1){
-            commandSender.sendMessage(Component.text("Removed " + i + " armor stand/s").color(NamedTextColor.WHITE));
+        if(intMap.get("AdminUtils.Values.MaxMinecartServer")==-1){
+            commandSender.sendMessage(Component.text("Removed " + i + " minecart/s").color(NamedTextColor.WHITE));
             return true;
         }
-        while(srm.size()>intMap.get("AdminUtils.Values.MaxStandServer")){
+        while(srm.size()>intMap.get("AdminUtils.Values.MaxMinecartServer")){
             Bukkit.getEntity(srm.getLast().getUniqueId()).remove();
             i++;
             srm.removeLast();
         }
-        commandSender.sendMessage(Component.text("Removed " + i + " armor stand/s").color(NamedTextColor.WHITE));
+        commandSender.sendMessage(Component.text("Removed " + i + " minecart/s").color(NamedTextColor.WHITE));
         return true;
     }
     @Override

@@ -6,7 +6,14 @@ author: il_maranna
 description: A Plugin meant to include as much features as possible
 load: POSTWORLD
 prefix: "EveryThingPlugin"
+softdepend: [ProtocolLib]
 commands:
+  ontime:
+    usage: /command
+    permission: commands.ontime
+  clearlag:
+    usage: /command skip|start|stop
+    permission: admin.clearlag
   role:
     usage: /command
     permission: admin.roles
@@ -160,6 +167,7 @@ permissions:
   admin.all:
     default: op
     children:
+      admin.clearlag: true
       admin.rel: true
       admin.wset: true
       admin.invsee: true
@@ -179,6 +187,7 @@ permissions:
   commands.all:
     default: not op
     children:
+      commands.ontime: true
       commands.warp: true
       commands.suicide: true
       commands.coords: true

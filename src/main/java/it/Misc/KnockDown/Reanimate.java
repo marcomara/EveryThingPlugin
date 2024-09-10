@@ -26,9 +26,11 @@ public class Reanimate implements Listener {
 
     public static Map<Player, BukkitTask> map = new HashMap<>();
     public static Map<Player, List<Player>> revmap = new HashMap<>();
+    static boolean prtclb;
 
-    public Reanimate (Plugin p){
+    public Reanimate (Plugin p, boolean prtclb){
         this.p=p;
+        this.prtclb=prtclb;
     }
 
     @EventHandler
@@ -59,7 +61,7 @@ public class Reanimate implements Listener {
             p.sendMessage(Component.text("You are being reanimated by " + r.getName()).color(NamedTextColor.GREEN));
         }
         BukkitRunnable rn = new C(0,r);
-        map.put(r,rn.runTaskTimer(p,0L,20L));
+        map.put(r,rn.runTaskTimer(p,0L,2L));
     }
 
     public static void Revive(Player p){
@@ -76,12 +78,9 @@ public class Reanimate implements Listener {
         }
         p.sendMessage(Component.text("You reanimated nearby players").color(NamedTextColor.GREEN));
         for (Player dp: pl){
-            dp.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.10000000149011612);
-            dp.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.41999998688697815);
-            dp.setSaturatedRegenRate(10);
-            dp.setUnsaturatedRegenRate(80);
-            down.get(dp).cancel();
-            down.remove(dp);
+                KnockListener.onRess(dp);
+                down.get(dp).cancel();
+                down.remove(dp);
             dp.sendMessage(Component.text(p.getName() + " reanimated you").color(NamedTextColor.GREEN));
         }
     }
