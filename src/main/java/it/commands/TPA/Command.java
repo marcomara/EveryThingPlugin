@@ -1,6 +1,12 @@
 package it.commands.TPA;
 
 import it.utils.TabCompleteUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -33,7 +39,6 @@ public class Command implements CommandExecutor {
             tminutes=tminutes-60;
             thours++;
         }
-        lgg.info("TPATimer set to: " + thours + ":" + tminutes + ":" + tseconds);
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String string, @NotNull String[] args) {
@@ -53,7 +58,10 @@ public class Command implements CommandExecutor {
                         table.remove(csender);
                         tasks.get(csender).cancel();
                         tasks.remove(csender);
-                        csender.teleport(((Player) sender));
+                        Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                            csender.teleport(((Player) sender).getLocation());
+                        }, 1L);
+
                         return true;
                     } else {
                         sender.sendMessage("You have no requests from " + args[1]);
@@ -81,6 +89,7 @@ public class Command implements CommandExecutor {
                 tasks.get(sender).cancel();
                 tasks.remove(sender);
             }
+            Bukkit.getPlayer(args[0]).sendMessage(request(sender.getName()));
             table.put((Player) sender, Bukkit.getPlayer(args[0]));
             tasks.put((Player) sender, new TPAtimer(Bukkit.getPlayer(args[0]), (Player) sender).runTaskTimerAsynchronously(plugin, 0L, 20L));
             return true;
@@ -145,5 +154,20 @@ public class Command implements CommandExecutor {
             }
             return applicants;
         }
+    }
+
+    private static Component request(String name){
+        TextComponent allow = Component.text("[Allow]").color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD)
+                .clickEvent(ClickEvent.runCommand("/tpa allow "+name))
+                .hoverEvent(HoverEvent.showText(Component.text("Allow the tpa request and teleport " + name + " to you")));
+        TextComponent deny = Component.text("[Deny]").color(NamedTextColor.RED).decorate(TextDecoration.BOLD)
+            .clickEvent(ClickEvent.runCommand("/tpa deny "+name))
+                .hoverEvent(HoverEvent.showText(Component.text("Deny the tpa request")));
+        return Component.text(name + " wants to teleport to you!")
+                .append(Component.text("\n" ))
+                .append(Component.text("        "))
+                .append(allow)
+                .append(Component.text("        "))
+                .append(deny);
     }
 }
