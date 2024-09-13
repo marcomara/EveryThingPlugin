@@ -13,11 +13,9 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import java.util.HashSet;
 import java.util.Set;
 
+import static it.plugin.Plugin.plugin;
+
 public class FastSleep implements Listener {
-    private final Plugin plugin;
-    public FastSleep(Plugin plugin){
-        this.plugin=plugin;
-    }
     private final Set<World> sleepingWorlds = new HashSet<>();
     @EventHandler
     public void onPlayerEnterBed(PlayerBedEnterEvent e){

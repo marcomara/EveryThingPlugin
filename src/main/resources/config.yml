@@ -14,7 +14,6 @@ Commands:
   isFlightEnabled: true
 Misc:
   isBedrockBridgeBuildEnabled: true
-  isChunkLoaderEnabled: true
   isSizeEnabled: true
   isSitEnabled: true
   isCrawlEnabled: true
@@ -34,6 +33,9 @@ ResourcePacks:
   isEnabled: true
   forcePack: false
   #you can find the configuration file for this function in the ResourcePacks folder
+Chunks:
+  ChunkLoader: true
+  XpFarmChunks: true
 AdminUtils:
   isInvseeEnabled: true
   isRELEnabled: true
@@ -70,4 +72,4 @@ ClearLag:
 Roles:
   Enable: true
 #DO NOT TOUCH THIS
-ConfigVersion: 27.0
+ConfigVersion: 28.0

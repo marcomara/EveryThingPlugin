@@ -8,20 +8,18 @@ import org.bukkit.entity.Pose;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
 import static it.plugin.Plugin.intMap;
+import static it.plugin.Plugin.plugin;
 
 public class KnockListener implements Listener {
     public static Map<Player, BukkitTask> down = new HashMap<>();
-    Plugin p;
     boolean prtclb;
-    public KnockListener(Plugin p, boolean prtclb){
-        this.p = p;
+    public KnockListener(boolean prtclb){
         this.prtclb = prtclb;
     }
     @EventHandler
@@ -35,7 +33,7 @@ public class KnockListener implements Listener {
         e.setCancelled(true);
         onDeath(e.getPlayer());
             e.getPlayer().setPose(Pose.SWIMMING);
-            BukkitTask br= new D(e.getPlayer()).runTaskTimer(p, 0L, 0L);
+            BukkitTask br= new D(e.getPlayer()).runTaskTimer(plugin, 0L, 0L);
             down.put(e.getPlayer(), br);
 
     }

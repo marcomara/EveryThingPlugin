@@ -16,8 +16,7 @@ public class ChunkLoaderHandler{
             List<String> chunks = LoadedChunks;
             for (String cs : chunks) {
                 String[] csa = cs.split("#");
-                String wname = csa[2];
-                Chunk chunk = Bukkit.getWorld(wname).getChunkAt(Integer.parseInt(csa[0]), Integer.parseInt(csa[1]));
+                Chunk chunk = Bukkit.getWorld(csa[2]).getChunkAt(Integer.parseInt(csa[0]), Integer.parseInt(csa[1]));
                 LoadChunk(chunk);
             }
         }catch (NullPointerException e){

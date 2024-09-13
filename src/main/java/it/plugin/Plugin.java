@@ -2,18 +2,14 @@ package it.plugin;
 
 import it.AdminUtility.OnTime;
 import it.commands.DisabledCommandMessage;
-import it.commands.ResourcePacks.Instance;
-import it.commands.Roles.Role;
-import it.commands.Leash.CollisionTeam;
 import it.plugin.StartupLoaders.*;
 import it.utils.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import it.utils.Metrics;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import static it.plugin.ConfigLoader.ValueLoader.*;
@@ -25,11 +21,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Plugin extends JavaPlugin {
-    public static Scoreboard roles;
-    public static Instance instance;
-    public static List<Entity> sitlist = new ArrayList<>();
+
+    public static List<BukkitTask> plugintasks = new ArrayList<>();
     public boolean cancontinue = true;
-    public static CollisionTeam team;
     public static File pf;
     public static FileConfiguration pfyml;
     public static String ecotype;
@@ -49,8 +43,7 @@ public final class Plugin extends JavaPlugin {
     public static DisabledCommandMessage executor = new DisabledCommandMessage();
     public static YamlConfiguration worlds;
     public static File bkfolder;
-    public static it.plugin.Plugin plugin;
-    public static List<Role> rolesl;
+    public static Plugin plugin;
 
     @NotNull private static String APIV = "1.21";
 

@@ -15,13 +15,10 @@ import java.util.List;
 import java.util.logging.Level;
 
 import static it.plugin.Plugin.lgg;
+import static it.plugin.Plugin.plugin;
 
 public class invsee implements CommandExecutor {
     public static final String[] arguments1 = {"getOtherOnlinePlayers"};
-    private final Plugin plugin;
-    public invsee (Plugin plugin){
-        this.plugin=plugin;
-    }
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if(!commandSender.hasPermission(command.getPermission())){commandSender.sendMessage(command.getPermissionMessage());return true;}

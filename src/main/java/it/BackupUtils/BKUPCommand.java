@@ -13,15 +13,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.plugin.Plugin.plugin;
+
 import static it.plugin.Plugin.bkfolder;
 
 public class BKUPCommand implements CommandExecutor {
-    Plugin plugin;
-
-    public BKUPCommand(Plugin plugin) {
-
-        this.plugin = plugin;
-    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {

@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -19,16 +18,15 @@ import java.util.List;
 import java.util.Map;
 
 import static it.Misc.KnockDown.KnockListener.down;
+import static it.plugin.Plugin.plugin;
 
 public class Reanimate implements Listener {
-    Plugin p;
 
     public static Map<Player, BukkitTask> map = new HashMap<>();
     public static Map<Player, List<Player>> revmap = new HashMap<>();
     static boolean prtclb;
 
-    public Reanimate (Plugin p, boolean prtclb){
-        this.p=p;
+    public Reanimate ( boolean prtclb){
         this.prtclb=prtclb;
     }
 
@@ -60,7 +58,7 @@ public class Reanimate implements Listener {
             p.sendMessage(Component.text("You are being reanimated by " + r.getName()).color(NamedTextColor.GREEN));
         }
         BukkitRunnable rn = new C(0,r);
-        map.put(r,rn.runTaskTimer(p,0L,2L));
+        map.put(r,rn.runTaskTimer(plugin,0L,2L));
     }
 
     public static void Revive(Player p){

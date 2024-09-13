@@ -15,9 +15,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.plugin.Plugin.instance;
-
 public class Command implements CommandExecutor, TabCompleter {
+
+    public static Instance instance;
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {

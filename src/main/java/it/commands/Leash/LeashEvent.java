@@ -19,16 +19,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.plugin.Plugin.team;
+import static it.plugin.Plugin.plugin;
 
 public class LeashEvent implements Listener{
     private final List<String> leashed = new ArrayList<>();
-
-    private final Plugin plugin;
-
-    public LeashEvent(Plugin plugin){
-        this.plugin=plugin;
-    }
+    public static CollisionTeam team = new CollisionTeam();;
 
     @EventHandler
     public void onLeashEvent(PlayerInteractEntityEvent event) {

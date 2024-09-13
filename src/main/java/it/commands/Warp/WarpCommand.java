@@ -1,6 +1,8 @@
 package it.commands.Warp;
 
 import it.utils.Colors;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static it.plugin.Plugin.dataFolder;
+import static it.plugin.Plugin.plugin;
 import static it.utils.SaveUtility.*;
 
 import java.io.File;
@@ -53,7 +56,15 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage("The warp point \"" + args[0] + "\" does not exists");
                     return true;
                 }
-                ((Player) sender).teleport(map.get(args[0]));
+                Chunk[] chunks =((Player) sender).getWorld().getLoadedChunks();
+                Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                    ((Player)sender).teleport(map.get(args[0]));
+                }, 1L);
+                for (Chunk c : chunks){
+                    if (c.getPlayersSeeingChunk().isEmpty()){
+                        c.unload();
+                    }
+                }
                 return true;
             }
             if (args.length == 2) {

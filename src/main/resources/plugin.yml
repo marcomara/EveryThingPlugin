@@ -8,6 +8,9 @@ load: POSTWORLD
 prefix: "EveryThingPlugin"
 softdepend: [ProtocolLib]
 commands:
+  xpfarm:
+    usage: /command
+    permission: commands.xpfarmchunk
   ontime:
     usage: /command
     permission: commands.ontime
@@ -187,6 +190,7 @@ permissions:
   commands.all:
     default: not op
     children:
+      commands.xpfarmchunk: false
       commands.ontime: true
       commands.warp: true
       commands.suicide: true
@@ -216,3 +220,8 @@ permissions:
     children:
       broadcast.op: false
       broadcast.normal: true
+  roles.all:
+    default: op
+    children:
+      roles.generic: false
+      roles.set: true

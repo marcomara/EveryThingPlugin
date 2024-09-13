@@ -13,12 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.plugin.Plugin.commands;
+import static it.plugin.Plugin.plugin;
 
 public class CommandList implements CommandExecutor, TabCompleter {
-    private final Plugin plugin;
-    public CommandList(Plugin plugin){
-        this.plugin=plugin;
-    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args){

@@ -15,6 +15,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 
 import static it.plugin.Plugin.*;
+import static it.commands.ResourcePacks.Command.instance;
 
 public class Starter {
     public static YamlConfiguration config;

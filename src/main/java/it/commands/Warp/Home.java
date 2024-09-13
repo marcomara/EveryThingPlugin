@@ -2,6 +2,7 @@ package it.commands.Warp;
 
 import it.utils.Colors;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -36,7 +37,15 @@ public class Home implements CommandExecutor, TabCompleter{
                     p.sendMessage(Colors.RED + "No home found");
                     return true;
                 }
-                p.teleport(new Location(Bukkit.getWorld(UUID.fromString(home.w)),home.x,home.y,home.z,home.yaw,home.p));
+                Chunk[] chunks = p.getWorld().getLoadedChunks();
+                Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                    p.teleport(new Location(Bukkit.getWorld(UUID.fromString(home.w)),home.x,home.y,home.z,home.yaw,home.p));
+                }, 1L);
+                for (Chunk c : chunks){
+                    if (c.getPlayersSeeingChunk().isEmpty()){
+                        c.unload();
+                    }
+                }
                 p.sendMessage(Colors.GREEN + "You've been teleported to your home");
                 return true;
             }

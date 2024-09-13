@@ -8,6 +8,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -58,10 +59,15 @@ public class Command implements CommandExecutor {
                         table.remove(csender);
                         tasks.get(csender).cancel();
                         tasks.remove(csender);
+                        Chunk[] chunks =((Player) sender).getWorld().getLoadedChunks();
                         Bukkit.getScheduler().runTaskLater(plugin, ()->{
                             csender.teleport(((Player) sender).getLocation());
                         }, 1L);
-
+                        for (Chunk c : chunks){
+                            if (c.getPlayersSeeingChunk().isEmpty()){
+                                c.unload();
+                            }
+                        }
                         return true;
                     } else {
                         sender.sendMessage("You have no requests from " + args[1]);
@@ -138,6 +144,7 @@ public class Command implements CommandExecutor {
                 toreturn.addAll(TabCompleteUtils.getOtherOnlinePlayers((Player) commandSender));
             }
             if (args.length == 2 && (args[0].equals("allow")||args[0].equals("deny"))) {
+
                 return getTpaSpecificOnlinePlayers(commandSender);
             }
             return toreturn;

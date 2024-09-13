@@ -5,8 +5,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import static it.Roles.Command.scoreboard;
 import static it.plugin.Plugin.lgg;
-import static it.plugin.Plugin.roles;
 
 public class ChatUtils {
     public static Component msg(Player p, String omsg){
@@ -17,7 +17,7 @@ public class ChatUtils {
     }
     public static Component rmsg(Player p, String omsg){
         try {
-            return roles.getPlayerTeam(p).prefix().append(Component.text(" ")).append(msg(p, omsg));
+            return scoreboard.getPlayerTeam(p).prefix().append(Component.text(" ")).append(msg(p, omsg));
         }catch (Exception e){
             lgg.warning("No team found for the messaging player");
             return msg(p,omsg);
@@ -32,7 +32,7 @@ public class ChatUtils {
 
     public static Component rjoin(Player p){
         try {
-            return roles.getPlayerTeam(p).prefix().append(Component.text(" ")).append(join(p));
+            return scoreboard.getPlayerTeam(p).prefix().append(Component.text(" ")).append(join(p));
         }catch (NullPointerException e){
             lgg.warning("No team found for the joining player");
             return join(p);
@@ -47,7 +47,7 @@ public class ChatUtils {
 
     public static Component rquit(Player p){
         try {
-            return roles.getPlayerTeam(p).prefix().append(Component.text(" ")).append(quit(p));
+            return scoreboard.getPlayerTeam(p).prefix().append(Component.text(" ")).append(quit(p));
         }catch (NullPointerException e){
             lgg.warning("No team found for the quitting player");
             return quit(p);

@@ -1,20 +1,74 @@
-package it.commands.Roles;
+package it.Roles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static it.plugin.Plugin.*;
+public class Command implements CommandExecutor {
 
-public class Command implements CommandExecutor, TabCompleter {
+
+    public static Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+    public static List<Integer> poslist = new ArrayList<>();
+    public static Map<String, Team> teams = new HashMap<>();
     @Override
+    public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        if (args.length==0){
+            sender.sendMessage("You are a " + scoreboard.getPlayerTeam((Player) sender).prefix());
+            return true;
+        }
+        if (args.length==3&&args[0].equals("set")){     //usage /role set player team
+            if (!sender.hasPermission("roles.set")){
+                sender.sendMessage("You don't have the permission to do that");
+                return true;
+            }
+            if (!teams.containsKey(args[2])){
+                sender.sendMessage(args[2] + " team does not exist");
+                return true;
+            }
+            Team t = teams.get(args[2]);
+            Player p = Bukkit.getPlayer(args[1]);
+            t.addPlayer(p);
+            p.sendMessage("You are now a " + t.prefix());
+            sender.sendMessage(p.getName() + " role updated");
+            return true;
+        }
+        if (args.length==3&&args[0].equals("remove")){
+            if (!sender.hasPermission("roles.remove")){
+                sender.sendMessage("You don't have the permission to do that");
+                return true;
+            }
+            if (!teams.containsKey(args[1])){
+                sender.sendMessage(args[1] + " team does not exist");
+                return true;
+            }
+            if (!teams.containsKey(args[2])){
+                sender.sendMessage("Replacement team \"" + args[2] +"\" does not exist");
+                return true;
+            }
+            teams.get(args[1]).unregister();
+            teams.remove(args[1]);
+        }
+        //usage /role create name displayname color position
+        //usage /role modify rname displayname|color|position newvalue
+        //usage /role remove name replacement
+        return true;
+    }
+
+
+
+
+
+
+    /*@Override
     public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(args.length==0 && sender instanceof Player){
             Player p = (Player) sender;
@@ -70,5 +124,5 @@ public class Command implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         return null;
-    }
+    }*/
 }
