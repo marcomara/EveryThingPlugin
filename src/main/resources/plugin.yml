@@ -1,5 +1,5 @@
 name: EveryThingPlugin
-version: 1.2
+version: 1.3
 main: it.plugin.Plugin
 api-version: '1.21'
 author: il_maranna
@@ -8,6 +8,18 @@ load: POSTWORLD
 prefix: "EveryThingPlugin"
 softdepend: [ProtocolLib]
 commands:
+  freeze:
+    usage: /command
+    permission: admin.freeze
+  claimarea:
+    usage: /command fromX fromY fromZ toX toY toZ allowGreefing name
+    permission: commands.area
+  skinupdate:
+    usage: /command
+  asjumpscare:
+    usage: /command player
+  world:
+    usage: /command
   xpfarm:
     usage: /command
     permission: commands.xpfarmchunk
@@ -170,6 +182,10 @@ permissions:
   admin.all:
     default: op
     children:
+      admin.area:
+        children:
+          admin.area.override: true
+      admin.freeze: true
       admin.clearlag: true
       admin.rel: true
       admin.wset: true
@@ -215,6 +231,7 @@ permissions:
       commands.rpset: true
       commands.fly: true
       commands.crawl: true
+      commands.area: true
   broadcast.generic:
     default: not op
     children:

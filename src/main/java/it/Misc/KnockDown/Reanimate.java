@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static it.Misc.KnockDown.KnockListener.down;
+import static it.plugin.Plugin.intMap;
 import static it.plugin.Plugin.plugin;
 
 public class Reanimate implements Listener {
@@ -58,7 +59,7 @@ public class Reanimate implements Listener {
             p.sendMessage(Component.text("You are being reanimated by " + r.getName()).color(NamedTextColor.GREEN));
         }
         BukkitRunnable rn = new C(0,r);
-        map.put(r,rn.runTaskTimer(plugin,0L,2L));
+        map.put(r,rn.runTaskTimer(plugin,0L,20L));
     }
 
     public static void Revive(Player p){

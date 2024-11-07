@@ -1,6 +1,5 @@
-package it.BackupUtils;
+package it.WorldUtils.BackupUtils;
 
-import it.plugin.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;

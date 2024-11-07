@@ -1,7 +1,13 @@
 package it.plugin;
 
-import it.AdminUtility.OnTime;
+import it.AdminUtility.ClearLag.RemoveChestCrafting;
+import it.AdminUtility.Freeze;
+import it.WorldUtils.WorldSecurity.AreaClaim.AreaClaim;
+import it.WorldUtils.Lootables.ChestRefiller;
+import it.WorldUtils.Lootables.PersonalLoot;
 import it.commands.DisabledCommandMessage;
+import it.commands.Misc.Jumpscare;
+import it.commands.Skin.SkinUpdate;
 import it.plugin.StartupLoaders.*;
 import it.utils.UpdateChecker;
 import org.bukkit.Bukkit;
@@ -21,7 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Plugin extends JavaPlugin {
-
     public static List<BukkitTask> plugintasks = new ArrayList<>();
     public boolean cancontinue = true;
     public static File pf;
@@ -47,7 +52,8 @@ public final class Plugin extends JavaPlugin {
 
     @NotNull private static String APIV = "1.21";
 
-    public static OnTime.Timer timerc = new OnTime.Timer();
+    //public static DataBase db;
+    public static File dbfile;
 
     @Override
     public void onLoad() {
@@ -59,6 +65,7 @@ public final class Plugin extends JavaPlugin {
             getLogger().warning("***MINECRAFT VERSION NOT SUPPORTED***");
             getLogger().warning("Check the supported versions here:");
             getLogger().warning("https://www.spigotmc.org/resources/everything-plugin.107875");
+            Bukkit.getPluginManager().disablePlugin(this);
             cancontinue = false;
             return;
         }
@@ -66,7 +73,6 @@ public final class Plugin extends JavaPlugin {
         dataFolder = getDataFolder();
         ver = getPluginMeta().getVersion();
         lgg = getLogger();
-        commands = new ArrayList<>();
         pf = new File(getDataFolder(), "players.yml");
         create(pf);
         pfyml = createyml(pf);
@@ -82,6 +88,19 @@ public final class Plugin extends JavaPlugin {
                 }
             }
         });
+        /*dbfile = new File(dataFolder, "database.db");
+        if (!dbfile.exists()){
+            try {
+                dbfile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            db = new DataBase(dbfile.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 
     @Override
@@ -92,6 +111,26 @@ public final class Plugin extends JavaPlugin {
             MiscLoader.EventLoader();
             AdminUtilsLoader.CommandRegister();
             CommandsLoader.CommandsLoader();
+            getCommand("asjumpscare").setExecutor(new Jumpscare());
+            if (booleanMap.get("Misc.enableSkinRefresher")) {
+                getCommand("skinupdate").setExecutor(new SkinUpdate());
+            }
+            if (booleanMap.get("AdminUtils.enableAreas")){
+                getCommand("claimarea").setExecutor(new AreaClaim());
+                getCommand("claimarea").setTabCompleter(new AreaClaim.AreaClaimTC());
+            }
+            if (booleanMap.get("AdminUtils.canUseFreeze")){
+                getCommand("freeze").setExecutor(new Freeze());
+            }
+            if (!booleanMap.get("AdminUtils.areChestsEnabled")){
+                RemoveChestCrafting.a();
+            }
+            if (booleanMap.get("World.doChestRefill")){
+                Bukkit.getPluginManager().registerEvents(new ChestRefiller(getConfig().getLong("World.chestRefillTimer")), this);
+            }
+            if (booleanMap.get("World.doPersonalChestLoot")){
+                Bukkit.getPluginManager().registerEvents(new PersonalLoot(), this);
+            }
         }
     }
 

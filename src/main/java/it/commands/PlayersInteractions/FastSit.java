@@ -1,6 +1,8 @@
 package it.commands.PlayersInteractions;
 
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Stairs;
@@ -17,7 +19,7 @@ public class FastSit implements Listener {
     @EventHandler
     public void FastSitListener(PlayerInteractEvent e){
         if(e.getAction().isRightClick()){
-            if(e.getClickedBlock()!=null) {
+            if(e.getClickedBlock()!=null && e.getPlayer().getInventory().getItemInMainHand().isEmpty()) {
                 BlockData bd = e.getClickedBlock().getBlockData();
                 if(bd.getMaterial() == Material.STONECUTTER){
                     e.setCancelled(true);
@@ -26,7 +28,7 @@ public class FastSit implements Listener {
                     }
                     SlimeSit(e.getPlayer(), e.getClickedBlock());
                 }
-                if((bd instanceof Slab&&((Slab)bd).getType() == Slab.Type.BOTTOM)||bd  instanceof Stairs) {
+                if((bd instanceof Slab&&((Slab)bd).getType() == Slab.Type.BOTTOM)||bd  instanceof Stairs&&((Stairs)bd).getHalf()== Bisected.Half.BOTTOM) {
                     if (e.getPlayer().isSneaking()) {
                         return;
                     }

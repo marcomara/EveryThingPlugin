@@ -1,5 +1,6 @@
 package it.events.Join;
 
+import it.commands.Nick.NickHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -14,5 +15,6 @@ public class Join implements Listener{
         SaveData(e.getPlayer());
         JoinChat(e);
         MiscActions(e.getPlayer());
+        NickHandler.onJoin(e.getPlayer());
     }
 }

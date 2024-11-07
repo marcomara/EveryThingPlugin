@@ -26,7 +26,8 @@ public class Commands {
                 "ec", EnderChest.class,
                 "suicide", Suicide.class,
                 "rel", Reload.class,
-                "gm", GameModeCycle.class));
+                "gm", GameModeCycle.class,
+                "world", it.commands.Worlds.Command.class));
         toreturn.putAll(Map.of(
                 "home", Home.class,
                 "carry", Carry.class,
@@ -70,7 +71,8 @@ public class Commands {
                 "ec", "Commands.isEnderChestEnabled",
                 "suicide", "Commands.isSuicideEnabled",
                 "rel", "AdminUtils.isRELEnabled",
-                "gm", "Commands.isGMEnabled"));
+                "gm", "Commands.isGMEnabled",
+                "world", "Commands.worlds"));
         toreturn.putAll(Map.of("home", "Commands.isHomeEnabled",
                 "carry", "Commands.isCarryEnabled",
                 "ldl", "Commands.isLDLEnabled",

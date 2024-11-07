@@ -13,14 +13,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import static it.plugin.Plugin.lgg;
-import static it.plugin.Plugin.pfyml;
+import static it.plugin.Plugin.*;
+import static it.utils.SaveUtility.save;
 
 public class NickHandler {
     public static void onJoin(Player p){
         PlayerProfile pp = p.getPlayerProfile();
         pfyml.set(p.getUniqueId() + ".PP", pp);
-        if(pfyml.get(p.getUniqueId()+".CPP")!=null && pfyml.getBoolean(p.getUniqueId()+".UsingNick")){
+        /*if(pfyml.get(p.getUniqueId()+".CPP")!=null && pfyml.getBoolean(p.getUniqueId()+".UsingNick")){
             PlayerProfile pp2 = pfyml.getSerializable(p.getUniqueId() + ".CPP", PlayerProfile.class);
             try {
                 assert pp2 != null;
@@ -29,7 +29,8 @@ public class NickHandler {
                 p.sendMessage("Something went wrong swapping your profile");
                 lgg.warning(e.fillInStackTrace().toString());
             }
-        }
+        }*/
+        save(pf,pfyml);
     }
     public static void onCommand(Player p, String var){
         PlayerProfile pp = Bukkit.createProfileExact(p.getUniqueId(), var);

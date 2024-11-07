@@ -1,16 +1,19 @@
 package it.commands.Utils;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.block.data.Rail;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MinecartSpawn implements Listener {
+    List<Integer> minecarts = new ArrayList<>();
     @EventHandler
     public void listener(PlayerInteractEvent e) {
         if (e.getClickedBlock()!=null &&  e.getPlayer().getInventory().getItemInMainHand().isEmpty() && e.getAction().isRightClick() && e.getClickedBlock().getBlockData() instanceof Rail) {
@@ -19,19 +22,21 @@ public class MinecartSpawn implements Listener {
                     if (e.getClickedBlock().getLocation().distanceSquared(en.getLocation()) < 3) return;
                 }
             }
-            Entity m = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation(), Minecart.class);
+            Minecart m = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation(), Minecart.class);
             m.setPersistent(false);
-            m.customName(Component.text("temp"));
-            m.setCustomNameVisible(false);
+            m.addPassenger(e.getPlayer());
+            m.setMaxSpeed(1000);
+            m.setSilent(true);
+            minecarts.add(m.getEntityId());
         }
     }
-
     @EventHandler
-    public void minecartkill(EntityDeathEvent e) {
-        if (e.getEntityType() == EntityType.MINECART) {
-            if (e.getEntity().getCustomName().equals("temp")) {
+    public void minecartkill(VehicleDestroyEvent e) {
+        if (e.getVehicle() instanceof Minecart m) {
+            if (minecarts.contains(m.getEntityId())) {
                 e.setCancelled(true);
-                e.getEntity().remove();
+                m.remove();
+                minecarts.remove(minecarts.indexOf(m.getEntityId()));
             }
         }
     }

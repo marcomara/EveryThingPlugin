@@ -1,8 +1,8 @@
 package it.plugin.StartupLoaders;
 
 import it.AdminUtility.ClearLag.ClearLagCommand;
-import it.BackupUtils.AllWorldsRun;
-import it.BackupUtils.BKUPCommand;
+import it.WorldUtils.BackupUtils.AllWorldsRun;
+import it.WorldUtils.BackupUtils.BKUPCommand;
 import it.Misc.KnockDown.KnockListener;
 import it.Misc.KnockDown.Reanimate;
 import it.Roles.RolesRegister;
@@ -103,7 +103,6 @@ public class MiscLoader {
             plugin.getCommand("xpfarm").setExecutor(new XpFarmChunk());
             plugin.getCommand("xpfarm").setTabCompleter(new XpFarmChunk.XpFarmChunkTabCompleter());
             plugin.getServer().getPluginManager().registerEvents(new Tasks(),plugin);
-            plugintasks.add(new Tasks().runTaskTimerAsynchronously(plugin, 0L, 5L));
         }else plugin.getCommand("xpfarm").setExecutor(executor);
         if(booleanMap.get("AdminUtils.isInvseeEnabled")){
             plugin.getCommand("invsee").setExecutor(new invsee());

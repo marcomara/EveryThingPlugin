@@ -1,7 +1,6 @@
 package it.commands.Warp;
 
 import it.utils.Colors;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -9,12 +8,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static it.plugin.Plugin.dataFolder;
-import static it.plugin.Plugin.plugin;
 import static it.utils.SaveUtility.*;
 
 import java.io.File;
@@ -57,12 +56,16 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 Chunk[] chunks =((Player) sender).getWorld().getLoadedChunks();
-                Bukkit.getScheduler().runTaskLater(plugin, ()->{
-                    ((Player)sender).teleport(map.get(args[0]));
-                }, 1L);
+                Player p = (Player) sender;
+                ((Player)sender).teleportAsync(map.get(args[0]));
+                if (p.getVehicle() != null) {
+                    Entity mount = ((Player) sender).getVehicle();
+                    mount.teleportAsync(map.get(args[0]));
+                    mount.addPassenger(p);
+                }
                 for (Chunk c : chunks){
                     if (c.getPlayersSeeingChunk().isEmpty()){
-                        c.unload();
+                        c.unload(true);
                     }
                 }
                 return true;

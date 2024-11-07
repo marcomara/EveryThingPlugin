@@ -3,43 +3,27 @@ package it.AdminUtility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class OnTime implements CommandExecutor {
+    private static long time;
+    public OnTime(){
+        this.time = System.currentTimeMillis();
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        commandSender.sendMessage("The server has been online for " + Timer.hours + " hours, " + Timer.minutes + " minutes and " + Timer.seconds + " seconds!");
+        int hours = 0, minutes = 0,seconds = (int) ((System.currentTimeMillis()-time)/1000);
+        while (seconds > 60){
+            minutes++;
+            seconds -= 60;
+        }
+        while (minutes > 60){
+            hours++;
+            minutes -= 60;
+        }
+        commandSender.sendMessage("The server has been online for " + hours + " hours, " + minutes + " minutes and " + seconds + " seconds!");
         return true;
     }
 
-    public static class Timer extends BukkitRunnable{
-        public static int seconds;
-        public static int minutes;
-        public static int hours;
-
-        @Override
-        public void run() {
-            seconds++;
-            if (seconds==60){
-                seconds=0;
-                minutes++;
-            }
-            if (minutes==60){
-                minutes=0;
-                hours++;
-            }
-        }
-
-        public static int getSeconds(){
-            return seconds;
-        }
-        public static int getMinutes(){
-            return minutes;
-        }
-        public static int getHours(){
-            return hours;
-        }
-    }
 }

@@ -17,6 +17,7 @@ import static it.plugin.Plugin.intMap;
 import static it.plugin.Plugin.plugin;
 
 public class KnockListener implements Listener {
+    public static Map<Player, Map<Attribute,Double >> attbs = new HashMap<>();
     public static Map<Player, BukkitTask> down = new HashMap<>();
     boolean prtclb;
     public KnockListener(boolean prtclb){
@@ -32,9 +33,9 @@ public class KnockListener implements Listener {
         }
         e.setCancelled(true);
         onDeath(e.getPlayer());
-            e.getPlayer().setPose(Pose.SWIMMING);
-            BukkitTask br= new D(e.getPlayer()).runTaskTimer(plugin, 0L, 0L);
-            down.put(e.getPlayer(), br);
+        e.getPlayer().setPose(Pose.SWIMMING);
+        BukkitTask br= new D(e.getPlayer()).runTaskTimer(plugin, 0L, 0L);
+        down.put(e.getPlayer(), br);
 
     }
     public class D extends BukkitRunnable{
@@ -67,13 +68,20 @@ public class KnockListener implements Listener {
         p.setHealth(1);
         p.setSaturatedRegenRate(999999999);
         p.setUnsaturatedRegenRate(999999999);
+        Map<Attribute, Double> pmap = new HashMap<>();
+        pmap.put(Attribute.GENERIC_MOVEMENT_SPEED, p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+        pmap.put(Attribute.GENERIC_JUMP_STRENGTH, p.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).getBaseValue());
+        attbs.put(p, pmap);
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
         p.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.4);
     }
     public static void onRess(Player p){
-        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.10000000149011612);
-        p.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.41999998688697815);
+        Map<Attribute, Double> pmap = attbs.get(p);
+        for (Map.Entry<Attribute,Double> e : pmap.entrySet()){
+            p.getAttribute(e.getKey()).setBaseValue(e.getValue());
+        }
         p.setSaturatedRegenRate(10);
         p.setUnsaturatedRegenRate(80);
+        attbs.remove(p);
     }
 }

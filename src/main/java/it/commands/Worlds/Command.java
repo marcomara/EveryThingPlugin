@@ -16,8 +16,8 @@ import static it.plugin.Plugin.dataFolder;
 import static it.plugin.Plugin.worlds;
 import static it.utils.SaveUtility.save;
 
-public class Command /*implements CommandExecutor*/ {
-    /*@Override
+public class Command implements CommandExecutor {
+    @Override
     public boolean onCommand(@NotNull CommandSender commandSender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
         Player p = (Player) commandSender;
         if (args.length==0) return false;
@@ -26,16 +26,16 @@ public class Command /*implements CommandExecutor*/ {
             if(w==null){
                 WorldCreator creator = new WorldCreator(args[0]);
                 w = Bukkit.createWorld(creator);
-                List<String> list = worlds.getStringList("worlds");
+                /*List<String> list = worlds.getStringList("worlds");
                 list.add(args[0]);
                 worlds.set("worlds",list);
-                save(new File(dataFolder, "worlds.yml"), worlds);
+                save(new File(dataFolder, "worlds.yml"), worlds);*/
             }
-            WorldHandler.onWorldChange(p, p.getWorld(), w);
+            //WorldHandler.changeWorld(p, w);
             Location l = w.getSpawnLocation();
-            p.teleport(l);
+            p.teleportAsync(l);
         }
         return true;
 
-    }*/
+    }
 }

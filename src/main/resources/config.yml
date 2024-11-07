@@ -12,7 +12,9 @@ Commands:
   isCraftingTableEnabled: true
   isAnvilEnabled: true
   isFlightEnabled: true
+  worlds: true
 Misc:
+  enableSkinRefresher: true
   isBedrockBridgeBuildEnabled: true
   isSizeEnabled: true
   isSitEnabled: true
@@ -36,10 +38,18 @@ ResourcePacks:
 Chunks:
   ChunkLoader: true
   XpFarmChunks: true
+World:
+  doChestRefill: false
+  chestRefillTimer: 1800 #Seconds between refills, 1800s=30m
+  doPersonalChestLoot: false
 AdminUtils:
+  canUseFreeze: false
+  enableAreas: false
   isInvseeEnabled: true
   isRELEnabled: true
   UpdateTellToOps: false
+  areChestsEnabled: true
+  replaceChestsWithBarrels: false
   Commands:
     RemoveMinecart: true
     RemoveProjectiles: true
@@ -72,4 +82,4 @@ ClearLag:
 Roles:
   Enable: true
 #DO NOT TOUCH THIS
-ConfigVersion: 28.0
+ConfigVersion: 28.62

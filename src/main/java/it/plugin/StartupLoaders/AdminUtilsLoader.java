@@ -13,7 +13,6 @@ import static it.plugin.Plugin.*;
 public class AdminUtilsLoader {
     static public void CommandRegister(){
         String s = "AdminUtils.Commands.";
-        BukkitTask timer = timerc.runTaskTimer(plugin,0L,20L);
         plugin.getCommand("ontime").setExecutor(new OnTime());
         if(booleanMap.get(s+"EntityList")) {
             plugin.getCommand("el").setExecutor(new EntityList());
